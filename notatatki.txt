@@ -1,0 +1,6 @@
+OK nutritioner = App's name. Czy w polskim jest jakieś JEDNO sensowne słowo odpowiadające "nutritioner"???
+
+Aplikacja, z której właśnie korzystasz przeznaczona jest do wspomagania prawidłowego bilansowanie codziennej diety.
+Nie tylko pomoże Ci osiągnąć swój cel niezależnie od tego czy chcesz, schudnąć, przytyć czy utrzymać wagę, ale przede wszystkim umożliwi Ci zrealizowanie go w sposób zdrowy, rozsądny i zrównoważony, dbając o to, żebyś dostarczył/a swojemu ciału wszystkie niezbędne mu składniki odżywcze.
+Aplikacja ta przeznaczona jest przede wszystkim dla zdrowych osób dorosłych ze standardowym metabolizmem. Jeśli cierpisz na dolegliwości wpływające na przemianę materii (cukrzyca, insulinooporność, zaburzenia pracy tarczycy) wskazana jest konsultacja z lekarzem. Z aplikacji nie powinno się korzystać w celu bilansowania diety osób poniżej 10. roku życia.
+Chociaż aplikacja bazuje na najnowszych wytycznych Instytutu Żywności i Żywienia, nie jest autoryzowanym produktem medycznym i nie zastąpi konsultacji z profesjonalnym lekarzem-dietetykiem.
