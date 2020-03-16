@@ -8,13 +8,22 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload' 
     %link{ rel: 'stylesheet', href: '/assets/style.css' }
     %link{ rel: 'stylesheet', href:'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css', integrity:'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh', crossorigin:'anonymous' }  
+    %link{ href: 'https://fonts.googleapis.com/css?family=Anton|Cherry+Swash&display=swap', rel:'stylesheet'} 
 
   %body
     #header
-      %nav{class:'navbar navbar-dark bg-dark'}
-        %a{class:'navbar-brand', href:'#'}='Rejestracja'
-        %a{class:'navbar-brand', href:'#'}='Logowanie'
+      %nav{class:'navbar navbar-light nav-display', style:'background-color:#068506'}
+        %div{class:'btn-group nav-display', role:'group'}
+          -# - if @user.signed_in?
+          %button{type:'button', class:'btn-nav-menu'}='Wyloguj'
+          -# - else
+          %button{type:'button', class:'btn-nav-menu nav-display'}='Rejestracja'
+          %button{type:'button', class:'btn-nav-menu'}='Logowanie'         
+          
+
     #content
       = yield 
     #footer
- 
+      %hr
+      %p='App created by O.Kierkowska for WWSI: Praca inżynierska 2020. All right reserved.'
+
