@@ -1,3 +1,4 @@
 $("#modal-holder").html("<%= escape_javascript(render 'modal/modal') %>");
+$("#modal-title").html("<%= params['title'] %>");
 $("#modal-body").html("<%= escape_javascript(render params['body']) %>");
 $(".modal").modal('show');

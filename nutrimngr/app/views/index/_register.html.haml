@@ -1,1 +1,9 @@
-="DUPA"
+%form{action:'/register', method:'post'}
+    %fieldset
+        %label{for:'email'}='Adres e-mail'
+        %input{name:"email", type:'text'}
+        %label{for:'password'}='Hasło'
+        %input{name:'password', type:'password'}
+        %label{for:'confirm_password'}='Hasło'
+        %input{name:'confirm_password', type:'password'}
+        %input{type:'submit', value:'Zarejestruj'}

@@ -22,8 +22,8 @@
           -# - if @user.signed_in?
           %button{type:'button', class:'btn-nav-menu'}='Wyloguj'
           -# - else
-          %button{type:'button', class:'btn-nav-menu nav-display'}='Rejestracja'
-          %button{type:'button', class:'btn-nav-menu'}='Logowanie'         
+          = link_to 'Rejestracja', modal_path(body: 'index/register', title: 'Rejestracja'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'   
+          = link_to 'Logowanie', modal_path(body: 'index/register', title: 'Rejestracja'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'      
           
 
     #content
