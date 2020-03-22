@@ -1,9 +1,8 @@
-%div{class:'alert alert-success', role:'alert'}
-    Informacja o sukcesie
-%div{class:'alert alert-danger', role:'alert'}
-    Informacja o błędzie
+#success{class:'alert alert-success', role:'alert', style:'display:none'}= 'Gratulacje! Zarejestrowałeś się w aplikacji!'
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}= 'Użytkownik o takim adresie email już istnieje.'
 
-%form{action:'/register', method:'post'}
+%form{id:'register-form', action:'/register', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
     %div{class:'form-group row'}    
         %label{for:'email', class:'col-sm-4 col-form-label'}='Adres e-mail'
         %div{class:'col-sm-8'}
