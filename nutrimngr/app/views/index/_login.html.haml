@@ -1,12 +1,10 @@
-%div{class:'alert alert-success', role:'alert'}
-    A simple success alert—check it out!'
-%div{class:'alert alert-danger', role:'alert'}
-    A simple danger alert—check it out!'
+#success{class:'alert alert-success', role:'alert', style:'display:none'}='Gratuluję zalogowano poprawnie!'
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}='Login lub hasło nieprawidłowe'
     
-%form{action:'/login', method:'post'}
+%form{id:'login-form', action:'/login', method:'post', 'data-remote' => 'true'}
     %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
     %div{class:'form-group row'}
-        %label{for:'email', class:'col-sm-4 col-form-label'}='Adres e-mail'
+        %label{for:'email', class:'col-sm-4 col-form-label'}='Login'
         %div{class:'col-sm-8'}
             %input{name:"email", type:'text', class:'form-control'}
     %div{class:'form-group row'}

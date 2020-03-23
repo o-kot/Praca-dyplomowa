@@ -1,10 +1,10 @@
 class RegisterController < ApplicationController
     def register
-        newUser = UserPg.new
-        if(newUser.saveUser(params['email'], params['password']))
-            render plain: 'success'            
+        if params['password'] != params['confirm_password']
+            render plain: 'Podane hasła nie są identyczne'
         else
-            render plain: 'error'
-        end 
+            newUser = UserPg.new
+            render plain: newUser.saveUser(params['email'], params['password'])         
+        end
     end    
 end

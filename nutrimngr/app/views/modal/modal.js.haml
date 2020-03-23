@@ -6,11 +6,15 @@ $(".btn-close").click(function () {
 if(confirm("Czy na pewno chcesz zamknąć to okno?"))
 $(".modal").modal('hide');
 });
-$("#register-form").on('ajax:success',function(event){
+$(document).on('ajax:success',function(event){
 var xhr = event.detail[2];
 if(xhr.responseText == "success")
 $("#success").css("display","block");
-else
+else if(xhr.responseText == "error")
 $("#error").css("display","block");
+else if(xhr.responseText.search('modal')<0){
+$("#error").html(xhr.responseText);
+$("#error").css("display","block");
+}
 });
 
