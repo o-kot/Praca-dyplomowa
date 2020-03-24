@@ -1,4 +1,4 @@
-class UserPg < UserInterface
+class UserPg
     def userExists? (email)
         UserDbModel.where(Login:email).exists?
     end

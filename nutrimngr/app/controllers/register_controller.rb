@@ -5,7 +5,7 @@ class RegisterController < ApplicationController
         elsif params['email'] || params['password'] || params['confirm_password'] == ''
             render plain: 'Formularz zawiera niewypełnione pola.'
         else
-            newUser = UserPg.new
+            newUser = UserRegisterViewModel.new
             render plain: newUser.saveUser(params['email'], params['password'])         
         end
     end    

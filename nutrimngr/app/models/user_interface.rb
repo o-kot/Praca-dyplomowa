@@ -1,11 +1,14 @@
 class UserInterface
+    def initialize(object)     
+        @object = object     
+    end
     def userExists? (email)
-        raise 'This method cannot be used directly'
+        @object.userExists?(email)
     end
     def saveUser (email, passwd)
-        raise 'This method cannot be used directly'
+        @object.saveUser(email, passwd)
     end
     def logUser (email, passwd)
-        raise 'This method cannot be used directly'
+        @object.logUser(email, passwd)
     end
 end

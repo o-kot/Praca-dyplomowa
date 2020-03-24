@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
     def login
-        accessingUser = UserPg.new
+        accessingUser = UserLoginViewModel.new
         if(accessingUser.logUser(params['email'], params['password']))
             render plain: 'success'   
         else
