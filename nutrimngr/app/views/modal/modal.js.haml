@@ -8,13 +8,18 @@ $(".modal").modal('hide');
 });
 $(document).on('ajax:success',function(event){
 var xhr = event.detail[2];
-if(xhr.responseText == "success")
+if(xhr.responseText == "success"){
 $("#success").css("display","block");
-else if(xhr.responseText == "error")
+$("#error").css("display","none");
+}
+else if(xhr.responseText == "error"){
 $("#error").css("display","block");
+$("#success").css("display","none");
+}
 else if(xhr.responseText.search('modal')<0){
 $("#error").html(xhr.responseText);
 $("#error").css("display","block");
+$("#success").css("display","none");
 }
 });
 

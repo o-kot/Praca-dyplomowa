@@ -5,6 +5,7 @@ class UserInterface
     def userExists? (email)
         @object.userExists?(email)
     end
+
     def saveUser (email, passwd)
         @object.saveUser(email, passwd)
     end

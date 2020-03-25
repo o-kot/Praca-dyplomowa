@@ -1,7 +1,7 @@
 class UserRegisterViewModel    
-    def registerUser(userEmail, userPassword)
+    def saveUser(userEmail, userPassword)
         user = UserInterface.new(ConfigDb::USERCONFIG.constantize.new)
-        user.registerUser(userEmail, userPassword)
+        user.saveUser(userEmail, userPassword)
     end
     private
     @userEmail = ''
