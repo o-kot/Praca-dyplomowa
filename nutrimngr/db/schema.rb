@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_144911) do
+ActiveRecord::Schema.define(version: 2020_04_02_165503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,55 @@ ActiveRecord::Schema.define(version: 2020_04_02_144911) do
     t.boolean "IsWoman"
     t.string "Name", limit: 25
     t.float "Requirement"
+  end
+
+  create_table "ProductInfo", force: :cascade do |t|
+    t.string "Name", limit: 30
+    t.float "Calories"
+    t.float "Protein"
+    t.float "Carbs"
+    t.float "Fat"
+    t.float "Sugars"
+    t.float "Fiber"
+    t.float "Omega3"
+    t.float "ALA"
+    t.float "SFA"
+    t.float "WNKT"
+    t.float "Trans"
+    t.float "Valine"
+    t.float "Isoleucine"
+    t.float "Leucine"
+    t.float "Lysine"
+    t.float "Methionine"
+    t.float "Threonine"
+    t.float "Tryptophan"
+    t.float "Phenylalanine"
+    t.float "VitA"
+    t.float "VitB1"
+    t.float "VitB2"
+    t.float "VitB3"
+    t.float "VitB4"
+    t.float "VitB5"
+    t.float "VitB6"
+    t.float "VitB9"
+    t.float "VitB12"
+    t.float "VitC"
+    t.float "VitD"
+    t.float "VitE"
+    t.float "VitH"
+    t.float "VitK"
+    t.float "Cl"
+    t.float "Zn"
+    t.float "F"
+    t.float "P"
+    t.float "I"
+    t.float "Mg"
+    t.float "Cu"
+    t.float "K"
+    t.float "Se"
+    t.float "Na"
+    t.float "Ca"
+    t.float "Fe"
   end
 
   create_table "ProteinRequisition", force: :cascade do |t|
