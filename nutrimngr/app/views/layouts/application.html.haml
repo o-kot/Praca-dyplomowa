@@ -26,7 +26,14 @@
           -# - else
           = link_to 'Rejestracja', modal_path(body: 'index/register', title: 'Rejestracja'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'   
           = link_to 'Logowanie', modal_path(body: 'index/login', title: 'Logowanie'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'      
-          
+
+    -# - if @user.signed_in?      
+    #menu
+      %ul{class:'nav justify-content-end'}
+        %li{class:'nav-item'}
+          = link_to 'Moje Dane', profile_path, class: 'nav-link'
+        %li{class:'nav-item'}
+          = link_to 'O aplikacji', about_path, class: 'nav-link'
 
     #content
       = yield 

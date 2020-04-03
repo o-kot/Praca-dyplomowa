@@ -1,0 +1,20 @@
+#success{class:'alert alert-success', role:'alert', style:'display:none'}='Wymiary zostały zapisane.'
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}
+    
+%form{id:'measurements-form', action:'/measurements', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga'
+        %div{class:'col-sm-8'}
+            %input{name:"weight", type:'text', class:'form-control'}
+    %div{class:'form-group row'}
+        %label{for:'waist', class:'col-sm-4 col-form-label'}='Obwód pasa'
+        %div{class:'col-sm-8'}
+            %input{name:'waist', type:'text', class:'form-control'}
+    %div{class:'form-group row'}
+        %label{for:'hips', class:'col-sm-4 col-form-label'}='Obwód bioder'
+        %div{class:'col-sm-8'}
+            %input{name:'hips', type:'text', class:'form-control'}
+    %div
+        %input{class: 'btn-form', type:'submit', value:'Zaloguj się'}
+

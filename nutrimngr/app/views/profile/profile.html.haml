@@ -1,0 +1,42 @@
+<!-- Central space -->
+
+%div{class:'central-space'}
+    %div{class:'row'}
+        %div{class:'col-md-4'}
+            %img{src:'/assets/images/logoWIP.png', class:'medium-logo', alt:'Brokuł trzymający wagę'}
+    %div{class:'col-md-8'}
+        -# - if @user.signed_in?
+        -# %h4='Żeby osiągnąć swój cel powinieneś spożywać: @tagetCalories kcal dziennie'
+        -#   %input{class: 'btn-form', type:'submit', value:'Przelicz ponownie'}
+        -# - else
+        %h4='Wprowadź swoje dane, żeby obliczyć swoje zapotrzebowanie energetyczne'
+        %input{class: 'btn-form', type:'submit', value:'Oblicz'}
+
+<!-- Forms -->
+
+%div{class:'container'}
+#invite{class:'row'}
+    %div{class:'col-sm-6 col-md-4'}
+        %div{class:'thumbnail'}
+            %div{class:'caption'}
+                %h3='Moje dane'
+
+      
+    %div{class:'col-sm-6 col-md-4'}
+        %div{class:'thumbnail'}
+            %div{class:'caption'}
+                %h3='Moje wymiary'
+
+     
+    %div{class:'col-sm-6 col-md-4'}
+        %div{class:'thumbnail'}
+            %div{class:'caption'}
+                %h3='Stopień aktywności fizycznej'
+
+    
+    %div{class:'col-sm-6 col-md-4'}
+        %div{class:'thumbnail'}
+            %div{class:'caption'}
+                %h3='Mój cel'
+
+           
