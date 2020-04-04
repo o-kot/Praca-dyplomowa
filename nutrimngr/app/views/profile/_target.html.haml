@@ -1,0 +1,12 @@
+#success{class:'alert alert-success', role:'alert', style:'display:none'}='Dane zostały zapisane.'
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}
+    
+%form{id:'data-form', action:'/target', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %select{class:'form-control', name:'target'}
+            %option{value:'0'}=''
+            %option{value:'1'}='Chcę schudnąć'
+            %option{value:'2'}='Chcę utrzymać wagę'
+            %option{value:'3'}='Chcę przytyć'
+    %div
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}

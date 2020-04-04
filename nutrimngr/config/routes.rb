@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   post 'data' => 'data#data'
   post 'measurements' => 'measurements#measurements'
   post 'target' => 'target#target'
+  post 'activity' => 'activity#activity'
 end
