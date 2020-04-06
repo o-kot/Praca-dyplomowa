@@ -2,23 +2,21 @@
 
 %div{class:'top-space'}
     %div{class:'row'}
-        %div{class:'col-md-2'}
-            %img{src:'/assets/images/logoWIP.png', class:'medium-logo', alt:'Brokuł trzymający wagę'}
-        %div{class:'col-md-8'}
-            -# - if @user.signed_in?
-            -# %h4='Żeby osiągnąć swój cel powinieneś spożywać: @tagetCalories kcal dziennie'
-            -#   %input{class: 'btn-form', type:'submit', value:'Przelicz ponownie'}
-            -# else
-        
-            %h4='Wprowadź swoje dane, żeby obliczyć swoje zapotrzebowanie energetyczne'
-        %input{class: 'col-md-2 btn-form', type:'submit', value:'Oblicz'}
+        -# - if @user.signed_in?
+        -# %h4='Żeby osiągnąć swój cel powinieneś spożywać: @tagetCalories kcal dziennie'
+        -#   %input{class: 'btn-form', type:'submit', value:'Przelicz ponownie'}
+        -# else   
+        %div{class:'col-md-10'}     
+            %h3='Wprowadź swoje dane, żeby obliczyć swoje zapotrzebowanie energetyczne'
+        %div{classs:'col-md-1'}
+            %input{class:'btn-form', style:'margin-top:0px;', type:'submit', value:'Oblicz'}
 
 -# Forms
 
 %div{class:'container'}
     %div{class:'row'}
-        %div{class:'col-sm-6 col-md-4'}
-            %h3='Moje dane'
+        #data{class:'col-sm-6 col-md-4'}
+            %h4{class:'inside-header'}='Moje dane'
             -# - if @Data.height.present?
                 -# %p="Wzrost: #{@Data.height} cm"
                     %input{class: 'btn-form', type:'submit', value:'Edytuj'}
@@ -34,10 +32,10 @@
             -# else
                     
             %p='Nie wprowadziłeś jeszcze swoich danych'
-            = link_to 'Wprowadź dane', modal_path(body: 'profile/data', title: 'Moje dane'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'   
+            = link_to '', modal_path(body: 'profile/data', title: 'Moje dane'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
         
-        %div{class:'col-sm-6 col-md-4'}
-            %h3='Moje wymiary'
+        #measurement{class:'col-sm-6 col-md-4'}
+            %h4{class:'inside-header'}='Moje wymiary'
             -# - if @UMeasurement.weight.present?
                 -# %p="Waga: #{@Measurement.weight} kg"
                     %input{class: 'btn-form', type:'submit', value:'Edytuj'}
@@ -47,25 +45,26 @@
                     %input{class: 'btn-form', type:'submit', value:'Edytuj'}
             -# else
                     
-            %p='Nie wprowadziłeś jeszcze swoich wymiarów'
-            = link_to 'Wprowadź wymiary', modal_path(body: 'profile/measurements', title: 'Moje wymiary'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'   
+            %p='Nie wprowadziłeś jeszcze swoich wymiarów'           
+            = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
         
         %div{class:'col-sm-6 col-md-4'}
-            %h3='Stopień aktywności fizycznej'
-            -# - if @Data.IDA.present?
-                -# %p="Twój stopień aktywności fizycznej: #{@Activity.desc}"
-                    %input{class: 'btn-form', type:'submit', value:'Zmień'}
-            -# else
-                    
-            %div
-            = render :partial => 'activity'
+            #activity
+                %h4{class:'inside-header'}='Stopień aktywności fizycznej'
+                -# - if @Data.IDA.present?
+                    -# %p="Twój stopień aktywności fizycznej: #{@Activity.desc}"
+                        %input{class: 'btn-form', type:'submit', value:'Zmień'}
+                -# else
+                        
+                %div
+                = render :partial => 'activity'
         
-        %div{class:'col-sm-6 col-md-4'}
-            %h3='Moj cel'
-            -# - if @Data.IDT.present?
-                -# %p="Wzrost: #{@Target.desc}"
-                    %input{class: 'btn-form', type:'submit', value:'Zmień'}
-            -# else
-                    
-            %div    
-                = render :partial => 'target'
+            #target-part
+                %h4{class:'inside-header'}='Moj cel'
+                -# - if @Data.IDT.present?
+                    -# %p="Wzrost: #{@Target.desc}"
+                        %input{class: 'btn-form', type:'submit', value:'Zmień'}
+                -# else
+                        
+                %div    
+                    = render :partial => 'target'
