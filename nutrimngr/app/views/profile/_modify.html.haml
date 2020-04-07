@@ -1,0 +1,11 @@
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}
+    
+%form{id:'modify-requisition-form', action:'/requisition/modifyRequisition', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %label{for:'calories', class:'col-sm-4 col-form-label'}='Docelowa kaloryczność'
+        %div{class:'col-sm-8'}
+            %input{name:'calories', type:'text', class:'form-control', placeholder:'2000'}
+            %span='kcal'
+    %div
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}

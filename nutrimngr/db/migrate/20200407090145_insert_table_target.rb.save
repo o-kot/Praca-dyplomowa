@@ -1,0 +1,7 @@
+lass InsertTableTarget < ActiveRecord::Migration[5.2]
+  def change
+	INSERT INTO Target VALUES ('Schudnąć')
+	INSERT INTO Target VALUES ('Utrzymać wagę')
+	INSERT INTO Target VALUES ('Przytyć')
+  end
+end

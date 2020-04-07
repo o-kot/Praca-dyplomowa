@@ -3,10 +3,17 @@ class UserRequisitionViewModel
         requisition = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
         requisition.calculateUserRequisition()      
     end
-    def
-        getUserRequisition()
+    def getUserRequisition
         requisition = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
         requisition.getUserRequisition()
+    end
+    def modifyUserRequisition
+        requisition = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
+        requisition.modifyUserRequisition()
+    end
+    def saveUserRequisition
+        requisition = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
+        requisition.saveUserRequisition()
     end
     $userRequisitionTargetCalories = ''
     private

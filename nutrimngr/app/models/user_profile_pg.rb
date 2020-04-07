@@ -41,6 +41,12 @@ class UserProfile
     def calculateUserRequisition(bool,int,float,int,int,int)
 
     end
+    def saveUserRequisition ()
+    
+    end
+    def modifyUserRequisition (int)
+        
+    end
     def getUserRequisition ()
 
     end
