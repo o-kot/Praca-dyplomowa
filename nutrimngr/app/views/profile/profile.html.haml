@@ -2,14 +2,17 @@
 
 %div{class:'top-space'}
     %div{class:'row'}
-        -# - if @user.signed_in?
-        -# %h4='Żeby osiągnąć swój cel powinieneś spożywać: @tagetCalories kcal dziennie'
-        -#   %input{class: 'btn-form', type:'submit', value:'Przelicz ponownie'}
-        -# else   
+        - if !@requisition.userRequisitionTargetCalories.nil?
+            %h4='Żeby osiągnąć swój cel powinieneś spożywać: #{@requisition.tagetCalories} kcal dziennie'
+            %input{class: 'btn-form', type:'submit', value:'Przelicz ponownie'}
+        - else   
         %div{class:'col-md-10'}     
             %h3='Wprowadź swoje dane, żeby obliczyć swoje zapotrzebowanie energetyczne'
         %div{classs:'col-md-1'}
-            %input{class:'btn-form', style:'margin-top:0px;', type:'submit', value:'Oblicz'}
+            %input{class:'btn-form btn-calculate', style:'margin-top:0px;', type:'submit', value:'Oblicz'}
+        #error{class:'alert alert-danger', role:'alert', style:'display:none'}
+        #advice{class:'alert alert-warning', role:'alert', style:'display:none'}
+
 
 -# Forms
 
@@ -17,54 +20,50 @@
     %div{class:'row'}
         #data{class:'col-sm-6 col-md-4'}
             %h4{class:'inside-header'}='Moje dane'
-            -# - if @Data.height.present?
-                -# %p="Wzrost: #{@Data.height} cm"
-                    %input{class: 'btn-form', type:'submit', value:'Edytuj'}
-                -# %p="Data urodzenia: #{@Data.birthDate}"
-                -# %input{class: 'btn-form', type:'submit', value:'Edytuj'}
-                -# %p
+            - if @data.userDataHeight.present?
+                %p="Wzrost: #{@data.userDataHeight} cm"
+                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                %p="Data urodzenia: #{@data.userDataBirthDay}"
+                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                %p
                     ='Płeć: '
-                    - if @Data.isWoman
+                    - if @data.userDataIsWoman
                         ='Kobieta'
                     - else
                         ='Mężczyzna'
-                    %input{class: 'btn-form', type:'submit', value:'Edytuj'}
-            -# else
-                    
-            %p='Nie wprowadziłeś jeszcze swoich danych'
-            = link_to '', modal_path(body: 'profile/data', title: 'Moje dane'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
+                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+            - else                    
+                %p='Nie wprowadziłeś jeszcze swoich danych'
+                = link_to '', modal_path(body: 'profile/data', title: 'Moje dane', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
         
         #measurement{class:'col-sm-6 col-md-4'}
             %h4{class:'inside-header'}='Moje wymiary'
-            -# - if @UMeasurement.weight.present?
-                -# %p="Waga: #{@Measurement.weight} kg"
-                    %input{class: 'btn-form', type:'submit', value:'Edytuj'}
-                %p="Obwód pasa: #{@Measurement.waist} cm"
-                    %input{class: 'btn-form', type:'submit', value:'Edytuj'}
-                %p="Obwód bioder: #{@Measurement.hips} cm"
-                    %input{class: 'btn-form', type:'submit', value:'Edytuj'}
-            -# else
-                    
-            %p='Nie wprowadziłeś jeszcze swoich wymiarów'           
-            = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
+            - if @measurements.userMeasurementsWeight.present?
+                %p="Waga: #{@measurements.userMeasurementsWeight} kg"
+                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                %p="Obwód pasa: #{@measurements.userMeasurementsWaist} cm"
+                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                %p="Obwód bioder: #{@measurements.userMeasurementsHips} cm"
+                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+            - else                    
+                %p='Nie wprowadziłeś jeszcze swoich wymiarów'           
+                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
         
         %div{class:'col-sm-6 col-md-4'}
             #activity
                 %h4{class:'inside-header'}='Stopień aktywności fizycznej'
-                -# - if @Data.IDA.present?
-                    -# %p="Twój stopień aktywności fizycznej: #{@Activity.desc}"
-                        %input{class: 'btn-form', type:'submit', value:'Zmień'}
-                -# else
-                        
-                %div
-                = render :partial => 'activity'
+                - if @data.userDataActivityID.present?
+                    %p="Twój stopień aktywności fizycznej: #{@activity.activityDesciption}"
+                    %input{class: 'btn-form', type:'submit', value:'Zmień'}
+                - else                        
+                    %div
+                    = render :partial => 'activity'
         
             #target-part
                 %h4{class:'inside-header'}='Moj cel'
-                -# - if @Data.IDT.present?
-                    -# %p="Wzrost: #{@Target.desc}"
-                        %input{class: 'btn-form', type:'submit', value:'Zmień'}
-                -# else
-                        
-                %div    
-                    = render :partial => 'target'
+                - if @data.userDataTargetID.present?
+                    %p="Twój cel to: #{@target.TargetDescription}"
+                    %input{class: 'btn-form', type:'submit', value:'Zmień'}
+                - else                        
+                    %div    
+                        = render :partial => 'target'

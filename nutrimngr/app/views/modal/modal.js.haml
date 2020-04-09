@@ -21,5 +21,52 @@ $("#error").html(xhr.responseText);
 $("#error").css("display","block");
 $("#success").css("display","none");
 }
-});
+else if(xhr.responseText == "Incomplete data"){
+if(confirm("Twoje dane są niekompletne czy chcesz je teraz uzupełnić?")) {
+$("#modal-title").html('Uzupełnij dane');
+$("#modal-body").html(" #{ escape_javascript(render 'profile/data') }");
+}
+else{
+$(".modal").modal('hide');
+};
+$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
+$("#error").css("display","block");
+}
+else if(xhr.responseText == "Incomplete measurements"){
+if(confirm("Twoje wymiary są niekompletne czy chcesz je teraz uzupełnić?")) {
+$("#modal-title").html('Uzupełnij wymiary');
+$("#modal-body").html(" #{ escape_javascript(render 'profile/measurements') }");
+}
+else{
+$(".modal").modal('hide');
+};
+$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
+$("#error").css("display","block");
+}
+else if(xhr.responseText == "Incomplete activity"){
+if(confirm("Nie określono stopnia aktywności czy chcesz to zrobić teraz?")){
+$(".modal").modal('hide');
+$("#advice").html("Wybierz stopień swojej aktywności fizycznej.");
+$("#advice").css("display","block");
+}
+else{
+$(".modal").modal('hide');
+$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
+$("#error").css("display","block");
+}}
+else if(xhr.responseText == "Incomplete target"){
+if(confirm("Nie określono celu czy chcesz to zrobić teraz?")){
+$(".modal").modal('hide');
+$("#advice").html("Wybierz swój cel.");
+$("#advice").css("display","block");
+}
+else{
+$(".modal").modal('hide');
+$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
+$("#error").css("display","block");
+}
+}});
+
+
+
 

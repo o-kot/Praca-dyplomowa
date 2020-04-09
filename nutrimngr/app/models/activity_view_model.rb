@@ -1,18 +1,18 @@
 class ActivityViewModel
     def saveActivity(id)  
         activity = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        activity.saveActivity()      
+        activity.saveActivity    
     end
     def editActivity(id)
         activity = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        activity.editActivity()
+        activity.editActivity
     end
     def
-        getActivity()
+        getActivity
         activity = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        activity.getActivity()
+        activity.getActivity
     end
-    $activityDesc = ''
+    @activityDesc = ''
     private
     @activityID = ''
     @activityValue = ''

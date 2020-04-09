@@ -1,53 +1,54 @@
-class UserProfile
-    def initialize(object)     
+class UserProfileInterface
+    def initialize(object,id)           
         @object = object     
+        @object.setID(id)
     end
-    def saveUserData (date,float,bool)
-        @object.saveUserData (date,float,bool)
+    def saveUserData (bday,height,gender)
+        @object.saveUserData(bday,height,gender)
     end
-    def editUserData (int)
-        @object.editUserData (int)
+    def editUserData (what)
+        @object.editUserData(what)
     end
-    def getUserData ()
-        @object.getUserData ()
+    def getUserData 
+        @object.getUserData
     end
-    def saveUserMeasurements (float,float,float)
-        @object.saveUserMeasurements (float,float,float)
+    def saveUserMeasurements (weight,waist,hips)
+        @object.saveUserMeasurements(weight,waist,hips)
     end
-    def editUserMeasurements (int)
-        @object.editUserMeasurements (int)
+    def editUserMeasurements (what)
+        @object.editUserMeasurements(what)
     end
-    def getUserMeasurements ()
-        @object.getUserMeasurements ()
+    def getUserMeasurements 
+        @object.getUserMeasurements
     end
-    def saveActivity (int)
-        @object.saveActivity (int)
+    def saveActivity (activity)
+        @object.saveActivity(activity)
     end
-    def editActivity (int)
-        @object.editActivity (int)
+    def editActivity (activity)
+        @object.editActivity(activity)
     end
-    def getActivity ()
-        @object.getActivity ()
+    def getActivity 
+        @object.getActivity 
     end
-    def saveTarget (int)
-        @object.saveTarget (int)
+    def saveTarget (target)
+        @object.saveTarget(target)
     end
-    def editTarget (int)
-        @object.editTarget (int)
+    def editTarget (target)
+        @object.editTarget(target)
     end
-    def getTarget ()
-        @object.getTarget ()
+    def getTarget 
+        @object.getTarget 
     end
-    def calculateUserRequisition(bool,int,float,int,int,int)
-        @object.calculateUserRequisition(bool,int,float,int,int,int)
+    def calculateUserRequisition(gender,height,weight,activity,age,target)
+        @object.calculateUserRequisition(gender,height,weight,activity,age,target)
     end
-    def saveUserRequisition ()
-        @object.saveUserRequisition ()
+    def saveUserRequisition 
+        @object.saveUserRequisition 
     end
-    def modifyUserRequisition (int)
-        @object.modifyUserRequisition (int)
+    def modifyUserRequisition (calories)
+        @object.modifyUserRequisition(calories)
     end
-    def getUserRequisition ()
-        @object.getUserRequisition ()
+    def getUserRequisition 
+        @object.getUserRequisition 
     end
 end

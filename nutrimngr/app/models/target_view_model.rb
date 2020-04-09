@@ -1,18 +1,18 @@
 class TargetViewModel
     def saveTarget(id)  
         target = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        target.saveTarget()      
+        target.saveTarget
     end
     def editTarget(id)
         target = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        target.editTarget()
+        target.editTarget
     end
     def
-        getTarget()
+        getTarget
         target = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        target.getTarget()
+        target.getTarget
     end
-    $targetDesc = ''
+    @targetDesc = ''
     private
     @activityID = ''
 end

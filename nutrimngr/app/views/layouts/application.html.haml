@@ -23,23 +23,23 @@
     #header
       %nav{class:'navbar navbar-light nav-display nav justify-content-end', style:'background-color:#068506'}
         %div{class:'btn-group nav-display', role:'group'}
-          -# - if @user.signed_in?
-          -# %button{type:'button', class:'btn-nav-menu'}='Wyloguj'
-          -# - else
+        - if session[:sessionID]
+          %button{type:'button', class:'btn-nav-menu'}='Wyloguj'
+        - else
           = link_to 'Rejestracja', modal_path(body: 'index/register', title: 'Rejestracja'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'   
           = link_to 'Logowanie', modal_path(body: 'index/login', title: 'Logowanie'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'      
 
-    -# - if @user.signed_in?      
-    #menu
-      %div{class:'row'}
-        %div{class:'col-md-2'}
-          %img{src:'/assets/images/logoWIP.png', class:'medium-logo', alt:'Brokuł trzymający wagę'}
-        %div{class:'col-md-10'}
-          %ul{class:'nav justify-content-end'}
-            %li{class:'nav-item'}
-              = link_to 'Moje Dane', profile_path, class: 'nav-link'
-            %li{class:'nav-item'}
-              = link_to 'O aplikacji', about_path, class: 'nav-link'
+    - if session[:sessionID]     
+      #menu
+        %div{class:'row'}
+          %div{class:'col-md-2'}
+            %img{src:'/assets/images/logoWIP.png', class:'medium-logo', alt:'Brokuł trzymający wagę'}
+          %div{class:'col-md-10'}
+            %ul{class:'nav justify-content-end'}
+              %li{class:'nav-item'}
+                = link_to 'Moje Dane', profile_path, class: 'nav-link'
+              %li{class:'nav-item'}
+                = link_to 'O aplikacji', about_path, class: 'nav-link'
 
     #content
       = yield 

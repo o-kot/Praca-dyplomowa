@@ -1,26 +1,59 @@
 #success{class:'alert alert-success', role:'alert', style:'display:none'}='Wymiary zostały zapisane.'
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
-    
-%form{id:'measurements-form', action:'/measurements', method:'post', 'data-remote' => 'true'}
-    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
-    %div{class:'form-group row'}
-        %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga'
-        %div{class:'col-sm-8'}
-            %input{name:"weight", type:'text', class:'form-control', placeholder:'70.2'}
-            #emailHelp{class:'form-text text-muted'}='Wprowadź swoją wagę w kilogramach.'
 
-    %div{class:'form-group row'}
-        %label{for:'waist', class:'col-sm-4 col-form-label'}='Obwód pasa'
-        %div{class:'col-sm-8'}
-            %input{name:'waist', type:'text', class:'form-control', placeholder:'69'}
-            #emailHelp{class:'form-text text-muted'}='Wprowadź swój obwód w centrymetrach.'
+- case params['which']
+- when 'all'
+    %form{id:'measurements-form', action:'/measurements', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga'
+            %div{class:'col-sm-8'}
+                %input{name:"weight", type:'text', class:'form-control', placeholder:'70.2'}
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swoją wagę w kilogramach.'
 
-    %div{class:'form-group row'}
-        %label{for:'hips', class:'col-sm-4 col-form-label'}='Obwód bioder'
-        %div{class:'col-sm-8'}
-            %input{name:'hips', type:'text', class:'form-control', placeholder:'98.5'}
-            #emailHelp{class:'form-text text-muted'}='Wprowadź swój obwód w centrymetrach.'
+        %div{class:'form-group row'}
+            %label{for:'waist', class:'col-sm-4 col-form-label'}='Obwód pasa'
+            %div{class:'col-sm-8'}
+                %input{name:'waist', type:'text', class:'form-control', placeholder:'69'}
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swój obwód w centrymetrach.'
 
+        %div{class:'form-group row'}
+            %label{for:'hips', class:'col-sm-4 col-form-label'}='Obwód bioder'
+            %div{class:'col-sm-8'}
+                %input{name:'hips', type:'text', class:'form-control', placeholder:'98.5'}
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swój obwód w centrymetrach.'
+
+        %div
+            %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+- when 'wght'
+    %form{id:'measurements-form', action:'/edit', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'edited', class:'col-sm-4 col-form-label'}='Waga'
+            %div{class:'col-sm-8'}
+                %input{name:"edited", type:'text', class:'form-control', placeholder:'70.2'}
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swoją wagę w kilogramach.'
     %div
-        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+        %input{class: 'btn-form', type:'submit', what: '1', value:'Zapisz'}    
 
+- when 'wst'
+    %form{id:'measurements-form', action:'/edit', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'edited', class:'col-sm-4 col-form-label'}='Obwód pasa'
+            %div{class:'col-sm-8'}
+                %input{name:'edited', type:'text', class:'form-control', placeholder:'69'}
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swój obwód w centrymetrach.'
+    %div
+        %input{class: 'btn-form', type:'submit', what:'2', value:'Zapisz'}
+- when 'hps'
+    %form{id:'measurements-form', action:'/edit', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'edited', class:'col-sm-4 col-form-label'}='Obwód bioder'
+            %div{class:'col-sm-8'}
+                %input{name:'edited', type:'text', class:'form-control', placeholder:'98.5'}
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swój obwód w centrymetrach.'
+
+        %div
+            %input{class: 'btn-form', type:'submit', what:'3', value:'Zapisz'}

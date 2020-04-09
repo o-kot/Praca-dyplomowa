@@ -1,25 +1,60 @@
 #success{class:'alert alert-success', role:'alert', style:'display:none'}='Dane zostały zapisane.'
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
-    
-%form{id:'data-form', action:'/data', method:'post', 'data-remote' => 'true'}
-    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
-    %div{class:'form-group row'}
-        %label{for:'birthday', class:'col-sm-4 col-form-label'}='Data urodzenia'
-        %div{class:'col-sm-8'}
-            %input{name:'birthday', type:'date', class:'form-control'}
-    %div{class:'form-group row'}
-        %label{for:'gender', class:'col-sm-4 col-form-label'}='Płeć'
-        %div{class:'form-check form-check-inline'}
-            %input{class:'form-check-input', type:'radio', name:'gender', id:'woman', value:'true'}
-            %label{class:'form-check-label', for:'woman'}='Kobieta'
-        %div{class:'form-check form-check-inline'}
-            %input{class:'form-check-input', type:'radio', name:'gender', id:'man', value:'false'}
-            %label{class:'form-check-label', for:'man'}='Mężczyzna'
-    %div{class:'form-group row'}
-        %label{for:'height', class:'col-sm-4 col-form-label'}='Wzrost'
-        %div{class:'col-sm-8'}
-            %input{name:'height', type:'text', class:'form-control', placeholder:'170'} 
-            #emailHelp{class:'form-text text-muted'}='Wprowadź swój wzrost w centrymetrach.'
-     
+
+- case params['which']
+- when 'all'    
+    %form{id:'data-form', action:'/data', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'birthday', class:'col-sm-4 col-form-label'}='Data urodzenia'
+            %div{class:'col-sm-8'}
+                %input{name:'birthday', type:'date', class:'form-control'}
+        %div{class:'form-group row'}
+            %label{for:'gender', class:'col-sm-4 col-form-label'}='Płeć'
+            %div{class:'form-check form-check-inline'}
+                %input{class:'form-check-input', type:'radio', name:'gender', id:'woman', value:'true'}
+                %label{class:'form-check-label', for:'woman'}='Kobieta'
+            %div{class:'form-check form-check-inline'}
+                %input{class:'form-check-input', type:'radio', name:'gender', id:'man', value:'false'}
+                %label{class:'form-check-label', for:'man'}='Mężczyzna'
+        %div{class:'form-group row'}
+            %label{for:'height', class:'col-sm-4 col-form-label'}='Wzrost'
+            %div{class:'col-sm-8'}
+                %input{name:'height', type:'text', class:'form-control', placeholder:'170'} 
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swój wzrost w centrymetrach.'
+        
+        %div
+            %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+- when 'bd'
+    %form{id:'data-form', action:'/edit', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'edited', class:'col-sm-4 col-form-label'}='Data urodzenia'
+            %div{class:'col-sm-8'}
+                %input{name:'edited', type:'date', class:'form-control'}
+        %div
+            %input{class: 'btn-form', type:'submit', what: '1', value:'Zapisz'}
+- when 'sx'
+    %form{id:'data-form', action:'/edit', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'edited', class:'col-sm-4 col-form-label'}='Płeć'
+            %div{class:'form-check form-check-inline'}
+                %input{class:'form-check-input', type:'radio', name:'edited', id:'woman', value:'true'}
+                %label{class:'form-check-label', for:'woman'}='Kobieta'
+            %div{class:'form-check form-check-inline'}
+                %input{class:'form-check-input', type:'radio', name:'edited', id:'man', value:'false'}
+                %label{class:'form-check-label', for:'man'}='Mężczyzna'
     %div
-        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+        %input{class: 'btn-form', type:'submit', what: '2', value:'Zapisz'}
+- when 'hgt'
+    %form{id:'data-form', action:'/edit', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'edited', class:'col-sm-4 col-form-label'}='Wzrost'
+            %div{class:'col-sm-8'}
+                %input{name:'edited', type:'text', class:'form-control', placeholder:'170'} 
+                #emailHelp{class:'form-text text-muted'}='Wprowadź swój wzrost w centrymetrach.'
+        
+        %div
+            %input{class: 'btn-form', type:'submit', what: '3', value:'Zapisz'}

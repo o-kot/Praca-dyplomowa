@@ -1,21 +1,24 @@
-class UserMeasuremetsViewModel
+class UserMeasurementsViewModel
+    attr_accessor :userMeasurementsWeight
+    def initialize(id)
+        @userID = id
+    end
     def saveUserMeasurements(weight,waist,hips)  
-        measurements = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        measurements.saveUserMeasurements()      
+        measurements = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
+        measurements.saveUserMeasurements
     end
     def editUserMeasurement(id)
-        measurement = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        measurement.editUserMeasurement()
+        measurement = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
+        measurement.editUserMeasurement
     end
-    def
-        getUserMeasurements()
-        measurements = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new)
-        measurements.getUserMeasurements()
+    def getUserMeasurements
+        measurements = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID).getUserMeasurements
+        userMeasurementsWeight = measurements.Weight rescue ''
+        userMeasurementsWaist = measurements.Waist rescue ''
+        userMeasurementsHips = measurements.Hips rescue ''
     end
-    $userMeasurementsWeight = ''
-    $userMeasurementsWaist = ''
-    $userMeasurementsHips = ''
+    userMeasurementsWaist = ''
+    userMeasurementsHips = ''
     private
-    @userMeasurementsID = ''
-    @userMeasurementsUserID = ''
+    @userID = -1
 end

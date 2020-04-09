@@ -17,7 +17,7 @@ class UserPg
     end
     def logUser (email, passwd)
         if UserDbModel.where(Login:email,Password:(Digest::MD5.hexdigest(passwd))).exists?
-            return true  
+            return UserDbModel.where(Login:email).first.id  
         else
             return false    
         end
