@@ -11,8 +11,7 @@
         %div{classs:'col-md-1'}
             %input{class:'btn-form btn-calculate', style:'margin-top:0px;', type:'submit', value:'Oblicz'}
         #error{class:'alert alert-danger', role:'alert', style:'display:none'}
-        #advice{class:'alert alert-warning', role:'alert', style:'display:none'}
-
+        #advice{class:'alert alert-warning', role:'alert', style:'display:none'}ader'}='Moje dane'
 
 -# Forms
 
@@ -22,29 +21,29 @@
             %h4{class:'inside-header'}='Moje dane'
             - if @data.userDataHeight.present?
                 %p="Wzrost: #{@data.userDataHeight} cm"
-                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'hgt'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
                 %p="Data urodzenia: #{@data.userDataBirthDay}"
-                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'bd'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
                 %p
                     ='Płeć: '
                     - if @data.userDataIsWoman
                         ='Kobieta'
                     - else
                         ='Mężczyzna'
-                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'sx'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
             - else                    
                 %p='Nie wprowadziłeś jeszcze swoich danych'
-                = link_to '', modal_path(body: 'profile/data', title: 'Moje dane', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
+                = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
         
         #measurement{class:'col-sm-6 col-md-4'}
             %h4{class:'inside-header'}='Moje wymiary'
             - if @measurements.userMeasurementsWeight.present?
                 %p="Waga: #{@measurements.userMeasurementsWeight} kg"
-                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wght'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
                 %p="Obwód pasa: #{@measurements.userMeasurementsWaist} cm"
-                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wst'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
                 %p="Obwód bioder: #{@measurements.userMeasurementsHips} cm"
-                %input{class: 'btn-form', type:'submit', value:'Edytuj'}
+                = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'hps'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
             - else                    
                 %p='Nie wprowadziłeś jeszcze swoich wymiarów'           
                 = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
@@ -62,8 +61,8 @@
             #target-part
                 %h4{class:'inside-header'}='Moj cel'
                 - if @data.userDataTargetID.present?
-                    %p="Twój cel to: #{@target.TargetDescription}"
-                    %input{class: 'btn-form', type:'submit', value:'Zmień'}
+                    %p="Twój cel to: #{@target.targetDescription}"
+                    = link_to '', modal_path(body: 'profile/target', title: 'Wybierz cel'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
                 - else                        
                     %div    
                         = render :partial => 'target'

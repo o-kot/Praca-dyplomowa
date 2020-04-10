@@ -8,4 +8,8 @@ class LoginController < ApplicationController
             render plain: 'error'      
         end 
     end    
+    def logout
+        session[:sessionID] = nil
+        redirect_to '/'
+    end
 end

@@ -7,6 +7,8 @@ class ProfileController < ApplicationController
         @data.getUserData
         @measurements = UserMeasurementsViewModel.new(session[:sessionID])
         @measurements.getUserMeasurements
+        @target = TargetViewModel.new(session[:sessionID])
+        @target.getTarget
         @requisition = UserRequisitionViewModel.new(session[:sessionID])
         @requisition.getUserRequisition
     end

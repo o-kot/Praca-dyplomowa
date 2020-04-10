@@ -1,10 +1,12 @@
 class TargetController < ApplicationController
     def target
-        if params['target'].blank?
+        if params['target'] == '0'
             render plain: 'Cel nie został wybrany.'
         else
-            newTarget = TargetViewModel.new
-            render plain: newTarget.saveTarget(params['target'])                    
+            newTarget = TargetViewModel.new(session[:sessionID])
+            if newTarget.saveTarget(params['target'])            
+                redirect_to '/profile/profile'
+            end        
         end
     end
 end

@@ -5,92 +5,94 @@ class UserProfilePg
     end
     def saveUserData (bday,gender,height)
         newUserData = UserDataDbModel.new
-        newUserData.IDU = userId
+        newUserData.IDU = @userID
         newUserData.BirthDate = bday
         newUserData.IsWoman = gender
         newUserData.Height = height
         newUserData.save
         return 'success'
     end
-    def editUserData (what)
+    def editUserData (what,edited)
         case what
         when 1
-            newUserData = UserDataDbModel.where(id:@userID).first
+            newUserData = UserDataDbModel.where(IDU:@userID).first
             newUserData.BirthDate = edited
             newUserData.save
         when 2
-            newUserData = UserDataDbModel.where(id:@userID).first
+            newUserData = UserDataDbModel.where(IDU:@userID).first
             newUserData.IsWoman = edited
             newUserData.save
         when 3
-            newUserData = UserDataDbModel.where(id:@userID).first
+            newUserData = UserDataDbModel.where(IDU:@userID).first
             newUserData.Height = edited
             newUserData.save
         else "Error: data has an invalid value (#{what})"
         end
+        return 'success'
     end
     def getUserData
-        newUserData = UserDataDbModel.where(id:@userID).first
+        newUserData = UserDataDbModel.where(IDU:@userID).first
     end
     def saveUserMeasurements (weight,waist,hips)
         newUserMeasurements = UserMeasurementsDbModel.new
-        newUserMeasurements.IDU = userId
+        newUserMeasurements.IDU = @userID
         newUserMeasurements.Weight = weight
         newUserMeasurements.Waist = waist
         newUserMeasurements.Hips = hips
         newUserMeasurements.save
         return 'success'
     end
-    def editUserMeasurements (what)
+    def editUserMeasurement(what,edited)
         case what
         when 1
-            newUserMeasurements = UserMeasurementsDbModel.where(id:@userID).first
+            newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
             newUserMeasurements.Weight = edited
-            newUserMeasurements.save
+            newUserMeasurements.save            
         when 2
-            newUserMeasurements = UserMeasurementsDbModel.where(id:@userID).first
+            newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
             newUserMeasurements.Waist = edited
             newUserMeasurements.save
         when 3
-            newUserMeasurements = UserMeasurementsDbModel.where(id:@userID).first
+            newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
             newUserMeasurements.Hips = edited
-            newUserMeasurements.save
+            newUserMeasurements.save            
         else "Error: data has an invalid value (#{what})"
         end
-
+        return 'success'
     end
     def getUserMeasurements
-        newUserMeasurements = UserMeasurementsDbModel.where(id:@userID).first
+        newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
     end
     def saveActivity (activity)
-        newUserActivity = UserDataDbModel.where(id:@userID).first
+        newUserActivity = UserDataDbModel.where(IDU:@userID).first
         newUserActivity.IDA = activity
         newUserActivity.save
         return 'success'
     end
     def editActivity (activity)
-        newUserActivity = UserDataDbModel.where(id:@userID).first
+        newUserActivity = UserDataDbModel.where(IDU:@userID).first
         newUserActivity.IDA = activity
         newUserActivity.save
         return 'success'
     end
     def getActivity
-        newUserActivity = UserDataDbModel.where(id:@userID).first
+        newUserActivity = UserDataDbModel.where(IDU:@userID).first
     end
     def saveTarget (target)
-        newUserTarget = UserDataDbModel.where(id:@userID).first
+        newUserTarget = UserDataDbModel.where(IDU:@userID).first
         newUserTarget.IDT = target
         newUserTarget.save
         return 'success'
     end
     def editTarget (target)
-        newUserTarget = UserDataDbModel.where(id:@userID).first
+        newUserTarget = UserDataDbModel.where(IDU:@userID).first
         newUserTarget.IDT = target
         newUserTarget.save
         return 'success'
     end
     def getTarget
-        newUserTarget = UserDataDbModel.IDT.where(id:@userID).first
+        newTargetID = UserDataDbModel.where(IDU:@userID).first.IDT
+        newTarget = TargetDbModel.where(id:newTargetID).first
     end
     def calculateUserRequisition(gender,height,weight,activity,age,target)  
         case gender
@@ -121,15 +123,15 @@ class UserProfilePg
         end
     end
     def saveUserRequisition
-        newUserRequisition = UserRequisitionDbModel.where(id:@userID).first
+        newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
         newUserRequisition.TargetCalories = calories
 
         newUserRequisition.save
         return 'success'
     end
     def modifyUserRequisition (calories)
-        newUserRequisition = UserRequisitionDbModel.where(id:@userID).first
-        target = UserDataDbModel.IDT.where(id:@userID)
+        newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
+        target = UserDataDbModel.IDT.where(IDU:@userID)
         if(calories < newUserRequisition.PPM)
             return 'Docelowa dzienna kaloryczność nie może być mniejsza niż Twoja podstawowa przemiana materii'
         elsif ((calories < UserRequisition.CPM & target = 3) || (calories > UserRequisition.CPM - 50 & target = 1) || ((UserRequisition.CPM -100 >= calories || calories > UserRequisition.CPM ) & target =2))
@@ -139,6 +141,6 @@ class UserProfilePg
         end
     end
     def getUserRequisition
-        newUserRequisition = UserRequisitionDbModel.where(id:@userID).first
+        newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
     end
 end

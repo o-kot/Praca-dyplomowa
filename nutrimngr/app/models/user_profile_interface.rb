@@ -6,8 +6,8 @@ class UserProfileInterface
     def saveUserData (bday,height,gender)
         @object.saveUserData(bday,height,gender)
     end
-    def editUserData (what)
-        @object.editUserData(what)
+    def editUserData (what,value)
+        @object.editUserData(what,value)
     end
     def getUserData 
         @object.getUserData
@@ -15,8 +15,8 @@ class UserProfileInterface
     def saveUserMeasurements (weight,waist,hips)
         @object.saveUserMeasurements(weight,waist,hips)
     end
-    def editUserMeasurements (what)
-        @object.editUserMeasurements(what)
+    def editUserMeasurement(what,value)
+        @object.editUserMeasurement(what,value)
     end
     def getUserMeasurements 
         @object.getUserMeasurements
@@ -30,10 +30,10 @@ class UserProfileInterface
     def getActivity 
         @object.getActivity 
     end
-    def saveTarget (target)
+    def saveTarget(target)
         @object.saveTarget(target)
     end
-    def editTarget (target)
+    def editTarget(target)
         @object.editTarget(target)
     end
     def getTarget 

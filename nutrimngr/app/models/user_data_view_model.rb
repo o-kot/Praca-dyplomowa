@@ -1,26 +1,25 @@
 class UserDataViewModel
-    attr_accessor :userDataHeight, :userDataActivityID, :userDataTargetID
+    attr_accessor :userDataHeight, :userDataBirthDay, :userDataIsWoman, :userDataActivityID, :userDataTargetID
     def initialize(id)
         @userID = id
     end
     def saveUserData(bday,height,gender)  
         data = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
-        data.saveUserData      
+        data.saveUserData(bday,height,gender)      
     end
-    def editUserData(id)
+    def editUserData(what,id)
         data = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
-        data.editUserData
+        data.editUserData(what,id)
     end
     def getUserData
-        data = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID).getUserData
-        userDataBirthDay = data.BirthDate rescue ''
-        userDataIsWoman = data.IsWoman rescue ''
-        userDataHeight = data.Height rescue ''
-        userDataActivityID = data.IDA rescue ''
-        userDataTargetID = data.IDT rescue ''
+        data = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
+        data = data.getUserData
+        @userDataBirthDay = data.BirthDate rescue ''
+        @userDataIsWoman = data.IsWoman rescue ''
+        @userDataHeight = data.Height rescue ''
+        @userDataActivityID = data.IDA rescue ''
+        @userDataTargetID = data.IDT rescue ''
     end
-    userDataBirthDay = ''
-    userDataIsWoman = ''
     private
     @userID = -1
 end
