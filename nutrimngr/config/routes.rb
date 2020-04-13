@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   post 'editMeasurement' => 'measurements#edit'
   post 'target' => 'target#target'
   post 'activity' => 'activity#activity'
-  post 'requisition/modifyRequisition' => 'requisition#modifyRequisition'
+  get 'user_requisition/requisition' => 'user_requisition#requisition'
+  post 'modifyRequisition' => 'user_requisition#modifyRequisition'
+  post 'acceptRequisition' => 'user_requisition#acceptRequisition'
 end

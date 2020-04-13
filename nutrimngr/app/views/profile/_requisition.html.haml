@@ -1,7 +1,11 @@
-%p="Twoja docelowa dzienna kaloryczność to: #{@targetCalories} kcal"
+%div{class:'row'}
+    %p{class:'important-text centered'}="Twoja docelowa dzienna kaloryczność to: #{params['energy']} kcal"
 
 %div{class:'row'}
-    %div{class:'col-sm-6 col-md-4'}
-        %input{class: 'btn-form', type:'submit', value:'Akceptuj'}
-    %div{class:'col-sm-6 col-md-4'}
-        = link_to 'Zmodyfikuj', modal_path(body: 'profile/modify', title: 'Moje dane'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'   
+    %div{class:'col-sm- col-md-6'}
+        %form{id:'requisition-form', action:'/acceptRequisition', method:'post', 'data-remote' => 'true'}
+            %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}                 
+                %input{type:'hidden', name:'calories', value:"#{params['energy']}"}
+                %input{class: 'btn-form', type:'submit', value:'Zaakceptuj'}
+    %div{class:'col-sm- col-md-4'}
+        = link_to 'Zmodyfikuj', modal_path(body: 'profile/modify', title: 'Wprowadź liczbę kalorii'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements-when-in-row'   

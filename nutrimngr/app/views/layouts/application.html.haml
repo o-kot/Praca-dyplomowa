@@ -24,10 +24,10 @@
       %nav{class:'navbar navbar-light nav-display nav justify-content-end', style:'background-color:#068506'}
         %div{class:'btn-group nav-display', role:'group'}
         - if session[:sessionID]
-          %button{type:'button', class:'btn-nav-menu'}='Wyloguj'
+          = link_to 'Wyloguj', logout_path, class:'btn-nav-menu nav-display'      
         - else
-          = link_to 'Rejestracja', modal_path(body: 'index/register', title: 'Rejestracja'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'   
-          = link_to 'Logowanie', modal_path(body: 'index/login', title: 'Logowanie'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu .nav-display'      
+          = link_to 'Rejestracja', modal_path(body: 'index/register', title: 'Rejestracja'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu nav-display'   
+          = link_to 'Logowanie', modal_path(body: 'index/login', title: 'Logowanie'), remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-holder', class:'btn-nav-menu nav-display'      
 
     - if session[:sessionID]     
       #menu

@@ -1,13 +1,35 @@
 #success{class:'alert alert-success', role:'alert', style:'display:none'}='Dane zostały zapisane.'
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
-    
+#info{class:'alert alert-warning',style:'display:none'}
+
 %form{id:'data-form', action:'/activity', method:'post', 'data-remote' => 'true'}
     %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
     #slider
     %div
+        %input{type:'hidden', id:'activityIDValue', name:'activity'}
         %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 
 %script
     $( function() {
-    $( "#slider" ).slider();
+    var activityArray = {};
+    activityArray[1]='Zerowa aktywność, praca siedząca'
+    activityArray[2]='Bardzo mała aktywność, praca siedząca'
+    activityArray[3]='Mała aktywność, praca siedząca'
+    activityArray[4]='Umiarkowana aktywność, praca siedząca'
+    activityArray[5]='Umiarkowana aktywność, praca wymagająca ruchu'
+    activityArray[6]='Duża aktywność, praca wymagająca ruchu'
+    activityArray[7]='Bardzo duża aktywność, praca wymagająca ruchu'
+    activityArray[8]='Bardzo intensywna aktywność, praca wymagająca ruchu'
+    activityArray[9]='Bardzo intensywna aktywność, praca fizyczna'
+    $( "#slider" ).slider({
+    max:9,min:0,
+    change: function(event,UI){
+    $('#activityIDValue').val($('#slider').slider('value'));
+    if($('#slider').slider('value')>0){
+    $('#info').html(activityArray[$('#slider').slider('value')]);
+    $('#info').css("display","block");
+    }
+    else $('#info').css("display","none");
+    }
+    });
     });

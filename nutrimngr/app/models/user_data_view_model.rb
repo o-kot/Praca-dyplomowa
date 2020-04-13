@@ -17,8 +17,8 @@ class UserDataViewModel
         @userDataBirthDay = data.BirthDate rescue ''
         @userDataIsWoman = data.IsWoman rescue ''
         @userDataHeight = data.Height rescue ''
-        @userDataActivityID = data.IDA rescue ''
         @userDataTargetID = data.IDT rescue ''
+        @userDataActivityID = data.IDA rescue ''
     end
     private
     @userID = -1

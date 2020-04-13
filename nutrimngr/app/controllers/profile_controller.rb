@@ -9,8 +9,9 @@ class ProfileController < ApplicationController
         @measurements.getUserMeasurements
         @target = TargetViewModel.new(session[:sessionID])
         @target.getTarget
+        @activity = ActivityViewModel.new(session[:sessionID])
+        @activity.getActivity
         @requisition = UserRequisitionViewModel.new(session[:sessionID])
         @requisition.getUserRequisition
     end
-    
-   end
+end

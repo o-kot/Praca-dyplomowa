@@ -76,7 +76,8 @@ class UserProfilePg
         return 'success'
     end
     def getActivity
-        newUserActivity = UserDataDbModel.where(IDU:@userID).first
+        newActivityID = UserDataDbModel.where(IDU:@userID).first.IDA
+        newActivity = ActivityDbModel.where(id:newActivityID).first
     end
     def saveTarget (target)
         newUserTarget = UserDataDbModel.where(IDU:@userID).first
@@ -96,48 +97,49 @@ class UserProfilePg
     end
     def calculateUserRequisition(gender,height,weight,activity,age,target)  
         case gender
-        when 0
+        when false
             ppm = 66.47 + 13.75*weight + 5*height - 6.78*age
-        when 1
+        when true
             ppm = 665.1 + 9.567*weight + 1.85*height - 4.87*age
         else "Error: data has an invalid value (#{gender})"
         end
-        pal = Activity.PAL.where(id:ativity).first        
-        cpm = ppm * PAL
-        newUserRequisition = UserMeasurementsDbModel.new
-        newUserRequisition.IDU = userId
+        pal = ActivityDbModel.where(id:activity).first.PAL        
+        cpm = ppm.to_f * pal.to_f
+        newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
+        if newUserRequisition.nil?
+            newUserRequisition = UserRequisitionDbModel.new
+        end
         newUserRequisition.PPM = ppm
         newUserRequisition.CPM = cpm
         newUserRequisition.save
         case target
         when 1
             targetCalories = cpm - 300
-            return targetCalories
+            return targetCalories.to_i
         when 2
             targetCalories = cpm - 50
-            return targetCalories
+            return targetCalories.to_i
         when 3
             targetCalories = cpm + 250
-            return targetCalories
+            return targetCalories.to_i
         else "Error: data has an invalid value (#{target})"
         end
     end
-    def saveUserRequisition
+    def saveUserRequisition(calories)
         newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
         newUserRequisition.TargetCalories = calories
-
         newUserRequisition.save
         return 'success'
     end
-    def modifyUserRequisition (calories)
+    def modifyUserRequisition(calories)
         newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
-        target = UserDataDbModel.IDT.where(IDU:@userID)
-        if(calories < newUserRequisition.PPM)
+        target = UserDataDbModel.where(IDU:@userID).first.IDT
+        if(calories.to_i < newUserRequisition.PPM.to_i)
             return 'Docelowa dzienna kaloryczność nie może być mniejsza niż Twoja podstawowa przemiana materii'
-        elsif ((calories < UserRequisition.CPM & target = 3) || (calories > UserRequisition.CPM - 50 & target = 1) || ((UserRequisition.CPM -100 >= calories || calories > UserRequisition.CPM ) & target =2))
+        elsif ((calories < newUserRequisition.CPM & target == 3) || (calories > newUserRequisition.CPM - 50 & target == 1) || ((newUserRequisition.CPM - 100 >= calories || calories > newUserRequisition.CPM ) & target == 2))
             return 'Podana wartość kalorii nie pozwoli Ci osiągnąć Twojego celu'
         else
-            saveUserRequisition(calories)
+            return saveUserRequisition(calories)
         end
     end
     def getUserRequisition

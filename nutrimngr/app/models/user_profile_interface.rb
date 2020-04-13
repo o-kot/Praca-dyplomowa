@@ -42,10 +42,10 @@ class UserProfileInterface
     def calculateUserRequisition(gender,height,weight,activity,age,target)
         @object.calculateUserRequisition(gender,height,weight,activity,age,target)
     end
-    def saveUserRequisition 
-        @object.saveUserRequisition 
+    def saveUserRequisition(calories) 
+        @object.saveUserRequisition(calories)
     end
-    def modifyUserRequisition (calories)
+    def modifyUserRequisition(calories)
         @object.modifyUserRequisition(calories)
     end
     def getUserRequisition 

@@ -15,7 +15,7 @@ class DataController < ApplicationController
     end
     def edit
         if params['edited'].blank?
-            render plain: 'Formularz zawiera niewypełnione pola.'
+            render plain: 'Formularz zawiera niewypełnione pola.' and return
         end
         if params['what'] == '3'       
             begin
