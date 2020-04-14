@@ -76,8 +76,8 @@ class UserProfilePg
         return 'success'
     end
     def getActivity
-        newActivityID = UserDataDbModel.where(IDU:@userID).first.IDA
-        newActivity = ActivityDbModel.where(id:newActivityID).first
+        newActivityID = UserDataDbModel.where(IDU:@userID).first.IDA rescue ''
+        newActivity = ActivityDbModel.where(id:newActivityID).first rescue ''
     end
     def saveTarget (target)
         newUserTarget = UserDataDbModel.where(IDU:@userID).first
@@ -92,8 +92,8 @@ class UserProfilePg
         return 'success'
     end
     def getTarget
-        newTargetID = UserDataDbModel.where(IDU:@userID).first.IDT
-        newTarget = TargetDbModel.where(id:newTargetID).first
+        newTargetID = UserDataDbModel.where(IDU:@userID).first.IDT rescue ''
+        newTarget = TargetDbModel.where(id:newTargetID).first rescue ''
     end
     def calculateUserRequisition(gender,height,weight,activity,age,target)  
         case gender
@@ -108,6 +108,7 @@ class UserProfilePg
         newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
         if newUserRequisition.nil?
             newUserRequisition = UserRequisitionDbModel.new
+            newUserRequisition.IDU = @userID
         end
         newUserRequisition.PPM = ppm
         newUserRequisition.CPM = cpm
@@ -134,7 +135,7 @@ class UserProfilePg
     def modifyUserRequisition(calories)
         newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
         target = UserDataDbModel.where(IDU:@userID).first.IDT
-        if(calories.to_i < newUserRequisition.PPM.to_i)
+        if(calories < newUserRequisition.PPM)
             return 'Docelowa dzienna kaloryczność nie może być mniejsza niż Twoja podstawowa przemiana materii'
         elsif ((calories < newUserRequisition.CPM & target == 3) || (calories > newUserRequisition.CPM - 50 & target == 1) || ((newUserRequisition.CPM - 100 >= calories || calories > newUserRequisition.CPM ) & target == 2))
             return 'Podana wartość kalorii nie pozwoli Ci osiągnąć Twojego celu'

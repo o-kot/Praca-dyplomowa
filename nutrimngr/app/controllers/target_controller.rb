@@ -4,7 +4,8 @@ class TargetController < ApplicationController
             render plain: 'Cel nie został wybrany.'
         else
             newTarget = TargetViewModel.new(session[:sessionID])
-            if newTarget.saveTarget(params['target'])            
+            if newTarget.saveTarget(params['target'])
+                session[:message]='Cel został zapisany.'            
                 redirect_to '/profile/profile'
             end        
         end

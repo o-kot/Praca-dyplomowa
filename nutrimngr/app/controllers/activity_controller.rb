@@ -4,7 +4,8 @@ class ActivityController < ApplicationController
             render plain: 'Stopień aktywności nie został wybrany.' and return
         else
             newActivity = ActivityViewModel.new(session[:sessionID])
-            if newActivity.saveActivity(params['activity'])            
+            if newActivity.saveActivity(params['activity'])          
+                session[:message]='Stopień aktywności fizycznej został zapisany.' 
                 redirect_to '/profile/profile'
             end                   
         end

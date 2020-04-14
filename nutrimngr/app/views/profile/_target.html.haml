@@ -4,9 +4,11 @@
 %form{id:'data-form', action:'/target', method:'post', 'data-remote' => 'true'}
     %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
         %select{class:'form-control form-control-sm', name:'target'}
-            %option{value:'0'}=''
-            %option{value:'1'}='Chcę schudnąć'
-            %option{value:'2'}='Chcę utrzymać wagę'
-            %option{value:'3'}='Chcę przytyć'
+            %option{hover:'backgroud:#068506 !important', value:'0'}=''
+            %option{focus:'backgroud:#068506 !important', value:'1'}='Chcę schudnąć'
+            %option{active:'backgroud:#068506 !important', value:'2'}='Chcę utrzymać wagę'
+            %option{style:'backgroud:#068506 !important',value:'3'}='Chcę przytyć'
     %div
         %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+
+

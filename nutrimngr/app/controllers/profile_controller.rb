@@ -3,6 +3,10 @@ class ProfileController < ApplicationController
         if !session[:sessionID]
             redirect_to "index/index"
         end
+        if session[:message]
+            @message=session[:message]
+            session[:message]=nil
+        end
         @data = UserDataViewModel.new(session[:sessionID])
         @data.getUserData
         @measurements = UserMeasurementsViewModel.new(session[:sessionID])

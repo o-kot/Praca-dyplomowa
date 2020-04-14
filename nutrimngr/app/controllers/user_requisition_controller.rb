@@ -4,17 +4,17 @@ class UserRequisitionController < ApplicationController
         newUserData.getUserData
         newUserMeasurements = UserMeasurementsViewModel.new(session[:sessionID])
         newUserMeasurements.getUserMeasurements
-        if !newUserData.present?
-            render plain: 'Incomplete data'
-        elsif !newUserMeasurements.present?
-            render plain: 'Incomplete measurements'
+        if !newUserData.userDataHeight.present?
+            render plain: 'Incomplete data' and return
+        elsif !newUserMeasurements.userMeasurementsWeight.present?
+            render plain: 'Incomplete measurements' and return
         elsif newUserData.userDataActivityID.nil?
-            render plain: 'Incomplete activity'    
+            render plain: 'Incomplete activity' and return    
         elsif newUserData.userDataTargetID.nil?
-            render plain: 'Incomplete target'
+            render plain: 'Incomplete target' and return
         else
             newDate = Date.today
-            userAge = 41
+            userAge = Date.today.year - newUserData.userDataBirthDay.year
             newUserRequisition = UserRequisitionViewModel.new(session[:sessionID])
             kcal = newUserRequisition.calculateUserRequisition(newUserData.userDataIsWoman,newUserData.userDataHeight,newUserMeasurements.userMeasurementsWeight,newUserData.userDataActivityID,userAge,newUserData.userDataTargetID)
             if kcal  

@@ -10,6 +10,7 @@ class DataController < ApplicationController
         end            
         newData = UserDataViewModel.new(session[:sessionID])
         if newData.saveUserData(params['birthday'], params['gender'], params['height']) == 'success'
+            session[:message]='Dane zostały zapisane.'
             redirect_to '/profile/profile'    
         end
     end
@@ -26,6 +27,7 @@ class DataController < ApplicationController
         end
         newData = UserDataViewModel.new(session[:sessionID])
         if newData.editUserData(params['what'].to_i, params['edited']) == 'success'
+            session[:message]='Dane zostały zmienione.'
             redirect_to '/profile/profile'    
         end    
     end      

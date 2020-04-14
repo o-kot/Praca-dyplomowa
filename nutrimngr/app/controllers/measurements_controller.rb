@@ -20,6 +20,7 @@ class MeasurementsController < ApplicationController
         end
         newMeasurements = UserMeasurementsViewModel.new(session[:sessionID])
         if newMeasurements.saveUserMeasurements(params['weight'], params['waist'], params['hips']) == 'success'
+            session[:message]='Wymiary zostały zapisane.'
             redirect_to '/profile/profile'
         end
     end
@@ -34,6 +35,7 @@ class MeasurementsController < ApplicationController
         end
         newMeasurements = UserMeasurementsViewModel.new(session[:sessionID])
         if newMeasurements.editUserMeasurement(params['what'].to_i, params['edited']) == 'success'
+            session[:message]='Wymiar został zmieniony.'
             redirect_to '/profile/profile'         
         end 
     end       
