@@ -112,6 +112,41 @@ class UserProfilePg
         end
         newUserRequisition.PPM = ppm
         newUserRequisition.CPM = cpm
+        newUserRequisition.Protein = weight*ProteinRequisitionDbModel.where(FromAge>=age && ToAge <= age).first.Requirement
+        newUserRequisition.Carbs = 130
+        newuserRequisition.Valine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Valine").first.Requirement
+        newuserRequisition.Isoleucine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Isoleucine").first.Requirement
+        newuserRequisition.Leucine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Leucine").first.Requirement
+        newuserRequisition.Lysine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Lysine").first.Requirement
+        newuserRequisition.Methionine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Methionine").first.Requirement
+        newuserRequisition.Threonine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Threonine").first.Requirement
+        newuserRequisition.Tryptophan = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Tryptophan").first.Requirement
+        newuserRequisition.Phenylalanine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Phenylalanine").first.Requirement
+        newuserRequisition.VitA = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitA" && IsWoman == gender).first.Requirement
+        newuserRequisition.VitB1 
+        newuserRequisition.VitB2 
+        newuserRequisition.VitB3 
+        newuserRequisition.VitB4 
+        newuserRequisition.VitB5 
+        newuserRequisition.VitB6 
+        newuserRequisition.VitB9 
+        newuserRequisition.VitB12 
+        newuserRequisition.VitC = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitC" && IsWoman == gender).first.Requirement
+        newuserRequisition.VitD = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitD" && IsWoman == gender).first.Requirement
+        newuserRequisition.VitE = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitE" && IsWoman == gender).first.Requirement
+        newuserRequisition.VitH 
+        newuserRequisition.VitK = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitK" && IsWoman == gender).first.Requirement
+        newuserRequisition.Cl 
+        newuserRequisition.Zn 
+        newuserRequisition.F 
+        newuserRequisition.P 
+        newuserRequisition.I
+        newuserRequisition.Mg 
+        newuserRequisition.Cu 
+        newuserRequisition.K 
+        newuserRequisition.Se 
+        newuserRequisition.Na 
+        newuserRequisition.Ca 
         newUserRequisition.save
         case target
         when 1
