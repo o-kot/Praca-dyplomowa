@@ -20,6 +20,4 @@ class UserDataViewModel
         @userDataTargetID = data.IDT rescue ''
         @userDataActivityID = data.IDA rescue ''
     end
-    private
-    @userID = -1
 end

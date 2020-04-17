@@ -17,6 +17,5 @@ class TargetViewModel
         target = target.getTarget
         @targetID = target.id rescue ''
         @targetDescription = target.Description rescue ''
-    end
-    private
+    end    
 end

@@ -1,72 +1,8 @@
-$(".btn-close").click(function () {
-if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-$(".modal").modal('hide');
-});
-$(document).on('ajax:success',function(event){
-var xhr = event.detail[2];
-if(xhr.responseText == "success"){
-$("#success").css("display","block");
-$("#error").css("display","none");
-}
-else if(xhr.responseText == "error"){
-$("#error").css("display","block");
-$("#success").css("display","none");
-}
-else if(xhr.responseText == "Incomplete data"){
-if(confirm("Twoje dane są niekompletne czy chcesz je teraz uzupełnić?")) {
-$("#modal-holder").html(" #{ escape_javascript(render 'modal/modal') }");
-$("#modal-title").html('Uzupełnij dane');
-$("#modal-body").html(" #{ escape_javascript(render 'profile/data') }");
-$(".modal").modal('show');
-}
-else{
-$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
-$("#error").css("display","block");
-}}
-else if(xhr.responseText == "Incomplete measurements"){
-if(confirm("Twoje wymiary są niekompletne czy chcesz je teraz uzupełnić?")) {
-$("#modal-holder").html(" #{ escape_javascript(render 'modal/modal') }");
-$("#modal-title").html('Uzupełnij wymiary');
-$("#modal-body").html(" #{ escape_javascript(render 'profile/measurements') }");
-$(".modal").modal('show');
-}
-else{
-$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
-$("#error").css("display","block");
-}}
-else if(xhr.responseText == "Incomplete activity"){
-if(confirm("Nie określono stopnia aktywności czy chcesz to zrobić teraz?")){
-$("#advice").html("Wybierz stopień swojej aktywności fizycznej.");
-$("#advice").css("display","block");
-}
-else{
-$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
-$("#error").css("display","block");
-}}
-else if(xhr.responseText == "Incomplete target"){
-if(confirm("Nie określono celu czy chcesz to zrobić teraz?")){
-$("#advice").html("Wybierz swój cel.");
-$("#advice").css("display","block");
-}
-else{
-$("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
-$("#error").css("display","block");
-}}
-else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
-$("#error").html(xhr.responseText);
-$("#error").css("display","block");
-$("#success").css("display","none");
-}
-});
 $("#modal-holder").html(" #{ escape_javascript(render 'modal/modal') }");
 $("#modal-title").html(" #{ params['title'] }");
 $("#modal-body").html(" #{ escape_javascript(render params['body']) }");
 $(".modal").modal('show');
-$(".modify-kcal").click(function () {
-$("#modal-title").html('Wprowadadź proponowaną kaloryczność');
-$("#modal-body").html(" #{ escape_javascript(render 'profile/modify') }");
-$(".modal").modal('show');
+$(".btn-close").click(function () {
+if(confirm("Czy na pewno chcesz zamknąć to okno?"))
+$(".modal").modal('hide');
 });
-
-
-

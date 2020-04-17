@@ -112,41 +112,42 @@ class UserProfilePg
         end
         newUserRequisition.PPM = ppm
         newUserRequisition.CPM = cpm
-        newUserRequisition.Protein = weight*ProteinRequisitionDbModel.where(FromAge>=age && ToAge <= age).first.Requirement
+        newUserRequisition.Protein = weight*ProteinRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\"").first.Requirement
         newUserRequisition.Carbs = 130
-        newuserRequisition.Valine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Valine").first.Requirement
-        newuserRequisition.Isoleucine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Isoleucine").first.Requirement
-        newuserRequisition.Leucine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Leucine").first.Requirement
-        newuserRequisition.Lysine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Lysine").first.Requirement
-        newuserRequisition.Methionine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Methionine").first.Requirement
-        newuserRequisition.Threonine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Threonine").first.Requirement
-        newuserRequisition.Tryptophan = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Tryptophan").first.Requirement
-        newuserRequisition.Phenylalanine = AminoAcidsRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "Phenylalanine").first.Requirement
-        newuserRequisition.VitA = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitA" && IsWoman == gender).first.Requirement
-        newuserRequisition.VitB1 
-        newuserRequisition.VitB2 
-        newuserRequisition.VitB3 
-        newuserRequisition.VitB4 
-        newuserRequisition.VitB5 
-        newuserRequisition.VitB6 
-        newuserRequisition.VitB9 
-        newuserRequisition.VitB12 
-        newuserRequisition.VitC = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitC" && IsWoman == gender).first.Requirement
-        newuserRequisition.VitD = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitD" && IsWoman == gender).first.Requirement
-        newuserRequisition.VitE = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitE" && IsWoman == gender).first.Requirement
-        newuserRequisition.VitH 
-        newuserRequisition.VitK = GeneralRequisitionDbModel.where(FromAge>=age && ToAge <= age && Name == "VitK" && IsWoman == gender).first.Requirement
-        newuserRequisition.Cl 
-        newuserRequisition.Zn 
-        newuserRequisition.F 
-        newuserRequisition.P 
-        newuserRequisition.I
-        newuserRequisition.Mg 
-        newuserRequisition.Cu 
-        newuserRequisition.K 
-        newuserRequisition.Se 
-        newuserRequisition.Na 
-        newuserRequisition.Ca 
+        newUserRequisition.Valine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Valine'").first.Requirement
+        newUserRequisition.Isoleucine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Isoleucine'").first.Requirement
+        newUserRequisition.Leucine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Leucine'").first.Requirement
+        newUserRequisition.Lysine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Lysine'").first.Requirement
+        newUserRequisition.Methionine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Methionine'").first.Requirement
+        newUserRequisition.Threonine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Threonine'").first.Requirement
+        newUserRequisition.Tryptophan = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Tryptophan'").first.Requirement
+        newUserRequisition.Phenylalanine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Phenylalanine'").first.Requirement
+        newUserRequisition.VitA = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitA' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB1 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB1' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB2 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB2' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB3 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB3' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB4 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB4' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB5 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB5' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB6 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB6' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB9 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB9' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitB12 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB12' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitC = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitC' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitD = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitD' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitE = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitE' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitH = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitH' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.VitK = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitK' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Cl = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Cl' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Zn = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Zn' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.F = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'F' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.P = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'P' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.I = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'I' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Mg = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Mg' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Cu = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Cu' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.K = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'K' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Se = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Se' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Na = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Na' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Ca = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Ca' and \"IsWoman\" = #{gender}").first.Requirement
+        newUserRequisition.Fe = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Fe' and \"IsWoman\" = #{gender}").first.Requirement
         newUserRequisition.save
         case target
         when 1

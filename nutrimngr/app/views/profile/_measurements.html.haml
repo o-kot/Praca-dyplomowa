@@ -1,7 +1,9 @@
 #success{class:'alert alert-success', role:'alert', style:'display:none'}='Wymiary zostały zapisane.'
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
 
-- case params['which']
+- if params['which']
+    - which = params['which']
+- case which
 - when 'all'
     %form{id:'measurements-form', action:'/measurements', method:'post', 'data-remote' => 'true'}
         %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}

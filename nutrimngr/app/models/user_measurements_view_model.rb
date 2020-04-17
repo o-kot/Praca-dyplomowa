@@ -17,6 +17,4 @@ class UserMeasurementsViewModel
         @userMeasurementsWaist = measurements.Waist rescue ''
         @userMeasurementsHips = measurements.Hips rescue ''
     end
-    private
-    @userID = -1
 end
