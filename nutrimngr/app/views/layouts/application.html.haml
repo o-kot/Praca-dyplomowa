@@ -37,6 +37,12 @@
           %div{class:'col-md-10'}
             %ul{class:'nav justify-content-end'}
               %li{class:'nav-item'}
+                = link_to 'Posiłki', meals_path, class: 'nav-link'
+              %li{class:'nav-item'}
+                = link_to 'Potrawy', recipes_path, class: 'nav-link'
+              %li{class:'nav-item'}
+                = link_to 'Moje produkty', user_products_path, class: 'nav-link'
+              %li{class:'nav-item'}
                 = link_to 'Moje Dane', profile_path, class: 'nav-link'
               %li{class:'nav-item'}
                 = link_to 'O aplikacji', about_path, class: 'nav-link'

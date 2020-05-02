@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_165503) do
+ActiveRecord::Schema.define(version: 2020_04_20_065748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,12 +27,128 @@ ActiveRecord::Schema.define(version: 2020_04_02_165503) do
     t.float "Requirement"
   end
 
+  create_table "CompleteRecipe", force: :cascade do |t|
+    t.integer "IDR"
+    t.boolean "IsActive"
+    t.boolean "HasPortion"
+    t.integer "HowManyPortion"
+    t.boolean "IsWeighed"
+    t.float "Weight"
+    t.float "WhatIsLeft"
+    t.float "Calories"
+    t.float "Protein"
+    t.float "Carbs"
+    t.float "Fat"
+    t.float "Sugars"
+    t.float "Fiber"
+    t.float "Omega3"
+    t.float "ALA"
+    t.float "SFA"
+    t.float "WNKT"
+    t.float "Trans"
+    t.float "Valine"
+    t.float "Isoleucine"
+    t.float "Leucine"
+    t.float "Lysine"
+    t.float "Methionine"
+    t.float "Threonine"
+    t.float "Tryptophan"
+    t.float "Phenylalanine"
+    t.float "VitA"
+    t.float "VitB1"
+    t.float "VitB2"
+    t.float "VitB3"
+    t.float "VitB4"
+    t.float "VitB5"
+    t.float "VitB6"
+    t.float "VitB9"
+    t.float "VitB12"
+    t.float "VitC"
+    t.float "VitD"
+    t.float "VitE"
+    t.float "VitH"
+    t.float "VitK"
+    t.float "Cl"
+    t.float "Zn"
+    t.float "F"
+    t.float "P"
+    t.float "I"
+    t.float "Mg"
+    t.float "Cu"
+    t.float "K"
+    t.float "Se"
+    t.float "Na"
+    t.float "Ca"
+    t.float "Fe"
+  end
+
+  create_table "Eaten", force: :cascade do |t|
+    t.integer "IDU"
+    t.integer "IDP"
+    t.date "Date"
+    t.time "Time"
+    t.integer "IDPr"
+    t.integer "IDDR"
+    t.string "CustomProductName", limit: 50
+    t.float "Weight"
+    t.integer "Portions"
+    t.float "Calories"
+    t.float "Protein"
+    t.float "Carbs"
+    t.float "Fat"
+    t.float "Sugars"
+    t.float "Fiber"
+    t.float "Omega3"
+    t.float "ALA"
+    t.float "SFA"
+    t.float "WNKT"
+    t.float "Trans"
+    t.float "Valine"
+    t.float "Isoleucine"
+    t.float "Leucine"
+    t.float "Lysine"
+    t.float "Methionine"
+    t.float "Threonine"
+    t.float "Tryptophan"
+    t.float "Phenylalanine"
+    t.float "VitA"
+    t.float "VitB1"
+    t.float "VitB2"
+    t.float "VitB3"
+    t.float "VitB4"
+    t.float "VitB5"
+    t.float "VitB6"
+    t.float "VitB9"
+    t.float "VitB12"
+    t.float "VitC"
+    t.float "VitD"
+    t.float "VitE"
+    t.float "VitH"
+    t.float "VitK"
+    t.float "Cl"
+    t.float "Zn"
+    t.float "F"
+    t.float "P"
+    t.float "I"
+    t.float "Mg"
+    t.float "Cu"
+    t.float "K"
+    t.float "Se"
+    t.float "Na"
+    t.float "Ca"
+    t.float "Fe"
+  end
+
   create_table "GeneralRequisition", force: :cascade do |t|
     t.integer "FromAge"
     t.integer "ToAge"
     t.boolean "IsWoman"
     t.string "Name", limit: 25
     t.float "Requirement"
+  end
+
+  create_table "Meal", force: :cascade do |t|
+    t.string "Name", limit: 15
   end
 
   create_table "ProductInfo", force: :cascade do |t|
@@ -82,12 +198,25 @@ ActiveRecord::Schema.define(version: 2020_04_02_165503) do
     t.float "Na"
     t.float "Ca"
     t.float "Fe"
+    t.integer "IDU"
   end
 
   create_table "ProteinRequisition", force: :cascade do |t|
     t.integer "FromAge"
     t.integer "ToAge"
     t.float "Requirement"
+  end
+
+  create_table "Recipe", force: :cascade do |t|
+    t.integer "IDU"
+    t.string "Name", limit: 100
+    t.boolean "IsActive"
+  end
+
+  create_table "RecipeProducts", force: :cascade do |t|
+    t.integer "IDP"
+    t.float "Weight"
+    t.integer "IDR"
   end
 
   create_table "Target", force: :cascade do |t|
@@ -124,7 +253,7 @@ ActiveRecord::Schema.define(version: 2020_04_02_165503) do
     t.integer "Carbs"
     t.integer "Valine"
     t.integer "Isoleucine"
-    t.integer "Leuccine"
+    t.integer "Leucine"
     t.integer "Lysine"
     t.integer "Methionine"
     t.integer "Threonine"
@@ -158,6 +287,15 @@ ActiveRecord::Schema.define(version: 2020_04_02_165503) do
     t.integer "Fe"
   end
 
+  add_foreign_key "CompleteRecipe", "\"Recipe\"", column: "IDR"
+  add_foreign_key "Eaten", "\"CompleteRecipe\"", column: "IDDR"
+  add_foreign_key "Eaten", "\"Meal\"", column: "IDP"
+  add_foreign_key "Eaten", "\"ProductInfo\"", column: "IDPr"
+  add_foreign_key "Eaten", "\"User\"", column: "IDU"
+  add_foreign_key "ProductInfo", "\"User\"", column: "IDU"
+  add_foreign_key "Recipe", "\"User\"", column: "IDU"
+  add_foreign_key "RecipeProducts", "\"ProductInfo\"", column: "IDP"
+  add_foreign_key "RecipeProducts", "\"Recipe\"", column: "IDR"
   add_foreign_key "UserData", "\"Activity\"", column: "IDA"
   add_foreign_key "UserData", "\"Target\"", column: "IDT"
   add_foreign_key "UserData", "\"User\"", column: "IDU"

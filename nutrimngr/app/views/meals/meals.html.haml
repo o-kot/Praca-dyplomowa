@@ -1,0 +1,21 @@
+-# Top central space
+
+%div{class:'top-space'}
+    %div{class:'row centered-for-flex'}
+        - if @meals.nil?
+            %div{class:'col-md-6'}
+                %h4="Dziś jeszcze nie został dodany żaden posiłek."
+                %h5="Dodaj posiłek, żeby sprawdzić czy zaspakajasz swoje zapotrzebowanie na składniki odżywcze."
+            %div{classs:'col-md-1'}
+                = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'    
+        - else
+            %div{class:'row'}
+                %div{class:'col-md-1'}
+                    %i{class:'far fa-arrow-alt-circle-left'}
+                %div{class:'col-md-6'}
+                    %p="#{@today}"
+                %div{class:'col-md-1'}
+                    %i{class:'far fa-arrow-alt-circle-right'}
+    #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
+    - if @message.present?
+        #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message

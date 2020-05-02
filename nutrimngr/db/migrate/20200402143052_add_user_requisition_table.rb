@@ -9,7 +9,7 @@ class AddUserRequisitionTable < ActiveRecord::Migration[5.2]
 	 t.integer :Carbs
 	 t.integer :Valine
 	 t.integer :Isoleucine
-	 t.integer :Leuccine
+	 t.integer :Leucine
 	 t.integer :Lysine
 	 t.integer :Methionine
 	 t.integer :Threonine

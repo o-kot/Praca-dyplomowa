@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get 'index/index'  
   get 'profile/profile' => 'profile#profile', :as => :profile
   get 'about/about' => 'about#about', :as => :about
+  get 'meals/meals' => 'meals#meals', :as => :meals
+  get 'recipes/recipes' => 'recipes#recipes', :as => :recipes
+  get 'user_products/user_products' => 'user_products#user_products', :as => :user_products
   get 'modal/modal' => 'modal#modal', :as => :modal
   get 'logout' => 'login#logout'
   post 'register' => 'register#register'
@@ -17,4 +20,6 @@ Rails.application.routes.draw do
   get 'user_requisition/requisition' => 'user_requisition#requisition'
   post 'modifyRequisition' => 'user_requisition#modifyRequisition'
   post 'acceptRequisition' => 'user_requisition#acceptRequisition'
+  post 'addUserProduct' => 'user_products#add'
+  post 'addRecipe' => 'recipe#add'
 end

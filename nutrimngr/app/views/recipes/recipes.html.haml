@@ -1,0 +1,25 @@
+-# Top central space
+
+%div{class:'top-space'}
+    %div{class:'row centered-for-flex'}
+        - if @recipes.nil?
+            %div{class:'col-md-6'}
+                %h4="Nie został jeszcze dodany żaden przepis."
+            %div{classs:'col-md-1'}
+                = link_to 'Dodaj przepis', modal_path(body: 'recipes/add', title: 'Wprowadź nazwę przepisu'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements'   
+        
+    #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
+    - if @message.present?
+        #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
+
+-# Main content for existing recipes
+   
+- if !@recipes.nil?
+    %div{class:'container'}
+        %div{class:'row'}
+            #recipes{class:'col-sm-6 col-md-4'}
+                %h4{class:'inside-header'}='Lista przepisów'
+
+        %div{class:'row'}
+            #cookedRecipes{class:'col-sm-6 col-md-4'}
+                %h4{class:'inside-header'}='Przygotowane potrawy'
