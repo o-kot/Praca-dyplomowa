@@ -7,9 +7,9 @@ class RecipesController < ApplicationController
             @message=session[:message]
             session[:message]=nil
         end
-        @recipe = RecipeViewModel.new(session[:sessionID])
-        @recipe.getRecipe
+        @recipes = RecipeViewModel.new(session[:sessionID])
+        @recipes = @recipes.getRecipeList
         @completeRecipes = CompleteRecipeViewModel.new(session[:sessionID])
-        @completeRecipes.getCompleteRecipes
+        @completeRecipes = @completeRecipes.getCompleteRecipeList
     end
 end

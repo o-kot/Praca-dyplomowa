@@ -3,8 +3,8 @@ class RecipesInterface
         @object = object     
         @object.setID(id)
     end
-    def getRecipe
-        @object.getRecipe
+    def getRecipeList
+        @object.getRecipeList
     end
     def addRecipe(name)
         @object.addRecipe(name)
@@ -36,8 +36,8 @@ class RecipesInterface
     def calculateWhatsLeft(recipe,eaten)
         @object.calculateWhatsLeft(recipe,eaten)
     end
-    def getCompleteRecipes
-        @object.getRecipe
+    def getCompleteRecipeList
+        @object.getCompleteRecipeList
     end
     def markAsEaten(recipe)
         @object.markAsEaten(recipe)

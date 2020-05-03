@@ -3,12 +3,9 @@ class RecipeViewModel
     def initialize(id)
         @userID = id
     end
-    def getRecipe
-        recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        recipe = recipe.getRecipe
-        @recipeID = recipe.id rescue ''
-        @recipeName = recipe.Name rescue ''
-        @recipeIsActive = recipe.IsActive rescue ''
+    def getRecipeList
+        recipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        recipes = recipes.getRecipeList       
     end
     def addRecipe(name)
         recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
@@ -22,6 +19,8 @@ class RecipeViewModel
         recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         recipe = recipe.deleteRecipe(id)
     end
+    @recipeID = ''
+    @recipeIsActive = ''
     private
     @recipeIsActive = ''
 end

@@ -15,9 +15,9 @@ class CompleteRecipeViewModel
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
         completeRecipe = completeRecipe.calculateWhatsLeft(id,eaten)
     end
-    def getCompleteRecipes
+    def getCompleteRecipeList
         completeRecipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        completeRecipes = completeRecipes.getCompleteRecipes
+        completeRecipes = completeRecipes.getCompleteRecipeList
     end
     def markAsEaten(id)
         completeRecipe = UserProfileInterface.new(ConfigDb::RECIPES.constantize.new)

@@ -1,20 +1,21 @@
 -# Top central space
 
-%div{class:'top-space'}
-    %div{class:'row centered-for-flex'}
-        - if @products.nil?
+%div{class:'top-space'}    
+    - if @userProducts.empty?
+        %div{class:'row centered-for-flex'}
             %div{class:'col-md-6'}
                 %h4="Nie został jeszcze dodany żaden produkt własny."
             %div{classs:'col-md-1'}
                 = link_to 'Dodaj produkt', modal_path(body: 'user_products/add', title: 'Wprowadź dane produktu', size: 'lg'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements'   
-        - else  
-            %div{class:'col-md-6'}
+    - else  
+        %div{class:'row justify-content-end'}
+            %div{class:'col-md-3'}
                 %form{class:'form-inline', action:'/searchUserProducts', method:'post'}
                     %input{class:'form-control mr-sm-2', type:'search', placeholder:'Wyszukaj', 'aria-label' => 'Search'}
-                    %button{class:'btn btn-outline-success my-2 my-sm-0', type:'submit'}
-                        %i{class:'fas fa-search btn-add'}
+                    %button{class:'btn my-2 my-sm-0', type:'submit'}
+                        %i{class:'fas fa-search btn-search'}
             %div{classs:'col-md-1'}
-                = link_to 'Dodaj produkt', modal_path(body: 'user_products/add', title: 'Wprowadź dane produktu'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'     
+                = link_to 'Dodaj produkt', modal_path(body: 'user_products/add', title: 'Wprowadź dane produktu'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements'     
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
     - if @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
@@ -22,6 +23,54 @@
 -# Table
 
 %div{class:'container'}
-    - if !@products.nil?
-        = ''
+    - if !@userProducts.empty?
+        %table{class:'table table-striped'} 
+            %thead
+                %tr
+                    %th='Nazwa produktu'
+                    %th='Kalorie'
+                    %th='Białko'
+                    %th='Węglowodany'
+                    %th='Tłuszcz'
+                    %th=''
+                    %th=''
+                    %th=''
+            - @userProducts.each do |product|
+                %tr
+                    %td=product.Name
+                    %td=product.Calories
+                    %td=product.Protein
+                    %td=product.Carbs
+                    %td=product.Fat
+                    %td
+                        = link_to '', modal_path(body: 'user_products/show', title: product.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'     
+                    %td
+                        = link_to '', modal_path(body: 'user_products/edit', title: 'Edytuj wybrane dane'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'     
+                    %td
+                        = link_to '', delete_product_path(product: product.id), class: 'fas fa-times btn-delete delete'
+
     -# Tu kod wstawiający tabelę
+
+%script
+    $(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText == "success"){
+    $("#success").css("display","block");
+    $("#error").css("display","none");
+    }
+    else if(xhr.responseText == "error"){
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }    
+    else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    });
+    $(document).ready(function (){
+    $(".delete").click(function () {
+    if(!confirm("Czy na pewno chcesz usunąć ten produkt?"))
+    return false;
+    });
+    });

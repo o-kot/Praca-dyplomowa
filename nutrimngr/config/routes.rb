@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get 'about/about' => 'about#about', :as => :about
   get 'meals/meals' => 'meals#meals', :as => :meals
   get 'recipes/recipes' => 'recipes#recipes', :as => :recipes
+  get 'recipes/delete' => 'recipe#delete', :as => :delete_recipe
   get 'user_products/user_products' => 'user_products#user_products', :as => :user_products
+  get 'user_products/delete' => 'user_products#delete', :as => :delete_product
   get 'modal/modal' => 'modal#modal', :as => :modal
   get 'logout' => 'login#logout'
   post 'register' => 'register#register'

@@ -3,8 +3,8 @@ class RecipesPg
     def setID (id)
         @userID = id
     end
-    def getRecipe
-        newRecipe = RecipeDbModel.where(IDU:@userID).first
+    def getRecipeList
+        recipes = RecipeDbModel.where(IDU:@userID)
     end
     def addRecipe(name)
         newRecipe = RecipeDbModel.new
@@ -62,8 +62,9 @@ class RecipesPg
         end
         return 'success'
     end
-    def getCompleteRecipes
-        newCompleteRecipes = CompleteRecipeDbModel.where(IDU:@userID).first
+    def getCompleteRecipeList
+        recipes = RecipeDbModel.where(IDU:@userID).map{|r| r.id}
+        completeRecipes = RecipeDbModel.where(IDR:recipes)
     end
     def markAsEaten(recipe)
         newCompleteRecipe = CompleteRecipeDbModel.where(id:recipe).first

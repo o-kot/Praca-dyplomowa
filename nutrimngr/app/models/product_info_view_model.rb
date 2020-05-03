@@ -46,16 +46,20 @@ class ProductInfoViewModel
         @productFe = product.Fe rescue ''
         @productCholesterol = product.Cholesterol rescue '' 
     end
-    def addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol)
-        userProduct = UserProfileInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
-        userProduct.addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol)
+    def getProductList(userOnly = false)
+        products = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
+        productList = products.getProductList(userOnly)
+    end
+    def addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
+        userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
+        userProduct.addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
     end
     def editUserProduct(id)
-        userProduct = UserProfileInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
+        userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
         userProduct.editUserProduct(id)
     end
     def deleteUserProduct(id)
-        userProduct = UserProfileInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
+        userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
         userProduct.deleteUserProduct(id)
     end
 end

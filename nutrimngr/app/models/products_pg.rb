@@ -6,8 +6,8 @@ class ProductsPg
     def getProductInfo
         newProductInfo = ProductInfoDbModel.where(IDU:@userID).first
     end
-    def getUserProductInfo
-        newUserProductInfo = ProductInfoDbModel.where(IDU:@userID).first
+    def getProductList(userOnly)
+        userOnly ? ProductInfoDbModel.where(IDU:@userID) : ProductInfoDbModel.all
     end
     def addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,cholesterol,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,weight)
         if ProductInfoDbModel.where(Name:name).exists?
@@ -66,51 +66,51 @@ class ProductsPg
             else
                 temp = 100/weight
                 newUserProduct.Calories = calories * temp
-                newUserProduct.Protein = protein * temp
-                newUserProduct.Carbs = carbs * temp
-                newUserProduct.Fat = fat * temp
-                newUserProduct.Sugars = sugars * temp
-                newUserProduct.Fiber = fiber * temp
-                newUserProduct.Omega3 = omega3 * temp
-                newUserProduct.ALA = ala * temp
-                newUserProduct.SFA = sfa * temp
-                newUserProduct.WNKT = wnkt * temp
-                newUserProduct.Trans = trans * temp
-                newUserProduct.Cholesterol = cholesterol * temp
-                newUserProduct.Valine = valine * temp
-                newUserProduct.Isoleucine = isoleucine * temp
-                newUserProduct.Leucine = leucine * temp
-                newUserProduct.Lysine = lysine * temp
-                newUserProduct.Methionine = methionine * temp
-                newUserProduct.Threonine = threonine * temp
-                newUserProduct.Tryptophan = tryptophan * temp
-                newUserProduct.Phenylalanine = phenylalanine * temp
-                newUserProduct.VitA = vitA * temp
-                newUserProduct.VitB1 = vitB1 * temp
-                newUserProduct.VitB2 = vitB2 * temp
-                newUserProduct.VitB3 = vitB3 * temp
-                newUserProduct.VitB4 = vitB4 * temp
-                newUserProduct.VitB5 = vitB5 * temp
-                newUserProduct.VitB6 = vitB6 * temp
-                newUserProduct.VitB9 = vitB9 * temp
-                newUserProduct.VitB12 = vitB12 * temp
-                newUserProduct.VitC = vitC * temp
-                newUserProduct.VitD = vitD * temp
-                newUserProduct.VitE = vitE * temp
-                newUserProduct.VitH = vitH * temp
-                newUserProduct.VitK = vitK * temp
-                newUserProduct.Cl = cl * temp
-                newUserProduct.Zn = zn * temp
-                newUserProduct.F = f * temp
-                newUserProduct.P = p * temp
-                newUserProduct.I = i * temp
-                newUserProduct.Mg = mg * temp
-                newUserProduct.Cu = cu * temp
-                newUserProduct.K = k * temp
-                newUserProduct.Se = se * temp
-                newUserProduct.Na = na  * temp
-                newUserProduct.Ca = ca * temp
-                newUserProduct.Fe = fe * temp
+                newUserProduct.Protein = protein * temp rescue nil
+                newUserProduct.Carbs = carbs * temp rescue nil
+                newUserProduct.Fat = fat * temp rescue nil
+                newUserProduct.Sugars = sugars * temp rescue nil
+                newUserProduct.Fiber = fiber * temp rescue nil
+                newUserProduct.Omega3 = omega3 * temp rescue nil
+                newUserProduct.ALA = ala * temp rescue nil
+                newUserProduct.SFA = sfa * temp rescue nil
+                newUserProduct.WNKT = wnkt * temp rescue nil
+                newUserProduct.Trans = trans * temp rescue nil
+                newUserProduct.Cholesterol = cholesterol * temp rescue nil
+                newUserProduct.Valine = valine * temp rescue nil
+                newUserProduct.Isoleucine = isoleucine * temp rescue nil
+                newUserProduct.Leucine = leucine * temp rescue nil
+                newUserProduct.Lysine = lysine * temp rescue nil
+                newUserProduct.Methionine = methionine * temp rescue nil
+                newUserProduct.Threonine = threonine * temp rescue nil
+                newUserProduct.Tryptophan = tryptophan * temp rescue nil
+                newUserProduct.Phenylalanine = phenylalanine * temp rescue nil
+                newUserProduct.VitA = vitA * temp rescue nil
+                newUserProduct.VitB1 = vitB1 * temp rescue nil
+                newUserProduct.VitB2 = vitB2 * temp rescue nil
+                newUserProduct.VitB3 = vitB3 * temp rescue nil
+                newUserProduct.VitB4 = vitB4 * temp rescue nil
+                newUserProduct.VitB5 = vitB5 * temp rescue nil
+                newUserProduct.VitB6 = vitB6 * temp rescue nil
+                newUserProduct.VitB9 = vitB9 * temp rescue nil
+                newUserProduct.VitB12 = vitB12 * temp rescue nil
+                newUserProduct.VitC = vitC * temp rescue nil
+                newUserProduct.VitD = vitD * temp rescue nil
+                newUserProduct.VitE = vitE * temp rescue nil
+                newUserProduct.VitH = vitH * temp rescue nil
+                newUserProduct.VitK = vitK * temp rescue nil
+                newUserProduct.Cl = cl * temp rescue nil
+                newUserProduct.Zn = zn * temp rescue nil
+                newUserProduct.F = f * temp rescue nil
+                newUserProduct.P = p * temp rescue nil
+                newUserProduct.I = i * temp rescue nil
+                newUserProduct.Mg = mg * temp rescue nil
+                newUserProduct.Cu = cu * temp rescue nil
+                newUserProduct.K = k * temp rescue nil
+                newUserProduct.Se = se * temp rescue nil
+                newUserProduct.Na = na  * temp rescue nil
+                newUserProduct.Ca = ca * temp rescue nil
+                newUserProduct.Fe = fe * temp rescue nil
             end
         newUserProduct.save
         return 'success'
@@ -120,6 +120,7 @@ class ProductsPg
         @object.editUserProduct(product)
     end
     def deleteUserProduct(product)
-        @object.deleteUserProduct(product)
+        temp = ProductInfoDbModel.find(product)
+        temp.delete
     end
 end
