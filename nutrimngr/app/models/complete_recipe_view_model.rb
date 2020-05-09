@@ -3,13 +3,17 @@ class CompleteRecipeViewModel
     def initialize(id)
         @userID = id
     end
-    def createCompleteRecipe
+    def createCompleteRecipe(recipe)
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
-        completeRecipe = completeRecipe.createCompleteRecipe
+        completeRecipe = completeRecipe.createCompleteRecipe(recipe)
     end
     def calculateNutrition(id)
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
         completeRecipe = completeRecipe.calculateNutrition(id)
+    end
+    def measureRecipe(recipe,how,measurement)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = completeRecipeNa.measureRecipe(recipe,how,measurement)
     end
     def calculateWhatsLeft(id,eaten)
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)

@@ -16,6 +16,8 @@
 
 %div{class:'container'}   
     - if !@recipes.empty?
+        %div{class:'row justify-content-end'}
+            = link_to 'Dodaj przepis', modal_path(body: 'recipes/add', title: 'Wprowadź nazwę przepisu'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements'   
         %div{class:'row'}
             #recipes{class:'col-sm-6 col-md-4'}
                 %h4{class:'inside-header'}='Lista przepisów'
@@ -24,7 +26,7 @@
                         %tr
                             %td=recipe.Name
                             %td
-                                = link_to '', modal_path(body: 'recipes/edit', title: 'Edytuj przepis'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'     
+                                = link_to '', modal_path(body: 'recipes/edit', title: 'Edytuj przepis', recipe: recipe.id), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'     
                             %td
                                 = link_to '', delete_recipe_path(recipe: recipe.id), class: 'fas fa-times btn-delete delete'
                             %td
@@ -32,7 +34,16 @@
 
             #cookedRecipes{class:'col-sm-6 col-md-4'}
                 %h4{class:'inside-header'}='Przygotowane potrawy'
-
+                %table{class:'table'} 
+                    - @completeRecipes.each do |cr|
+                        %tr
+                            %td=cr.Name
+                            - if cr.IsWeighted.nil? && cr.HasPortioned.nil?
+                                %td
+                                    = link_to '', end_recipe_path(recipe: cr.id), class: 'fas fa-balance scale btn-add divide'
+                            %td
+                                = link_to '', end_recipe_path(recipe: cr.id), class: 'fas fa-times btn-delete end'
+                          
 %script
     $(document).off('ajax:success').on('ajax:success',function(event){
     var xhr = event.detail[2];
@@ -43,6 +54,26 @@
     else if(xhr.responseText == "error"){
     $("#error").css("display","block");
     $("#success").css("display","none");
+    }
+    else if(xhr.responseText == "Add products"){
+    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
+    $("#modal-title").html('Dodaj składniki przepisu');
+    $("#modal-body").html("#{ escape_javascript(render 'recipes/add_products') }");
+    $(".modal").modal('show');    
+    $(".btn-close").click(function () {
+    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
+    $(".modal").modal('hide');
+    });
+    }    
+    else if(xhr.responseText == "Edited name"){
+    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
+    $("#modal-title").html('Edytuj przepis');
+    $("#modal-body").html("#{ escape_javascript(render 'recipes/edit') }");
+    $(".modal").modal('show');    
+    $(".btn-close").click(function () {
+    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
+    $(".modal").modal('hide');
+    });
     }    
     else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
     $("#error").html(xhr.responseText);
@@ -53,6 +84,11 @@
     $(document).ready(function (){
     $(".delete").click(function () {
     if(!confirm("Czy na pewno chcesz usunąć ten przepis?"))
+    return false;
+    });
+    $(document).ready(function (){
+    $(".end").click(function () {
+    if(!confirm("Czy na pewno chcesz oznaczyć tę potrawę jako zakończoną?"))
     return false;
     });
     });

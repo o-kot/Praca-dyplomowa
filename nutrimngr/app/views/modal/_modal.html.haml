@@ -1,15 +1,12 @@
 %div{class:'modal fade', tabindex:'-1', role:'dialog', 'data-backdrop' => 'static'}
-   -# - if (params['size']=='lg')
-      %div{class:'modal-dialog modal-lg', role:'document'}
-   -# -else
-   
-   %div{class:'modal-dialog', role:'document'}
-   
+   - size_class = ''
+   - size_class = 'modal-lg' if params['size'] == 'lg'
+   %div{class:"modal-dialog #{size_class}", role:'document'}
       %div{class:'modal-content'}
-         #modal-header        
+         #modal-header
             %button{class:'btn-close'}
                %i{class:'fas fa-times'}
-            #modal-title          
-         
+            #modal-title
+
          #modal-body{class:'modal-body'}
 

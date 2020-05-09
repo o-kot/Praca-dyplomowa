@@ -1,0 +1,39 @@
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}='Wystąpił błąd. Spróbuj ponownie za  chwilę.'
+#success{class:'alert alert-success', role:'alert', style:'display:none'}='Dodano nowy produkt do bazy.'
+
+
+%form{id:'add-product-form', action:'/addProductToMeal', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %label{for:'product', class:'col-sm-4 col-form-label'}='Wybierz produkt'
+        %div{class:'col-sm-8'}
+            %select{class:'form-control form-control-sm', name:'product'}
+            - @products.each do |product|
+                %option{hover:'backgroud:#068506 !important', value:product.id}=product.Name
+                %input{name:'recipe', type:'date', class:'form-control form-control-obligatory'}
+                #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+    %div{class:'form-group row'}
+        %label{class:'col-sm-4 col-form-label', for:'weight'}='Wprowadź wagę'
+        %div{class:'col-sm-8'}
+            %input{name:'weight', type:'text', class:'form-control form-control-obligatory'}
+            #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+    %div
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+    %div
+        = link_to 'Dodaj produkt spoza bazy', modal_path(body: 'meals/how_to_add_product', title: 'Dodać na stałe?'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'    
+
+
+$(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText == "error"){
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    else if(xhr.responseText == "comeback"){
+    $("#modal-title").html('Wybierz produkt');
+    $("#modal-body").html("#{ escape_javascript(render 'meal/add_from_products') }");
+    $(".modal").modal('show');
+    $("#success").css("display","block");
+    $("#error").css("display","none");
+    });
+    });

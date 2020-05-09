@@ -1,0 +1,38 @@
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}='Wystąpił błąd. Spróbuj ponownie za  chwilę.'
+
+%form{id:'meal-form', action:'/addMeal', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %label{for:'date', class:'col-sm-4 col-form-label'}='Data'
+        %div{class:'col-sm-8'}
+            %input{name:'date', type:'date', class:'form-control form-control-obligatory'}
+            #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+    %div{class:'form-group row'}
+        %label{class:'col-sm-4 col-form-label', for:'time'}='Godzina'
+        %div{class:'col-sm-8'}
+            %input{name:'time', type:'time', class:'form-control form-control-obligatory'}
+            #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+    %div{class:'form-group row'}
+        %select{class:'form-control form-control-sm', name:'meal'}
+        - @meal.each do |meal|
+            %option{hover:'backgroud:#068506 !important', value:meal.id}=meal.Name
+
+    %div
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+
+$(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText == "error"){
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    else if(xhr.responseText == "Choose how"){
+    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
+    $("#modal-title").html('Wybierz co chcesz dodać');
+    $("#modal-body").html("#{ escape_javascript(render 'recipes/how_to_add') }");
+    $(".modal").modal('show');    
+    $(".btn-close").click(function () {
+    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
+    $(".modal").modal('hide');
+    });
+    });

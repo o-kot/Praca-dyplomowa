@@ -1,6 +1,6 @@
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
 
-%form{id:'data-form', action:'/addUserProduct', method:'post', 'data-remote' => 'true'}
+%form{id:'custom-product-form', action:'/addCustomProduct', method:'post', 'data-remote' => 'true'}
     %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
     %div{class:'form-group row'}
         %label{for:'name', class:'col-sm-4 col-form-label'}='Nazwa produktu'
@@ -193,20 +193,10 @@
         %div{class:'col-sm-8'}
             %input{name:'fe', type:'text', class:'form-control'} 
     %div{class:'form-check'}
-        %input{type:'checkbox', class:'form-check-input', id:'defaultWeight', name:'defaultWeight', checked:'true'}
-        %label{class:'form-check-label', for:'defaultWeight'}='Dane dla 100 g produktu?'
-    %div{class:'form-group row', id:'alternativeWeight', style:'display:none'}
-        %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga dla której podano informacje'
-        %div{class:'col-sm-8'}
-            %input{name:'weight', type:'text', class:'form-control'} 
+        %input{type:'checkbox', class:'form-check-input', id:'decompose', name:'decompose'}
+        %label{class:'form-check-label', for:'decompose'}='Czy chcesz dokonać dekompozycji?'
     %div
         %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 
 
-%script
-    $('#defaultWeight').change(function(){
-    if(!$('#defaultWeight').is(':checked'))
-    $('#alternativeWeight').css('display','inline');
-    else
-    $('#alternativeWeight').css('display','none');
-    });
+

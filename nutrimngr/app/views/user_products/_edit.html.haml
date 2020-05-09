@@ -1,0 +1,212 @@
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}
+
+%form{id:'data-form', action:'/editUserProduct', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %label{for:'Name', class:'col-sm-4 col-form-label'}='Nazwa produktu'
+        %div{class:'col-sm-8'}
+            %input{name:'Name', type:'text', class:'form-control form-control-obligatory', placeholder:@product.Name}
+            #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+    %div{class:'form-group row'}
+        %label{for:'Calories', class:'col-sm-4 col-form-label'}='Kalorie'
+        %div{class:'col-sm-8'}
+            %input{name:'Calories', type:'text', class:'form-control form-control-obligatory', placeholder:@product.Calories}
+            #kcalHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+    %div{class:'form-group row'}
+        %label{for:'Protein', class:'col-sm-4 col-form-label'}='Białko'
+        %div{class:'col-sm-8'}
+            %input{name:'Protein', type:'text', class:'form-control', placeholder:@product.Protein} 
+    %div{class:'form-group row'}
+        %label{for:'Carbs', class:'col-sm-4 col-form-label'}='Węglowodany'
+        %div{class:'col-sm-8'}
+            %input{name:'Carbs', type:'text', class:'form-control', placeholder:@product.Carbs} 
+    %div{class:'form-group row'}
+        %label{for:'Fat', class:'col-sm-4 col-form-label'}='Tłuszcz'
+        %div{class:'col-sm-8'}
+            %input{name:'Fat', type:'text', class:'form-control', placeholder:@product.Fat} 
+    %div{class:'form-group row'}
+        %label{for:'Sugars', class:'col-sm-4 col-form-label'}='Cukry'
+        %div{class:'col-sm-8'}
+            %input{name:'Sugars', type:'text', class:'form-control', placeholder:@product.Sugars} 
+    %div{class:'form-group row'}
+        %label{for:'Fiber', class:'col-sm-4 col-form-label'}='Błonnik'
+        %div{class:'col-sm-8'}
+            %input{name:'Fiber', type:'text', class:'form-control', placeholder:@product.Fiber} 
+    %div{class:'form-group row'}
+        %label{for:'Omega3', class:'col-sm-4 col-form-label'}='Tłuszcz typu omega-3'
+        %div{class:'col-sm-8'}
+            %input{name:'Omega3', type:'text', class:'form-control', placeholder:product.Omega3} 
+    %div{class:'form-group row'}
+        %label{for:'ALA', class:'col-sm-4 col-form-label'}='Tłuszcz typu ALA'
+        %div{class:'col-sm-8'}
+            %input{name:'ALA', type:'text', class:'form-control', placeholder:@product.ALA} 
+    %div{class:'form-group row'}
+        %label{for:'SFA', class:'col-sm-4 col-form-label'}='Tłuszcze nasycone'
+        %div{class:'col-sm-8'}
+            %input{name:'SFA', type:'text', class:'form-control', placeholder:@productSFA} 
+    %div{class:'form-group row'}
+        %label{for:'WNKT', class:'col-sm-4 col-form-label'}='Tłuszcze wielonienasycone'
+        %div{class:'col-sm-8'}
+            %input{name:'WNKT', type:'text', class:'form-control', placeholder:@product.WNKT} 
+    %div{class:'form-group row'}
+        %label{for:'Trans', class:'col-sm-4 col-form-label'}='Tłuszcze typu trans'
+        %div{class:'col-sm-8'}
+            %input{name:'Trans', type:'text', class:'form-control', placeholder:@product.Trans} 
+    %div{class:'form-group row'}
+        %label{for:'Cholesterol', class:'col-sm-4 col-form-label'}='Cholesterol'
+        %div{class:'col-sm-8'}
+            %input{name:'Cholesterol', type:'text', class:'form-control', placeholder:@product.Cholesterol} 
+    %div{class:'form-group row'}
+        %label{for:'Valine', class:'col-sm-4 col-form-label'}='Walina'
+        %div{class:'col-sm-8'}
+            %input{name:'Valine', type:'text', class:'form-control', placeholder:@product.Valine} 
+    %div{class:'form-group row'}
+        %label{for:'Isoleucine', class:'col-sm-4 col-form-label'}='Izoleucyna'
+        %div{class:'col-sm-8'}
+            %input{name:'Isoleucine', type:'text', class:'form-control', placeholder:@product.Isoleucine} 
+    %div{class:'form-group row'}
+        %label{for:'Leucine', class:'col-sm-4 col-form-label'}='Leucyna'
+        %div{class:'col-sm-8'}
+            %input{name:'Leucine', type:'text', class:'form-control',, placeholder:@product.Leucine} 
+    %div{class:'form-group row'}
+        %label{for:'Lysine', class:'col-sm-4 col-form-label'}='Lizyna'
+        %div{class:'col-sm-8'}
+            %input{name:'Lysine', type:'text', class:'form-control', placeholder:@product.Lysine} 
+    %div{class:'form-group row'}
+        %label{for:'Methionine', class:'col-sm-4 col-form-label'}='Metionina'
+        %div{class:'col-sm-8'}
+            %input{name:'Methionine', type:'text', class:'form-control', placeholder:@product.Methionine} 
+    %div{class:'form-group row'}
+        %label{for:'Threonine', class:'col-sm-4 col-form-label'}='Treonina'
+        %div{class:'col-sm-8'}
+            %input{name:'Threonine', type:'text', class:'form-control', placeholder:@product.Threonine} 
+    %div{class:'form-group row'}
+        %label{for:'Tryptophan', class:'col-sm-4 col-form-label'}='Tryptofan'
+        %div{class:'col-sm-8'}
+            %input{name:'Tryptophan', type:'text', class:'form-control', placeholder:@product.Tryptophan} 
+    %div{class:'form-group row'}
+        %label{for:'Phenylalanine', class:'col-sm-4 col-form-label'}='Fenyloalanina'
+        %div{class:'col-sm-8'}
+            %input{name:'Phenylalanine', type:'text', class:'form-control', placeholder:@product.Phenylalanine} 
+    %div{class:'form-group row'}
+        %label{for:'VitA', class:'col-sm-4 col-form-label'}='Witamina A'
+        %div{class:'col-sm-8'}
+            %input{name:'VitA', type:'text', class:'form-control', placeholder:@product.VitA} 
+    %div{class:'form-group row'}
+        %label{for:'VitB1', class:'col-sm-4 col-form-label'}='Witamina B1'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB1', type:'text', class:'form-control', placeholder:@product.VitB1} 
+    %div{class:'form-group row'}
+        %label{for:'VitB2', class:'col-sm-4 col-form-label'}='Witamina B2'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB2', type:'text', class:'form-control', placeholder:@product.VitB2} 
+    %div{class:'form-group row'}
+        %label{for:'VitB3', class:'col-sm-4 col-form-label'}='Witamina B3'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB3', type:'text', class:'form-control', placeholder:@product.VitB3} 
+    %div{class:'form-group row'}
+        %label{for:'VitB4', class:'col-sm-4 col-form-label'}='Witamina B4'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB4', type:'text', class:'form-control', placeholder:@product.VitB4} 
+    %div{class:'form-group row'}
+        %label{for:'VitB5', class:'col-sm-4 col-form-label'}='Witamina B5'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB5', type:'text', class:'form-control', placeholder:@product.VitB5} 
+    %div{class:'form-group row'}
+        %label{for:'VitB6', class:'col-sm-4 col-form-label'}='Witamina B6'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB6', type:'text', class:'form-control', placeholder:@product.VitB6} 
+    %div{class:'form-group row'}
+        %label{for:'VitB9', class:'col-sm-4 col-form-label'}='Witamina B9'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB9', type:'text', class:'form-control', placeholder:@product.VitB9} 
+    %div{class:'form-group row'}
+        %label{for:'VitB12', class:'col-sm-4 col-form-label'}='Witamina B12'
+        %div{class:'col-sm-8'}
+            %input{name:'VitB12', type:'text', class:'form-control', placeholder:@product.VitB12} 
+    %div{class:'form-group row'}
+        %label{for:'VitC', class:'col-sm-4 col-form-label'}='Witamina C'
+        %div{class:'col-sm-8'}
+            %input{name:'VitC', type:'text', class:'form-control', placeholder:@product.VitC} 
+    %div{class:'form-group row'}
+        %label{for:'VitD', class:'col-sm-4 col-form-label'}='Witamina D'
+        %div{class:'col-sm-8'}
+            %input{name:'VitD', type:'text', class:'form-control', placeholder:@product.VitD} 
+    %div{class:'form-group row'}
+        %label{for:'VitE', class:'col-sm-4 col-form-label'}='Witamina E'
+        %div{class:'col-sm-8'}
+            %input{name:'VitE', type:'text', class:'form-control', placeholder:@product.VitE} 
+    %div{class:'form-group row'}
+        %label{for:'VitH', class:'col-sm-4 col-form-label'}='Witamina H'
+        %div{class:'col-sm-8'}
+            %input{name:'VitH', type:'text', class:'form-control', placeholder:@product.VitH} 
+    %div{class:'form-group row'}
+        %label{for:'VitK', class:'col-sm-4 col-form-label'}='Witamina K'
+        %div{class:'col-sm-8'}
+            %input{name:'VitK', type:'text', class:'form-control', placeholder:@product.VitK} 
+    %div{class:'form-group row'}
+        %label{for:'Cl', class:'col-sm-4 col-form-label'}='Chlor'
+        %div{class:'col-sm-8'}
+            %input{name:'Cl', type:'text', class:'form-control', placeholder:@product.Cl} 
+    %div{class:'form-group row'}
+        %label{for:'Zn', class:'col-sm-4 col-form-label'}='Cynk'
+        %div{class:'col-sm-8'}
+            %input{name:'Zn', type:'text', class:'form-control', placeholder:@product.Zn} 
+    %div{class:'form-group row'}
+        %label{for:'F', class:'col-sm-4 col-form-label'}='Fluor'
+        %div{class:'col-sm-8'}
+            %input{name:'F', type:'text', class:'form-control', placeholder:@product.F} 
+    %div{class:'form-group row'}
+        %label{for:'P', class:'col-sm-4 col-form-label'}='Fosfor'
+        %div{class:'col-sm-8'}
+            %input{name:'P', type:'text', class:'form-control', placeholder:@product.P} 
+    %div{class:'form-group row'}
+        %label{for:'I', class:'col-sm-4 col-form-label'}='Jod'
+        %div{class:'col-sm-8'}
+            %input{name:'I', type:'text', class:'form-control', placeholder:@product.I} 
+    %div{class:'form-group row'}
+        %label{for:'Mg', class:'col-sm-4 col-form-label'}='Magnez'
+        %div{class:'col-sm-8'}
+            %input{name:'Mg', type:'text', class:'form-control', placeholder:@product.Mg} 
+    %div{class:'form-group row'}
+        %label{for:'Cu', class:'col-sm-4 col-form-label'}='Miedź'
+        %div{class:'col-sm-8'}
+            %input{name:'Cu', type:'text', class:'form-control', placeholder:@product.Cu} 
+    %div{class:'form-group row'}
+        %label{for:'K', class:'col-sm-4 col-form-label'}='Potas'
+        %div{class:'col-sm-8'}
+            %input{name:'K', type:'text', class:'form-control', placeholder:@product.K} 
+    %div{class:'form-group row'}
+        %label{for:'Se', class:'col-sm-4 col-form-label'}='Selen'
+        %div{class:'col-sm-8'}
+            %input{name:'Se', type:'text', class:'form-control', placeholder:@product.Se} 
+    %div{class:'form-group row'}
+        %label{for:'Na', class:'col-sm-4 col-form-label'}='Sód'
+        %div{class:'col-sm-8'}
+            %input{name:'Na', type:'text', class:'form-control', placeholder:@product.Na} 
+    %div{class:'form-group row'}
+        %label{for:'Ca', class:'col-sm-4 col-form-label'}='Wapń'
+        %div{class:'col-sm-8'}
+            %input{name:'Ca', type:'text', class:'form-control', placeholder:@product.Ca} 
+    %div{class:'form-group row'}
+        %label{for:'Fe', class:'col-sm-4 col-form-label'}='Żelazo'
+        %div{class:'col-sm-8'}
+            %input{name:'Fe', type:'text', class:'form-control', placeholder:@product.Fe} 
+    %div{class:'form-check'}
+        %input{type:'checkbox', class:'form-check-input', id:'defaultWeight', name:'defaultWeight', checked:'true'}
+        %label{class:'form-check-label', for:'defaultWeight'}='Dane dla 100 g produktu?'
+    %div{class:'form-group row', id:'alternativeWeight', style:'display:none'}
+        %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga dla której podano informacje'
+        %div{class:'col-sm-8'}
+            %input{name:'weight', type:'text', class:'form-control'} 
+    %div
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+
+
+%script
+    $('#defaultWeight').change(function(){
+    if(!$('#defaultWeight').is(':checked'))
+    $('#alternativeWeight').css('display','inline');
+    else
+    $('#alternativeWeight').css('display','none');
+    });

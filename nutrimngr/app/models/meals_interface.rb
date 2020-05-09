@@ -6,8 +6,14 @@ class MealsInterface
     def getMeal
         @object.getMeal
     end
-    def addMeal
-        @object.addMeal
+    def getMeals
+        @object.getMeals
+    end
+    def getEaten(date)
+        @object.getEaten(date)
+    end
+    def addMeal(date,time,meal)
+        @object.addMeal(date,time,meal)
     end
     def editMeal(id) 
         @object.editMeal(id)
@@ -16,10 +22,10 @@ class MealsInterface
         @object.deleteMeal(id)
     end
     def addProduct(meal,product,weight)
-        @object.addProduct(meal,product.weight)
+        @object.addProduct(meal,product,weight)
     end
-    def addCustomProduct
-        @object.addCustomProduct
+    def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
+        @object.addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
     end
     def addCompleteRecipe(meal,recipe,portion)
         @object.addCompleteRecipe(meal,recipe,portion)
@@ -29,5 +35,8 @@ class MealsInterface
     end
     def calculateDailyRequisition(date)
         @object.calculateDailyRequisition(date)
+    end
+    def decompose(customProduct,product,weight)
+        @object.decompose(customProduct,product,weight)
     end
 end

@@ -11,9 +11,9 @@ class RecipeViewModel
         recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         recipe = recipe.addRecipe(name)
     end
-    def editRecipe(id)
+    def editRecipe(recipe,name)
         recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        recipe = recipe.editRecipe(id)
+        recipe = recipe.editRecipe(id,name)
     end
     def deleteRecipe(id)
         recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)

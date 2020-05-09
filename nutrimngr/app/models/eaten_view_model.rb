@@ -61,15 +61,35 @@ class EatenViewModel
         @eatenCa = meal.Ca rescue ''
         @eatenFe = meal.Fe rescue ''       
     end
-    def addProduct(meal,product)
+    def getEaten(date)
+        mealsList = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        mealsList = mealsList.getEaten(date)
     end
-    def addCustomProduct(meal)
+    def addMeal(date,time,meal)
+        newMeal = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        newMeal = newMeal.addMeal(date,time,meal)
+    end
+    def addProduct(meal,product,weight)
+        newMeal = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        newMeal = newMeal.addProduct(meal,product,weight)
+    end
+    def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
+        newMeal = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        newMeal = newMeal.addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
     end
     def addCompleteRecipe(meal,recipe,portion)
+        newMeal = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        newMeal = newMeal.addCompleteRecipe(meal,recipe,portion)
     end
     def calculateMealRequisition(meal)
+        newEaten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        newEaten = newEaten.calculateMealRequisition(meal)
     end
     def calculateDailyRequisition(date)
+    end
+    def decompose(params['customProduct'],params['product'],params['weight'])
+        newEaten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        newEaten = newEaten.decompose(params['customProduct'],params['product'],params['weight'])
     end
     private
     @eatenID = ''

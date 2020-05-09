@@ -3,20 +3,20 @@ class ProductsPg
     def setID (id)
         @userID = id
     end
-    def getProductInfo
-        newProductInfo = ProductInfoDbModel.where(IDU:@userID).first
+    def getProductInfo(product)
+        newProductInfo = ProductInfoDbModel.find(product)
     end
     def getProductList(userOnly)
         userOnly ? ProductInfoDbModel.where(IDU:@userID) : ProductInfoDbModel.all
     end
     def addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,cholesterol,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,weight)
         if ProductInfoDbModel.where(Name:name).exists?
-            return 'Produkt o takiej nazwie istnieje już w bazie danych.'  
+            return 'Produkt o takiej nazwie istnieje już w bazie danych.'
         else
             newUserProduct = ProductInfoDbModel.new
             newUserProduct.Name = name
             newUserProduct.IDU = @userID
-            if weight == 100         
+            if weight == 100
                 newUserProduct.Calories = calories
                 newUserProduct.Protein = protein
                 newUserProduct.Carbs = carbs
@@ -116,8 +116,21 @@ class ProductsPg
         return 'success'
         end
     end
-    def editUserProduct(product) 
-        @object.editUserProduct(product)
+    def editUserProduct(product,edited)
+        product = ProductInfoDbModel.find(product)
+        product.Name = edited['name'] if edited.key?('name')
+        if edited['weight'] == 100
+            edited.each do |key,value|
+                product.update_attributes(key => value)
+            end
+        else
+            temp = 100/weight
+            edited.each do |key,value|
+                product.update_attributes(key => value * temp)
+            end
+        end
+        product.save
+        return 'success'
     end
     def deleteUserProduct(product)
         temp = ProductInfoDbModel.find(product)

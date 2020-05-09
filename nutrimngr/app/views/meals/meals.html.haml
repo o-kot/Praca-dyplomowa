@@ -2,7 +2,7 @@
 
 %div{class:'top-space'}
     %div{class:'row centered-for-flex'}
-        - if @meals.nil?
+        - if @eaten.empty?
             %div{class:'col-md-6'}
                 %h4="Dziś jeszcze nie został dodany żaden posiłek."
                 %h5="Dodaj posiłek, żeby sprawdzić czy zaspakajasz swoje zapotrzebowanie na składniki odżywcze."
@@ -19,3 +19,20 @@
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
     - if @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
+
+-# Table with meals
+
+%div{class:'container'} 
+    %div{class:'row'}
+        - if !@eaten.empty?
+            %table{class:'table'} 
+                %thead
+                    %tr
+                    - @meals.each do |meal|
+                        %th=meal.Name
+                    %tr
+
+    %div{class:'row justify-content-end'}
+        = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'    
+
+            

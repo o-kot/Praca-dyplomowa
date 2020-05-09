@@ -1,0 +1,20 @@
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}
+
+%form{id:'measure-recipe-form', action:'/measureRecipe', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %input{name:'recipe', type:'hidden', value:@recipe.id}
+    %div{class:'form-group row'}
+        %div{class:'form-check form-check-inline'}
+            %input{class:'form-check-input', type:'radio', name:'howToMeasure', id:'weight', value:'weight'}
+            %label{class:'form-check-label', for:'weight'}
+                %i{class:'fas fa-balance-scale fa-big'}
+        %div{class:'form-check form-check-inline'}
+            %input{class:'form-check-input', type:'radio', name:'howToMeasure', id:'portions', value:'portions'}
+            %label{class:'form-check-label', for:'portions'}
+                %i{class:'fas fa-cheese fa-big'}
+    %div{class:'form-group row'}
+            %input{name:'measurement', type:'text', class:'form-control'} 
+
+    %div{class:'form-group row'}
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}

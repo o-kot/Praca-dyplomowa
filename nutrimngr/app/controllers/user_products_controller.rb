@@ -13,7 +13,7 @@ class UserProductsController < ApplicationController
     def add
         if params['name'].blank? || params['kcal'].blank?
             render plain: 'Formularz zawiera niewypełnione pola.' and return
-        end         
+        end
         if params['defaultWeight'] != 'on' && params['weight'].blank?
             render plain: 'Podaj wagę produktu, której dotyczącą wprowadzone informacje.' and return
         end
@@ -73,16 +73,34 @@ class UserProductsController < ApplicationController
             weight = params['weight'].to_f
         end
         newUserProduct = ProductInfoViewModel.new(session[:sessionID])
-        if newUserProduct.addUserProduct(params['name'], params['kcal'], params['protein'], params['cabs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe'], weight) == 'success'
+        if(params['comeback']=='true')
+            if newUserProduct.addUserProduct(params['name'], params['kcal'], params['protein'], params['cabs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe'], weight) == 'success'
+                render plain: 'Comeback'    
+            end    
+        elsif newUserProduct.addUserProduct(params['name'], params['kcal'], params['protein'], params['cabs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe'], weight) == 'success'
             session[:message]='Produkt został zapisany.'
-            redirect_to '/user_products/user_products'    
-        end          
+            redirect_to '/user_products/user_products'
+        end
     end
     def edit
+        edited = {}
+        params.each do |key,value|
+            if !value.blank? && (!key=='defaultWeight' || !key=='weight')
+               edited[key]=value.to_f
+            elsif key=='defaultWeight' && value == 'on'
+                edited['weight']=100
+            elsif key=='weight' && !value.blank?
+                edited[key]=value.to_f
+            end
+        editedProduct = ProductInfoViewModel.new(session[:sessionID])
+        if editedProduct.editProducInfo(params['product'],edited) == 'success'
+            session[:message]='Dane produktu zostały zmienione.'
+            redirect_to '/user_products/user_products'
+        end
     end
     def delete
         userProduct = ProductInfoViewModel.new(session[:sessionID])
         userProduct.deleteUserProduct(params['product'])
-        redirect_to '/user_products/user_products'    
+        redirect_to '/user_products/user_products'
     end
 end

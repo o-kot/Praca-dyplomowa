@@ -4,7 +4,7 @@ class UserPg
     end
     def saveUser (email, passwd)
         if userExists? (email)
-            return 'Użytkownik o podanym mailu jest już zarejestrowany w bazie.'    
+            return 'Użytkownik o podanym mailu jest już zarejestrowany w bazie.'
         elsif !passwd.match /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
             return 'Podane hasło nie spełnia wymogów bezpieczeństwa.'
         else
@@ -16,10 +16,10 @@ class UserPg
         end
     end
     def logUser (email, passwd)
-        if UserDbModel.where(Login:email,Password:(Digest::MD5.hexdigest(passwd))).exists?
-            return UserDbModel.where(Login:email).first.id  
+        if UserDbModel.where(Login:email,Password:Digest::MD5.hexdigest(passwd)).exists?
+            return UserDbModel.where(Login:email).first.id
         else
-            return false    
+            return false
         end
     end
 end

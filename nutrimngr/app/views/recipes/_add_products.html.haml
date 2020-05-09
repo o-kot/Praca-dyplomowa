@@ -1,0 +1,34 @@
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}
+
+%form{id:'products-form', action:'/addProduct', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %label{for:'name', class:'col-sm-4 col-form-label'}=@recipe.name
+        %input{type:'hidden',name:'recipe',value:@recipe.id}
+    %div{class:'form-group row',id:'ingredient'}
+        %label{for:'product', class:'col-sm-4 col-form-label'}='Składnik'        
+        %input{class:'form-check-label', for:'product', id:'product', name:'product'}        
+    %div
+        %button{class:'btn-add'}
+               %i{class:'fas fa-plus-square'}
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+
+%script
+    $(function() {
+    $("#product").autocomplete({        
+    source: function(request, response) {
+    var productList = [
+    -@productInfo.each do |product|
+        ="{name:'#{product.Name}',value:'#{product.id}'},"
+    ];
+    response(productList);
+    },
+    select: function( event, ui ) {
+    $( "#product" ).val( ui.item.name); 
+    return false;
+    }
+    });
+    $(".btn-add").click(function(){
+    $("#products-form").append($("#ingredient").clone().html());
+    });
+});​

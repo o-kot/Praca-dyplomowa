@@ -1,0 +1,21 @@
+#error{class:'alert alert-danger', role:'alert', style:'display:none'}
+
+%form{id:'decompose-form', action:'/decompose', method:'post', 'data-remote' => 'true'}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %div{class:'form-group row'}
+        %label{for:'customProduct', class:'col-sm-4 col-form-label'}=@decomposable.name
+        %input{type:'hidden',name:'customProduct',value:@decomposble.id}
+    #pętla    
+    %div{class:'form-group row'}
+        %label{for:'product', class:'col-sm-4 col-form-label'}='Składnik'        
+        %select
+            %option{class:'form-check-label', for:'product', id:'product', name:'product',value:product.id}=product.Name
+    %div{class:'form-group row',id:'weight'}
+        %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga'        
+        %input{class:'form-control', for:'weight', id:'weight', name:'weight'}           
+    %div
+        %button{class:'btn-add'}
+               %i{class:'fas fa-plus-square'}
+        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+
+%script

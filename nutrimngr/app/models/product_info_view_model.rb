@@ -3,13 +3,22 @@ class ProductInfoViewModel
     def initialize (id)
         @userID = id
     end
-    def getProductInfo
+    def getProductInfo(id)
         product = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
-        product = product.getProductInfo
+        product = product.getProductInfo(id)
         @productName = product.Name rescue ''
         @productCalories = product.Calories rescue ''
         @productProtein = product.Protein rescue ''
         @productCarbs = product.Carbs rescue ''
+        @productFat = product.Fat rescue ''
+        @productSugars = product.Sugars rescue ''
+        @productFiber = product.Fiber rescue ''
+        @productOmega3 = product.Omega3 rescue ''
+        @productALA = product.ALA rescue ''
+        @productSFA = product.SFA rescue ''
+        @productWNKT = product.WNKT rescue ''
+        @productTrans = productTrans rescue ''
+        @productCholesterol = product.Cholesterol rescue ''
         @productValine = product.Valine rescue ''
         @productIsoleucine = product.Isoleucine rescue ''
         @productLeucine = product.Leucine rescue ''
@@ -44,7 +53,6 @@ class ProductInfoViewModel
         @productNa = product.Na rescue ''
         @productCa = product.Ca rescue ''
         @productFe = product.Fe rescue ''
-        @productCholesterol = product.Cholesterol rescue '' 
     end
     def getProductList(userOnly = false)
         products = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
@@ -54,9 +62,9 @@ class ProductInfoViewModel
         userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
         userProduct.addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
     end
-    def editUserProduct(id)
+    def editUserProduct(id,changes)
         userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
-        userProduct.editUserProduct(id)
+        userProduct.editUserProduct(id,changes)
     end
     def deleteUserProduct(id)
         userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
