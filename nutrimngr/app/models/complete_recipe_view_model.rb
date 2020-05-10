@@ -15,6 +15,10 @@ class CompleteRecipeViewModel
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
         completeRecipe = completeRecipeNa.measureRecipe(recipe,how,measurement)
     end
+    def findAmount(completeRecipe)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = completeRecipe.findAmount(completeRecipe)
+    end
     def calculateWhatsLeft(id,eaten)
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
         completeRecipe = completeRecipe.calculateWhatsLeft(id,eaten)
@@ -23,6 +27,10 @@ class CompleteRecipeViewModel
         completeRecipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipes = completeRecipes.getCompleteRecipeList
     end
+    def findLast
+        completeRecipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        completeRecipes = completeRecipes.findLast
+    end 
     def markAsEaten(id)
         completeRecipe = UserProfileInterface.new(ConfigDb::RECIPES.constantize.new)
         completeRecipe = completeRecipe.markAsEaten(id)

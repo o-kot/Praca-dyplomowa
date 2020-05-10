@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'meals/meals' => 'meals#meals', :as => :meals
   get 'recipes/recipes' => 'recipes#recipes', :as => :recipes
   get 'recipes/delete' => 'recipe#delete', :as => :delete_recipe
-  get 'recipes/delete' => 'completeRecipe#markAsEnded', :as => :end_recipe
+  get 'recipes/delete' => 'completeRecipe#markAsEaten', :as => :end_recipe
   get 'user_products/user_products' => 'user_products#user_products', :as => :user_products
   get 'user_products/delete' => 'user_products#delete', :as => :delete_product
   get 'recipe/delete' => 'recipe#deleteProduct', :as => :delete_product_from_recipe  
@@ -35,4 +35,5 @@ Rails.application.routes.draw do
   post 'addRecipeToMeal' => 'eaten#addCompleteRecipe'
   post 'addProductToMeal' => 'eaten#addProduct'
   post 'addCustomProduct' => 'eaten#addCustomProduct'
+  post 'decompoes' =>'eaten#decompose'
 end

@@ -38,9 +38,9 @@
                     - @completeRecipes.each do |cr|
                         %tr
                             %td=cr.Name
-                            - if cr.IsWeighted.nil? && cr.HasPortioned.nil?
+                            - if cr.IsWeighted == false && cr.HasPortioned == false
                                 %td
-                                    = link_to '', end_recipe_path(recipe: cr.id), class: 'fas fa-balance scale btn-add divide'
+                                    = link_to '', modal_path(body: 'recipes/measure_recipe', recipe: cr.id), class: 'fas fa-balance scale btn-add divide'
                             %td
                                 = link_to '', end_recipe_path(recipe: cr.id), class: 'fas fa-times btn-delete end'
                           
@@ -74,7 +74,17 @@
     if(confirm("Czy na pewno chcesz zamknąć to okno?"))
     $(".modal").modal('hide');
     });
-    }    
+    }   
+    else if(xhr.responseText == "Go to portioning"){
+    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
+    $("#modal-title").html('Pomiar gotowej potrawy');
+    $("#modal-body").html("#{ escape_javascript(render 'recipes/measure_recipe') }");
+    $(".modal").modal('show'); 
+    $(".btn-close").click(function () {
+    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
+    $(".modal").modal('hide');   
+    });
+    } 
     else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
     $("#error").html(xhr.responseText);
     $("#error").css("display","block");

@@ -29,11 +29,6 @@
     $("#error").css("display","block");
     $("#success").css("display","none");
     }
-    else if(xhr.responseText == "Go to portioning"){
-    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
-    $("#modal-title").html('Wybierz sposób pomiaru potrawy');
-    $("#modal-body").html("#{ escape_javascript(render 'recipes/measure_recipe') }");
-    $(".modal").modal('show');    
     $(".btn-close").click(function () {
     if(confirm("Czy na pewno chcesz zamknąć to okno?"))
     $(".modal").modal('hide');

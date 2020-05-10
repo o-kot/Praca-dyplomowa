@@ -3,8 +3,8 @@ class MealsInterface
         @object = object     
         @object.setID(id)
     end
-    def getMeal
-        @object.getMeal
+    def getEaten(date)
+        @object.getEaten(date)
     end
     def getMeals
         @object.getMeals
@@ -26,6 +26,9 @@ class MealsInterface
     end
     def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
         @object.addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
+    end
+    def findLast
+        @object.findLast
     end
     def addCompleteRecipe(meal,recipe,portion)
         @object.addCompleteRecipe(meal,recipe,portion)

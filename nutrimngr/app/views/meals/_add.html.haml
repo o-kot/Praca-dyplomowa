@@ -20,19 +20,11 @@
     %div
         %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 
-$(document).off('ajax:success').on('ajax:success',function(event){
+%script
+    $(document).off('ajax:success').on('ajax:success',function(event){
     var xhr = event.detail[2];
     if(xhr.responseText == "error"){
     $("#error").css("display","block");
     $("#success").css("display","none");
     }
-    else if(xhr.responseText == "Choose how"){
-    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
-    $("#modal-title").html('Wybierz co chcesz dodać');
-    $("#modal-body").html("#{ escape_javascript(render 'recipes/how_to_add') }");
-    $(".modal").modal('show');    
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
     });

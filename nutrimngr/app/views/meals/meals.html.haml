@@ -1,5 +1,4 @@
 -# Top central space
-
 %div{class:'top-space'}
     %div{class:'row centered-for-flex'}
         - if @eaten.empty?
@@ -16,6 +15,19 @@
                     %p="#{@today}"
                 %div{class:'col-md-1'}
                     %i{class:'far fa-arrow-alt-circle-right'}
+            %div{class:'row'}
+                #calories{class:'col-md-2'}
+                    %p="Kalorie: "
+                    %span{class:"#{@resultkc}"}= "#{@gotten.Calories}"
+                #protein{class:'col-md-2'}
+                    %p="Białko: "
+                    %span{class:"#{@resultp}"}="#{@gotten.Protein}"
+                #carbs{class:'col-md-2'}
+                    %p="Węglowodany: "
+                    %span{class:"#{@resultc}"}="#{@gotten.Carbs}"
+                #fat{class:'col-md-2'}
+                    %p="Tłuszcze: "
+                    %span{class:"#{@resultf}"}="#{@gotten.Fat}"
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
     - if @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
@@ -35,4 +47,34 @@
     %div{class:'row justify-content-end'}
         = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'    
 
-            
+%script
+    $(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText == "error"){
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    else if(xhr.responseText == "Choose how"){
+    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
+    $("#modal-title").html('Wybierz co chcesz dodać');
+    $("#modal-body").html("#{ escape_javascript(render 'recipes/how_to_add') }");
+    $(".modal").modal('show');    
+    $(".btn-close").click(function () {
+    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
+    $(".modal").modal('hide');
+    });
+    else if(xhr.responseText == "Comeback"){
+    $("#modal-title").html('Wybierz produkt');
+    $("#modal-body").html("#{ escape_javascript(render 'meal/add_from_products') }");
+    $(".modal").modal('show');
+    $("#success").css("display","block");
+    $("#error").css("display","none");
+    });
+    else if(xhr.responseText == "Decompose"){
+    $("#modal-title").html('Wybierz produkt');
+    $("#modal-body").html("#{ escape_javascript(render 'meal/decompose') }");
+    $(".modal").modal('show');
+    $("#success").css("display","block");
+    $("#error").css("display","none");
+    });
+    });

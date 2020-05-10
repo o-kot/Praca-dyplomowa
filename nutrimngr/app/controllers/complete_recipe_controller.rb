@@ -19,7 +19,7 @@ class CompleteRecipeController < ApplicationController
         newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
         newCompleteRecipeID = newCompleteRecipe.createCompleteRecipe(params['recipe'])
         if params['goToPortioning']) == 'on'
-            render plain: "Go to portioning"  and return
+            render plain: 'Go to portioning' and return
         else
             newCompleteRecipe.calculateNutrition(newCompleteRecipeID)
                 session[:message]='Stworzono potrawę z przepisu'  
@@ -39,9 +39,10 @@ class CompleteRecipeController < ApplicationController
         end
         newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
         if newCompleteRecipe.measureRecipe(params['recipe'],params['howToMeasure'],params['measurement']) == 'success'
-            newCompleteRecipe.calculateNutrition(params['recipe']) == 'success'
+            if newCompleteRecipe.calculateNutrition(params['recipe']) == 'success'
                 session[:message]='Stworzono potrawę z przepisu'  
                 redirect_to 'recipes/recipes'  
+            end
         end
     end
 end

@@ -86,6 +86,12 @@ class EatenViewModel
         newEaten = newEaten.calculateMealRequisition(meal)
     end
     def calculateDailyRequisition(date)
+        gotten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        gotten = gotten.calculateDailyRequisition(date)
+    end
+    def findLast
+        last = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        last = last.findLast
     end
     def decompose(params['customProduct'],params['product'],params['weight'])
         newEaten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)

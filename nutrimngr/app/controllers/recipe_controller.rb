@@ -15,8 +15,13 @@ class RecipeController < ApplicationController
     end
     def addProduct
         newRecipeProduct = RecipeProductsViewModel.new(session[:sessionID])
+        existingProductsList = ProductInfoViewModel.new(session[:sessionID])
+        existingProductsList = existingProductsList.getProductList.each {|existing|existing.id}
         productsIDs = []
         params['product'].each do |product|
+            if !existingProductsList.include?(product)
+                render plain: 'Podany produkt nie istnieje' and return
+            end
             if !productsIDs.include?(product['value'])
                 newRecipeProduct.addProduct(params['recipe'],product['value'])
                 productsIDs << product['value']

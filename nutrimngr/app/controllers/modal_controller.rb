@@ -25,19 +25,25 @@ class ModalController < ActionController::Base
             @productList = @productList.getProductList(@recipe.id)['ingredients']
             @productWeightList = RecipeProductsViewModel.new(session[:sessionID])
             @productWeightList = @productWeightList.getProductList(@recipe.id)['ingredientsWeight']
+        when 'recipes/measure_recipe'
+            @recipe = CompleteRecipeViewModel.new
+            @recipe = @recipe.findLast
         when 'meals/add'
             @meal = MealViewModel.new(session[:sessionID])
             @meal = @meal.getMeals
             @session[:meal] = nil
         when 'meal/add_from_recipes'
             @completeRecipes = CompleteRecipeViewModel.new(session[:sessionID])
-            @completeRecipes = @CompleteRecipes.getCompleteRecipeList
-            @availableRecipes = @completeRecipes.where(HasPortions == true || IsWeighted == true)
+            @completeRecipes = @completeRecipes.getCompleteRecipeList
+            @availableRecipes = @completeRecipes.select{|cr| cr.HasPortions == true || cr.IsWeighted == true)}
         when 'meal/add_from_products'
             @products = ProductInfoViewModel.new(session[:sessionID])
             @products.getProductList
         when 'meal/decompose'
-            @decomposable = EatenViewModel.where(IDU:session[:sessionID],!CustomProductName.nil?).last
+            @decomposable = EatenViewModel.new(session[:sessionID])
+            @decomposable = @decomposable.findLast
+            @products = ProductInfoViewModel.new(session[:sessionID])
+            @products = @products.getProductList
         end
     end
         respond_to do |format|

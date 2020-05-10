@@ -13,34 +13,42 @@ class EatenController < ApplicationController
         end
         newEaten = EatenViewModel.new(session[:sessionID])
         @session[:meal] = newEaten.addMeal(params['date'],params['time'],params['meal'])
-            if !@session[:meal].nil? 
-                render plain: "Choose how"
-            else
-                render plain: "error"
+        if !@session[:meal].nil? 
+            render plain: "Choose how"
+        else
+            render plain: "error"
+        end
     end
     def addProduct
+        existingProductsList = ProductInfoViewModel.new(session[:sessionID])
+        existingProductsList = existingProductsList.getProductList.each {|existing|existing.id}
+        if !existingProductsList.include?(params['product'])
+            render plain: 'Podany produkt nie istnieje' and return
+        end
         if params['product'].blank?
             render plain: 'Nie wybrano produktu.' and return
         end
+        if 
         begin
             params['weight'] = Float(params['weight']) 
         rescue
             render plain: 'Wprowadzoną błędną wagę.' and return     
         end
-        if params['portion'] <= 0
+        if params['weight'] <= 0
             render plain: 'Wprowadzoną błędną wagę.' and return     
         end
         newEaten = EatenViewModel.new(session[:sessionID])
-        if newEaten.addCompleteRecipe(session[:meal],params['product'],params['weight']) == 'success'
+        if newEaten.addProduct(session[:meal],params['product'],params['weight']) == 'success'
             session[:message]='Dodano spożyty posiłek'
             redirect_to '/meals/meals' 
         end
     end
     def addCustomProduct
-        if params['name'].blank? || params['kcal'].blank?
-            render plain: 'Formularz zawiera niewypełnione pola.' and return
+        if params['name'].blank?
+            render plain: 'Formularz zawiera niewypełnione pole.' and return
         end
         begin
+            params['calories'] = Float(params['calories']) if !params['calories'].blank?
             params['protein'] = Float(params['protein']) if !params['protein'].blank?
             params['carbs'] = Float(params['carbs']) if !params['carbs'].blank?
             params['fat'] = Float(params['fat']) if !params['fat'].blank?
@@ -100,6 +108,8 @@ class EatenController < ApplicationController
         end
     end
     def addCompleteRecipe
+        eatenRecipe = CompleteRecipeViewModel.new(session[:sessionID])
+        amount = eatenRecipe.findAmount(params['recipe'])
         if params['meal'].blank?
             render plain: 'Nie wybrano potrawy.' and return
         end
@@ -108,38 +118,52 @@ class EatenController < ApplicationController
         rescue
             render plain: 'Wprowadzoną błędną wartość porcji.' and return     
         end
+        if params[portion] > amount
+            render plain: 'Wprowadzono większą porcję, niż zostało potrawy.' and return     
+        end
         if params['portion'] <= 0
             render plain: 'Wprowadzoną błędną wartość porcji.' and return     
         end
         newEaten = EatenViewModel.new(session[:sessionID])
-        eatenID = newEaten.addCompleteRecipe(session[:meal],params['meal'],params['portion'])
+        eatenID = newEaten.addCompleteRecipe(session[:meal],params['recipe'],params['portion'])
         if eatenID > 0
-            newEaten.calculateMealRequisition(eatenID)
+            eatenRecipe = CompleteRecipeViewModel.new(session[:sessionID])
+            eatenRecipe.calculateWhatsLeft(params['recipe'],param['portion'])
+            if newEaten.calculateMealRequisition(eatenID) == 'success'
+                session[:message]='Dodano spożyty posiłek'
+                redirect_to '/meals/meals' 
+            end
         end
     end
-    def calculateMealRequisition
-        newEaten = EatenViewModel.new(session[:sessionID])
-        if newEaten.calculateMealRequisition(eatenID) == 'success'
-            session[:message]='Dodano spożyty posiłek'
-            redirect_to '/meals/meals' 
-        end
-    end
-    def calculateDailyRequisition
-    end
-    def decompose
+    def decompose       
         if params['product'].blank?
             render plain: 'Nie wybrano żadnego składnika.' and return
+        end 
+        params['weight'].each do |w|
+            begin
+                w = Float(w) 
+            rescue
+                render plain: 'Wprowadzoną błędną wagę.' and return     
+            end
+            if w <= 0
+                render plain: 'Wprowadzoną błędną wagę.' and return     
+            end
         end
-        begin
-            params['weight'] = Float(params['weight']) 
-        rescue
-            render plain: 'Wprowadzoną błędną wartość porcji.' and return     
-        end
-        if params['weight'] <= 0
-            render plain: 'Wprowadzoną błędną wagę.' and return     
-        end
+        existingProductsList = ProductInfoViewModel.new(session[:sessionID])
+        existingProductsList = existingProductsList.getProductList.each {|existing|existing.id}
+        productsIDs = []
+        weights = []
+        params['product'].each_with_index do |product,index|
+            if !existingProductsList.include?(product)
+                render plain: 'Podany produkt nie istnieje' and return
+            end
+            if !productsIDs.include?(product['value'])
+                productsIDs << product['value']
+                weights << params['weight'][index]
+            end
+        end  
         newEaten = EatenViewModel.new(session[:sessionID])
-        if newEaten.decompose(params['customProduct'],params['product'],params['weight']) == "success"
+        if newEaten.decompose(params['customProduct'],productsIDs,weights) == "success"
             session[:message]='Dodano zdekomponowany produkt'
             redirect_to '/meals/meals' 
         end

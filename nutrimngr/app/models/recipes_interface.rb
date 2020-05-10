@@ -39,6 +39,12 @@ class RecipesInterface
     def measureRecipe(recipe,how,measurement)
         @object.measureRecipe(recipe,how,measurement)
     end
+    def findLast
+        @object.findLast
+    end
+    def findAmount(completeRecipe)
+        @object.findAmount(completeRecipe)
+    end
     def calculateWhatsLeft(recipe,eaten)
         @object.calculateWhatsLeft(recipe,eaten)
     end
