@@ -5,8 +5,8 @@ class ModalController < ActionController::Base
             @product = ProductInfoViewModel.new(session[:sessionID])
             @product.getProductInfo(params['product'])
         when 'user_products/edit'
-            @userProduct = ProductInfoViewModel.new(session[:sessionID])
-            @userProduct = @userProduct.getProducInfo(params['product'])        
+            @product = ProductInfoViewModel.new(session[:sessionID])
+            @product.getProductInfo(params['product'])
         when 'recipes/add_products'
             @recipe = RecipeViewModel.new(session[:sessionID])
             @recipe = @recipe.find(params['recipe'])
@@ -35,17 +35,16 @@ class ModalController < ActionController::Base
         when 'meal/add_from_recipes'
             @completeRecipes = CompleteRecipeViewModel.new(session[:sessionID])
             @completeRecipes = @completeRecipes.getCompleteRecipeList
-            @availableRecipes = @completeRecipes.select{|cr| cr.HasPortions == true || cr.IsWeighted == true)}
+            @availableRecipes = @completeRecipes.select{|cr| cr.HasPortions == true || cr.IsWeighted == true}
         when 'meal/add_from_products'
             @products = ProductInfoViewModel.new(session[:sessionID])
-            @products.getProductList
+            @products = @products.getProductList
         when 'meal/decompose'
             @decomposable = EatenViewModel.new(session[:sessionID])
             @decomposable = @decomposable.findLast
             @products = ProductInfoViewModel.new(session[:sessionID])
             @products = @products.getProductList
         end
-    end
         respond_to do |format|
             format.html
             format.js

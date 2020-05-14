@@ -1,11 +1,12 @@
 class ProductInfoViewModel
-    attr_accessor :productName, :productCalories, :productProtein, :productCarbs, :productFat, :productSugars, :productFiber, :productOmega3, :productALA, :productSFA, :productWNKT, :productTrans, :productValine, :productIsoleucine, :productLeucine, :productLysine, :productMehionine, :productThreonine, :productTryptophan, :productPhenylalanine, :productVitA, :productVitB1, :productVitB2, :productVitB3, :productVitB4, :productVitB5, :productVitB6, :productVitB9, :productVitB12, :productVitC, :productVitD, :productVitE, :productVitH, :productVitK, :productCl, :productZn, :productF, :productP, :productI, :productMg, :productCu, :productK, :productSe, :productNa, :productCa, :productFe, :productCholesterol
+    attr_accessor :productid, :productName, :productCalories, :productProtein, :productCarbs, :productFat, :productSugars, :productFiber, :productOmega3, :productALA, :productSFA, :productWNKT, :productTrans, :productValine, :productIsoleucine, :productLeucine, :productLysine, :productMethionine, :productThreonine, :productTryptophan, :productPhenylalanine, :productVitA, :productVitB1, :productVitB2, :productVitB3, :productVitB4, :productVitB5, :productVitB6, :productVitB9, :productVitB12, :productVitC, :productVitD, :productVitE, :productVitH, :productVitK, :productCl, :productZn, :productF, :productP, :productI, :productMg, :productCu, :productK, :productSe, :productNa, :productCa, :productFe, :productCholesterol
     def initialize (id)
         @userID = id
     end
     def getProductInfo(id)
         product = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
         product = product.getProductInfo(id)
+        @productid = product.id rescue ''
         @productName = product.Name rescue ''
         @productCalories = product.Calories rescue ''
         @productProtein = product.Protein rescue ''
@@ -62,9 +63,9 @@ class ProductInfoViewModel
         userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
         userProduct.addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
     end
-    def editUserProduct(id,changes)
+    def editProductInfo(id,changes)
         userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
-        userProduct.editUserProduct(id,changes)
+        userProduct.editProductInfo(id,changes)
     end
     def deleteUserProduct(id)
         userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)

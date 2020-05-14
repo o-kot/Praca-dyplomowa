@@ -4,29 +4,32 @@ class MealsPg
         @userID = id
     end
     def getEaten(date)
-        newEaten = EatenDbModel.where(IDU:@userID,date:date)    
+        newEaten = EatenDbModel.where(IDU:@userID,date:date)
     end
     def getMeals
-        meals = MealsDbModel.all
+        meals = MealDbModel.all
         return meals
     end
     def getEaten(date)
-        mealsList = EatenDbModel.where(IDU:@userID,date:date)
+        mealsList = EatenDbModel.where(IDU:@userID,Date:date)
+        mealsList.each do |meal|
+            meal.name = meal.CustomProductName.present? ? meal.CustomProductName : ProductInfoDbModel.where(id:meal.IDPR).first.Name
+        end
         return mealsList
     end
     def addMeal(date,time,meal)
-        newMealTMP = EatenDbModel.new  
+        newMealTMP = EatenDbModel.new
         newMealTMP.IDU = @userID
         newMealTMP.IDP = meal
         newMealTMP.Date = date
         newMealTMP.Time = time
         return newMealTMP
     end
-    def editMeal(id) 
-        newMeal = EatenDbModel.where(id:id).first   
+    def editMeal(id)
+        newMeal = EatenDbModel.where(id:id).first
     end
-    def deleteMeal(id) 
-        newMeal = EatenDbModel.where(id:id).first   
+    def deleteMeal(id)
+        newMeal = EatenDbModel.where(id:id).first
         newMeal.delete
         return "success"
     end
@@ -89,7 +92,7 @@ class MealsPg
         return 'success'
     end
     def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
-        newMealTMP = EatenDbModel.new  
+        newMealTMP = EatenDbModel.new
         newMealTMP.IDU = @userID
         newMealTMP.IDP = meal.IDP
         newMealTMP.Date = meal.Date
@@ -101,7 +104,7 @@ class MealsPg
         newMealTMP.Fat = fat rescue nil
         newMealTMP.Sugars = sugars rescue nil
         newMealTMP.Fiber = fiber rescue nil
-        newMealTMP.Omega3 = omega3 * rescue nil
+        newMealTMP.Omega3 = omega3 rescue nil
         newMealTMP.ALA = ala rescue nil
         newMealTMP.SFA = sfa rescue nil
         newMealTMP.WNKT = wnkt rescue nil
@@ -140,8 +143,8 @@ class MealsPg
         newMealTMP.Se = se rescue nil
         newMealTMP.Na = na rescue nil
         newMealTMP.Ca = ca rescue nil
-        newMealTMP.Fe = fe rescue nil  
-        newMealTMP.save   
+        newMealTMP.Fe = fe rescue nil
+        newMealTMP.save
         return 'success'
     end
     def findLast
@@ -160,6 +163,7 @@ class MealsPg
             newMealTMP.Portions = portion
         elsif recipe.IsWeighted == true
             newMealTMP.Weight = portion
+        end
         newMealTMP.Calories = 0
         newMealTMP.Protein = 0
         newMealTMP.Carbs = 0
@@ -273,7 +277,7 @@ class MealsPg
         gotten.Na = 0
         gotten.Ca = 0
         gotten.Fe = 0
-        eaten = EatenDbModel.where(date:date)
+        eaten = EatenDbModel.where(Date:date)
         eaten.each do |e|
             gotten.Protein += e.Protein rescue gotten.Protein
             gotten.Carbs += e.Carbs rescue gotten.Carbs
@@ -381,7 +385,7 @@ class MealsPg
             eatenTMP.Sugars += p.Sugars * weight[index] rescue eatenTMP.Sugars
             eatenTMP.Fiber += p.Fiber * weight[index] rescue eatenTMP.Fiber
             eatenTMP.Omega3 += p.Omega3 * weight[index] rescue eatenTMP.Omega3
-            eatenTMP.ALA += p.ALA * weight[index] rescue eatenTMP.ALA 
+            eatenTMP.ALA += p.ALA * weight[index] rescue eatenTMP.ALA
             eatenTMP.SFA += p.SFA * weight[index] rescue eatenTMP.SFA
             eatenTMP.WNKT += p.WNKT * weight[index] rescue eatenTMP.WNKT
             eatenTMP.Trans += p.Trans * weight[index] rescue eatenTMP.Trans
@@ -390,8 +394,8 @@ class MealsPg
             eatenTMP.Isoleucine += p.Isoleucine * weight[index] rescue eatenTMP.Isoleucine
             eatenTMP.Leucine += p.Leucine * weight[index] rescue eatenTMP.Leucine
             eatenTMP.Lysine += p.Lysine * weight[index] rescue eatenTMP.Lysine
-            eatenTMP.Methionine += p.Methionine * weight[index] rescue eatenTMP.Methionine 
-            eatenTMP.Threonine += p.Threonine * weight[index] rescue eatenTMP.Threonine 
+            eatenTMP.Methionine += p.Methionine * weight[index] rescue eatenTMP.Methionine
+            eatenTMP.Threonine += p.Threonine * weight[index] rescue eatenTMP.Threonine
             eatenTMP.Tryptophan += p.Tryptophan * weight[index] rescue eatenTMP.Tryptophan
             eatenTMP.Phenylalanine += p.Phenylalanine * weight[index] rescue eatenTMP.Phenylalanine
             eatenTMP.VitA += p.VitA * weight[index] rescue eatenTMP.VitA
@@ -401,7 +405,7 @@ class MealsPg
             eatenTMP.VitB4 += p.VitB4 * weight[index] rescue eatenTMP.VitB4
             eatenTMP.VitB5 += p.VitB5 * weight[index] rescue eatenTMP.VitB5
             eatenTMP.VitB6 += p.VitB6 * weight[index] rescue eatenTMP.VitB6
-            eatenTMP.VitB9 += p.VitB9 * weight[index] rescue eatenTMP.VitB9 
+            eatenTMP.VitB9 += p.VitB9 * weight[index] rescue eatenTMP.VitB9
             eatenTMP.VitB12 += p.VitB12 * weight[index] rescue eatenTMP.VitB12
             eatenTMP.VitC += p.VitC * weight[index] rescue eatenTMP.VitC
             eatenTMP.VitD += p.VitD * weight[index] rescue eatenTMP.VitD
@@ -411,8 +415,8 @@ class MealsPg
             eatenTMP.Cl += p.Cl * weight[index] rescue eatenTMP.Cl
             eatenTMP.Zn += p.Zn * weight[index] rescue eatenTMP.Zn
             eatenTMP.F += p.F * weight[index] rescue eatenTMP.F
-            eatenTMP.P += p.P * weight[index] rescue eatenTMP.P 
-            eatenTMP.I += p.I * weight[index] rescue eatenTMP.I 
+            eatenTMP.P += p.P * weight[index] rescue eatenTMP.P
+            eatenTMP.I += p.I * weight[index] rescue eatenTMP.I
             eatenTMP.Mg += p.Mg * weight[index] rescue eatenTMP.Mg
             eatenTMP.Cu += p.Cu * weight[index] rescue eatenTMP.Cu
             eatenTMP.K += p.K * weight[index] rescue eatenTMP.K

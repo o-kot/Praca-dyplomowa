@@ -1,206 +1,213 @@
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
 
-%form{id:'data-form', action:'/addUserProduct', method:'post', 'data-remote' => 'true'}
-    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
-    %div{class:'form-group row'}
-        %label{for:'name', class:'col-sm-4 col-form-label'}='Nazwa produktu'
-        %div{class:'col-sm-8'}
-            %input{name:'name', type:'text', class:'form-control form-control-obligatory'}
-            #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
-    %div{class:'form-group row'}
-        %label{for:'kcal', class:'col-sm-4 col-form-label'}='Kalorie'
-        %div{class:'col-sm-8'}
-            %input{name:'kcal', type:'text', class:'form-control form-control-obligatory'}
-            #kcalHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
-    %div{class:'form-group row'}
-        %label{for:'protein', class:'col-sm-4 col-form-label'}='Białko'
-        %div{class:'col-sm-8'}
-            %input{name:'protein', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'carbs', class:'col-sm-4 col-form-label'}='Węglowodany'
-        %div{class:'col-sm-8'}
-            %input{name:'carbs', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'fat', class:'col-sm-4 col-form-label'}='Tłuszcz'
-        %div{class:'col-sm-8'}
-            %input{name:'fat', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'sugars', class:'col-sm-4 col-form-label'}='Cukry'
-        %div{class:'col-sm-8'}
-            %input{name:'sugars', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'fiber', class:'col-sm-4 col-form-label'}='Błonnik'
-        %div{class:'col-sm-8'}
-            %input{name:'fiber', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'omega3', class:'col-sm-4 col-form-label'}='Tłuszcz typu omega-3'
-        %div{class:'col-sm-8'}
-            %input{name:'omega3', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'ala', class:'col-sm-4 col-form-label'}='Tłuszcz typu ALA'
-        %div{class:'col-sm-8'}
-            %input{name:'ala', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'SFA', class:'col-sm-4 col-form-label'}='Tłuszcze onasycone'
-        %div{class:'col-sm-8'}
-            %input{name:'SFA', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'wnkt', class:'col-sm-4 col-form-label'}='Tłuszcze wielonienasycone'
-        %div{class:'col-sm-8'}
-            %input{name:'wnkt', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'trans', class:'col-sm-4 col-form-label'}='Tłuszcze typu trans'
-        %div{class:'col-sm-8'}
-            %input{name:'trans', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'cholesterol', class:'col-sm-4 col-form-label'}='Cholesterol'
-        %div{class:'col-sm-8'}
-            %input{name:'cholesterol', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'valine', class:'col-sm-4 col-form-label'}='Walina'
-        %div{class:'col-sm-8'}
-            %input{name:'valine', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'isoleucine', class:'col-sm-4 col-form-label'}='Izoleucyna'
-        %div{class:'col-sm-8'}
-            %input{name:'isoleucine', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'leucine', class:'col-sm-4 col-form-label'}='Leucyna'
-        %div{class:'col-sm-8'}
-            %input{name:'leucine', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'lysine', class:'col-sm-4 col-form-label'}='Lizyna'
-        %div{class:'col-sm-8'}
-            %input{name:'lysine', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'methionine', class:'col-sm-4 col-form-label'}='Metionina'
-        %div{class:'col-sm-8'}
-            %input{name:'methionine', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'threonine', class:'col-sm-4 col-form-label'}='Treonina'
-        %div{class:'col-sm-8'}
-            %input{name:'threonine', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'tryptophan', class:'col-sm-4 col-form-label'}='Tryptofan'
-        %div{class:'col-sm-8'}
-            %input{name:'tryptophan', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'phenylalanine', class:'col-sm-4 col-form-label'}='Fenyloalanina'
-        %div{class:'col-sm-8'}
-            %input{name:'phenylalanine', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitA', class:'col-sm-4 col-form-label'}='Witamina A'
-        %div{class:'col-sm-8'}
-            %input{name:'vitA', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB1', class:'col-sm-4 col-form-label'}='Witamina B1'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB1', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB2', class:'col-sm-4 col-form-label'}='Witamina B2'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB2', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB3', class:'col-sm-4 col-form-label'}='Witamina B3'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB3', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB4', class:'col-sm-4 col-form-label'}='Witamina B4'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB4', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB5', class:'col-sm-4 col-form-label'}='Witamina B5'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB5', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB6', class:'col-sm-4 col-form-label'}='Witamina B6'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB6', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB9', class:'col-sm-4 col-form-label'}='Witamina B9'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB9', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitB12', class:'col-sm-4 col-form-label'}='Witamina B12'
-        %div{class:'col-sm-8'}
-            %input{name:'vitB12', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitC', class:'col-sm-4 col-form-label'}='Witamina C'
-        %div{class:'col-sm-8'}
-            %input{name:'vitC', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitD', class:'col-sm-4 col-form-label'}='Witamina D'
-        %div{class:'col-sm-8'}
-            %input{name:'vitD', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitE', class:'col-sm-4 col-form-label'}='Witamina E'
-        %div{class:'col-sm-8'}
-            %input{name:'vitE', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitH', class:'col-sm-4 col-form-label'}='Witamina H'
-        %div{class:'col-sm-8'}
-            %input{name:'vitH', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'vitK', class:'col-sm-4 col-form-label'}='Witamina K'
-        %div{class:'col-sm-8'}
-            %input{name:'vitK', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'cl', class:'col-sm-4 col-form-label'}='Chlor'
-        %div{class:'col-sm-8'}
-            %input{name:'cl', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'zn', class:'col-sm-4 col-form-label'}='Cynk'
-        %div{class:'col-sm-8'}
-            %input{name:'zn', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'f', class:'col-sm-4 col-form-label'}='Fluor'
-        %div{class:'col-sm-8'}
-            %input{name:'f', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'p', class:'col-sm-4 col-form-label'}='Fosfor'
-        %div{class:'col-sm-8'}
-            %input{name:'p', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'i', class:'col-sm-4 col-form-label'}='Jod'
-        %div{class:'col-sm-8'}
-            %input{name:'i', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'mg', class:'col-sm-4 col-form-label'}='Magnez'
-        %div{class:'col-sm-8'}
-            %input{name:'mg', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'cu', class:'col-sm-4 col-form-label'}='Miedź'
-        %div{class:'col-sm-8'}
-            %input{name:'cu', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'k', class:'col-sm-4 col-form-label'}='Potas'
-        %div{class:'col-sm-8'}
-            %input{name:'k', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'se', class:'col-sm-4 col-form-label'}='Selen'
-        %div{class:'col-sm-8'}
-            %input{name:'se', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'na', class:'col-sm-4 col-form-label'}='Sód'
-        %div{class:'col-sm-8'}
-            %input{name:'na', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'ca', class:'col-sm-4 col-form-label'}='Wapń'
-        %div{class:'col-sm-8'}
-            %input{name:'ca', type:'text', class:'form-control'} 
-    %div{class:'form-group row'}
-        %label{for:'fe', class:'col-sm-4 col-form-label'}='Żelazo'
-        %div{class:'col-sm-8'}
-            %input{name:'fe', type:'text', class:'form-control'} 
-    %div{class:'form-check'}
-        %input{type:'checkbox', class:'form-check-input', id:'defaultWeight', name:'defaultWeight', checked:'true'}
-        %label{class:'form-check-label', for:'defaultWeight'}='Dane dla 100 g produktu?'
-    %div{class:'form-group row', id:'alternativeWeight', style:'display:none'}
-        %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga dla której podano informacje'
-        %div{class:'col-sm-8'}
-            %input{name:'weight', type:'text', class:'form-control'} 
-    %div
-        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+#product-form
+    %form{id:'add-product-form', action:'/addUserProduct', method:'post', 'data-remote' => 'true'}
+        %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+        %div{class:'form-group row'}
+            %label{for:'name', class:'col-sm-3 col-form-label'}='Nazwa produktu'
+            %div{class:'col-sm-9'}
+                %input{name:'name', type:'text', class:'form-control form-control-sm form-control-obligatory'}
+                #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+        %div{class:'row'}
+            %div{class:'form-group row col-sm'}
+                %label{for:'kcal', class:'col-sm col-form-label'}='Kalorie'
+                %div{class:'col-sm'}
+                    %input{name:'kcal', type:'text', class:'form-control form-control-sm form-control-obligatory'}
+                    #kcalHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+            %div{class:'form-group row col-sm'}
+                %label{for:'protein', class:'col-sm col-form-label'}='Białko'
+                %div{class:'col-sm'}
+                    %input{name:'protein', type:'text', class:'form-control form-control-sm'} 
+            %div{class:'form-group row no-gutters col-sm'}
+                %label{for:'carbs', class:'col-sm col-form-label'}='Węglowodany'
+                %div{class:'col-sm'}
+                    %input{name:'carbs', type:'text', class:'form-control form-control-sm'} 
+            %div{class:'form-group row col-sm'}
+                %label{for:'fat', class:'col-sm col-form-label'}='Tłuszcz'
+                %div{class:'col-sm'}
+                    %input{name:'fat', type:'text', class:'form-control form-control-sm'} 
+        %div{class:'row'}
+            %div{class:'col-sm'}
+                %div{class:'form-group row'}
+                    %label{for:'sugars', class:'col-sm col-form-label'}='Cukry'
+                    %div{class:'col-sm'}
+                        %input{name:'sugars', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'fiber', class:'col-sm col-form-label'}='Błonnik'
+                    %div{class:'col-sm'}
+                        %input{name:'fiber', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'omega3', class:'col-sm col-form-label'}='Tłuszcz typu omega-3'
+                    %div{class:'col-sm'}
+                        %input{name:'omega3', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'ala', class:'col-sm col-form-label'}='Tłuszcz typu ALA'
+                    %div{class:'col-sm'}
+                        %input{name:'ala', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'SFA', class:'col-sm col-form-label'}='Tłuszcze nasycone'
+                    %div{class:'col-sm'}
+                        %input{name:'SFA', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group'}
+                    %label{for:'wnkt', class:'col-sm col-form-label'}='Tłuszcze wielonienasycone'
+                    %div{class:'col-sm'}
+                        %input{name:'wnkt', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'trans', class:'col-sm col-form-label'}='Tłuszcze typu trans'
+                    %div{class:'col-sm'}
+                        %input{name:'trans', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'cholesterol', class:'col-sm col-form-label'}='Cholesterol'
+                    %div{class:'col-sm'}
+                        %input{name:'cholesterol', type:'text', class:'form-control form-control-sm'} 
+            %div{class:'col-sm'}
+                %div{class:'form-group row'}
+                    %label{for:'valine', class:'col-sm col-form-label'}='Walina'
+                    %div{class:'col-sm'}
+                        %input{name:'valine', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'isoleucine', class:'col-sm col-form-label'}='Izoleucyna'
+                    %div{class:'col-sm'}
+                        %input{name:'isoleucine', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'leucine', class:'col-sm col-form-label'}='Leucyna'
+                    %div{class:'col-sm'}
+                        %input{name:'leucine', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'lysine', class:'col-sm col-form-label'}='Lizyna'
+                    %div{class:'col-sm'}
+                        %input{name:'lysine', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'methionine', class:'col-sm col-form-label'}='Metionina'
+                    %div{class:'col-sm'}
+                        %input{name:'methionine', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'threonine', class:'col-sm col-form-label'}='Treonina'
+                    %div{class:'col-sm'}
+                        %input{name:'threonine', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'tryptophan', class:'col-sm col-form-label'}='Tryptofan'
+                    %div{class:'col-sm'}
+                        %input{name:'tryptophan', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'phenylalanine', class:'col-sm col-form-label'}='Fenyloalanina'
+                    %div{class:'col-sm'}
+                        %input{name:'phenylalanine', type:'text', class:'form-control form-control-sm'} 
+            %div{class:'col-sm'}
+                %div{class:'form-group row'}
+                    %label{for:'vitA', class:'col-sm col-form-label'}='Witamina A'
+                    %div{class:'col-sm'}
+                        %input{name:'vitA', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB1', class:'col-sm col-form-label'}='Witamina B1'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB1', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB2', class:'col-sm col-form-label'}='Witamina B2'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB2', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB3', class:'col-sm col-form-label'}='Witamina B3'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB3', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB4', class:'col-sm col-form-label'}='Witamina B4'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB4', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB5', class:'col-sm col-form-label'}='Witamina B5'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB5', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB6', class:'col-sm col-form-label'}='Witamina B6'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB6', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB9', class:'col-sm col-form-label'}='Witamina B9'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB9', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitB12', class:'col-sm col-form-label'}='Witamina B12'
+                    %div{class:'col-sm'}
+                        %input{name:'vitB12', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitC', class:'col-sm col-form-label'}='Witamina C'
+                    %div{class:'col-sm'}
+                        %input{name:'vitC', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitD', class:'col-sm col-form-label'}='Witamina D'
+                    %div{class:'col-sm'}
+                        %input{name:'vitD', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitE', class:'col-sm col-form-label'}='Witamina E'
+                    %div{class:'col-sm'}
+                        %input{name:'vitE', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitH', class:'col-sm col-form-label'}='Witamina H'
+                    %div{class:'col-sm'}
+                        %input{name:'vitH', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'vitK', class:'col-sm col-form-label'}='Witamina K'
+                    %div{class:'col-sm'}
+                        %input{name:'vitK', type:'text', class:'form-control form-control-sm'} 
+            %div{class:'col-sm'}
+                %div{class:'form-group row'}
+                    %label{for:'cl', class:'col-sm col-form-label'}='Chlor'
+                    %div{class:'col-sm'}
+                        %input{name:'cl', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'zn', class:'col-sm col-form-label'}='Cynk'
+                    %div{class:'col-sm'}
+                        %input{name:'zn', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'f', class:'col-sm col-form-label'}='Fluor'
+                    %div{class:'col-sm'}
+                        %input{name:'f', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'p', class:'col-sm col-form-label'}='Fosfor'
+                    %div{class:'col-sm'}
+                        %input{name:'p', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'i', class:'col-sm col-form-label'}='Jod'
+                    %div{class:'col-sm'}
+                        %input{name:'i', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'mg', class:'col-sm col-form-label'}='Magnez'
+                    %div{class:'col-sm'}
+                        %input{name:'mg', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'cu', class:'col-sm col-form-label'}='Miedź'
+                    %div{class:'col-sm'}
+                        %input{name:'cu', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'k', class:'col-sm col-form-label'}='Potas'
+                    %div{class:'col-sm'}
+                        %input{name:'k', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'se', class:'col-sm col-form-label'}='Selen'
+                    %div{class:'col-sm'}
+                        %input{name:'se', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'na', class:'col-sm col-form-label'}='Sód'
+                    %div{class:'col-sm'}
+                        %input{name:'na', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'ca', class:'col-sm col-form-label'}='Wapń'
+                    %div{class:'col-sm'}
+                        %input{name:'ca', type:'text', class:'form-control form-control-sm'} 
+                %div{class:'form-group row'}
+                    %label{for:'fe', class:'col-sm col-form-label'}='Żelazo'
+                    %div{class:'col-sm'}
+                        %input{name:'fe', type:'text', class:'form-control form-control-sm'} 
+        %div{class:'form-check'}
+            %input{type:'checkbox', class:'form-check-input', id:'defaultWeight', name:'defaultWeight', checked:'true'}
+            %label{class:'form-check-label', for:'defaultWeight'}='Dane dla 100 g produktu?'
+        %div{class:'form-group row', id:'alternativeWeight', style:'display:none'}
+            %label{for:'weight', class:'col-sm col-form-label'}='Waga dla której podano informacje'
+            %div{class:'col-sm'}
+                %input{name:'weight', type:'text', class:'form-control form-control-sm'} 
+        %div
+            %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 
 
 %script
@@ -209,4 +216,12 @@
     $('#alternativeWeight').css('display','inline');
     else
     $('#alternativeWeight').css('display','none');
+    });
+    $(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }    
     });

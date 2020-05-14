@@ -6,7 +6,7 @@
                 %h4="Dziś jeszcze nie został dodany żaden posiłek."
                 %h5="Dodaj posiłek, żeby sprawdzić czy zaspakajasz swoje zapotrzebowanie na składniki odżywcze."
             %div{classs:'col-md-1'}
-                = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'    
+                = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
         - else
             %div{class:'row'}
                 %div{class:'col-md-1'}
@@ -34,18 +34,30 @@
 
 -# Table with meals
 
-%div{class:'container'} 
+%div{class:'container'}
     %div{class:'row'}
         - if !@eaten.empty?
-            %table{class:'table'} 
+            %table{class:'table'}
                 %thead
                     %tr
                     - @meals.each do |meal|
                         %th=meal.Name
                     %tr
+                        %td
+                            - caloriesForMeal = 0
+                            - @eaten.each do |eaten|
+                                - if eaten.IDP == @meal.id
+                                    - caloriesForMeal += eaten.Calories
+                            =caloriesForMeal
+                    %tr='CALORIES ToDo'
+                    - @eaten.each do |eat|
+                        - if eat.IDP == meal.id
+                            %td=eat.Time
+                            %td=eat.Name
+
 
     %div{class:'row justify-content-end'}
-        = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'    
+        = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
 
 %script
     $(document).off('ajax:success').on('ajax:success',function(event){
@@ -57,22 +69,22 @@
     else if(xhr.responseText == "Choose how"){
     $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
     $("#modal-title").html('Wybierz co chcesz dodać');
-    $("#modal-body").html("#{ escape_javascript(render 'recipes/how_to_add') }");
-    $(".modal").modal('show');    
+    $("#modal-body").html("#{ escape_javascript(render 'meals/how_to_add') }");
+    $(".modal").modal('show');
     $(".btn-close").click(function () {
     if(confirm("Czy na pewno chcesz zamknąć to okno?"))
     $(".modal").modal('hide');
     });
     else if(xhr.responseText == "Comeback"){
     $("#modal-title").html('Wybierz produkt');
-    $("#modal-body").html("#{ escape_javascript(render 'meal/add_from_products') }");
+    $("#modal-body").html("#{ escape_javascript(render 'meals/add_from_products') }");
     $(".modal").modal('show');
     $("#success").css("display","block");
     $("#error").css("display","none");
     });
     else if(xhr.responseText == "Decompose"){
     $("#modal-title").html('Wybierz produkt');
-    $("#modal-body").html("#{ escape_javascript(render 'meal/decompose') }");
+    $("#modal-body").html("#{ escape_javascript(render 'meals/decompose') }");
     $(".modal").modal('show');
     $("#success").css("display","block");
     $("#error").css("display","none");

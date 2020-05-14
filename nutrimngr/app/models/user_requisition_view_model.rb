@@ -3,13 +3,13 @@ class UserRequisitionViewModel
     def initialize(id)
         @userID = id
     end
-    def calculateUserRequisition(gender,height,weight,activity,age,target)  
+    def calculateUserRequisition(gender,height,weight,activity,age,target)
         requisition = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
         requisition.calculateUserRequisition(gender,height,weight,activity,age,target)
     end
     def getUserRequisition
         requisition = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID).getUserRequisition
-        if requisition.present? 
+        if requisition.present?
             @userRequisitionPPM = requisition.PPM
             @userRequisitionCPM = requisition.CPM
             @userRequisitionTargetCalories = requisition.TargetCalories
@@ -50,6 +50,7 @@ class UserRequisitionViewModel
             @userRequisitionCa = requisition.Ca
             @userRequisitionFe = requisition.Fe
         end
+        requisition
     end
     def modifyUserRequisition(calories)
         requisition = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)

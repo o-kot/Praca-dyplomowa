@@ -59,7 +59,7 @@ class EatenViewModel
         @eatenSe = meal.Se rescue ''
         @eatenNa = meal.Na rescue ''
         @eatenCa = meal.Ca rescue ''
-        @eatenFe = meal.Fe rescue ''       
+        @eatenFe = meal.Fe rescue ''
     end
     def getEaten(date)
         mealsList = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
@@ -93,7 +93,7 @@ class EatenViewModel
         last = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
         last = last.findLast
     end
-    def decompose(params['customProduct'],params['product'],params['weight'])
+    def decompose(customProduct,product,weight)
         newEaten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
         newEaten = newEaten.decompose(params['customProduct'],params['product'],params['weight'])
     end

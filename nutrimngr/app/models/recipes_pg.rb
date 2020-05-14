@@ -15,9 +15,10 @@ class RecipesPg
             newRecipe.Name = name
             newRecipe.IsActive = true
             newRecipe.save
-        return 'success'
+            return 'success'
+        end
     end
-    def editRecipe(recipe,name) 
+    def editRecipe(recipe,name)
         if RecipeDbModel.where(Name:name).exists?
             return 'Przepis o takiej nazwie istnieje już w bazie danych.'
         else
@@ -26,13 +27,13 @@ class RecipesPg
             return 'success'
         end
     end
-    def deleteRecipe(id) 
+    def deleteRecipe(id)
         recipe = RecipeDbModel.where(id:id).first
         recipe.update_attributes(IsActive:false)
         return 'success'
     end
     def find(recipe)
-        recipe = RecipeDbModel.where(id:recipe).first        
+        recipe = RecipeDbModel.where(id:recipe).first
     end
     def findLast
         last = CompleteRecipeDbModel.where(IDU:@userID).last
@@ -57,11 +58,12 @@ class RecipesPg
         return 'success'
     end
     def getProductList(recipe)
-        productList = RecipeProductsDbModel.where(IDR:recipe).map do |products| 
+        productList = RecipeProductsDbModel.where(IDR:recipe).map do |products|
             {
                 id:products.IDP,
                 weight:products.Weight
             }
+        end
         ingredients = {}
         ingredientsWeight = {}
         productList.each do |product|
@@ -82,16 +84,17 @@ class RecipesPg
         newCompleteRecipe.Protein = 0
         newCompleteRecipe.Carbs = 0
         newCompleteRecipe.Fat = 0
-        newCompleteRecipe.save            
+        newCompleteRecipe.save
         return newCompleteRecipe.id
     end
     def calculateNutrition(recipe)
         newCompleteRecipe = CompleteRecipeDbModel.where(id:recipe).first
-        productList = RecipeProductsDbModel.where(IDR:newCompleteRecipe.IDR).map do |products| 
+        productList = RecipeProductsDbModel.where(IDR:newCompleteRecipe.IDR).map do |products|
             {
                 id:products.IDP,
                 weight:products.Weight
             }
+        end
         productList.each do |product|
             productInfo = ProductInfoDbModel.where(id:product.id).first
             newCompleteRecipe.Calories = newCompleteRecipe.Calories.nil? ? 0 : newCompleteRecipe.Calories + productInfo.Calories * product.weight rescue newCompleteRecipe.Calories
@@ -129,12 +132,12 @@ class RecipesPg
             newCompleteRecipe.VitH = newCompleteRecipe.VitH.nil? ? 0 : newCompleteRecipe.VitH + productInfo.VitH * product.weight rescue newCompleteRecipe.VitH
             newCompleteRecipe.VitK = newCompleteRecipe.VitK.nil? ? 0 : newCompleteRecipe.VitK + productInfo.VitK * product.weight rescue newCompleteRecipe.VitK
             newCompleteRecipe.Cl = newCompleteRecipe.Cl.nil? ? 0 : newCompleteRecipe.Cl + productInfo.Cl * product.weight rescue newCompleteRecipe.Cl
-            newCompleteRecipe.Zn = newCompleteRecipe.Zn.nil? ? 0: newCompleteRecipe.Zn + productInfo.Zn * product.weight rescue newCompleteRecipe.Zn 
+            newCompleteRecipe.Zn = newCompleteRecipe.Zn.nil? ? 0: newCompleteRecipe.Zn + productInfo.Zn * product.weight rescue newCompleteRecipe.Zn
             newCompleteRecipe.F = newCompleteRecipe.F.nil? ? 0 : ewCompleteRecipe.F + productInfo.F * product.weight rescue newCompleteRecipe.F
             newCompleteRecipe.P = newCompleteRecipe.P.nil? ? 0 : newCompleteRecipe.P + productInfo.P * product.weight rescue newCompleteRecipe.P
             newCompleteRecipe.I = newCompleteRecipe.I.nil? ? 0 : newCompleteRecipe.I + productInfo.I * product.weight rescue newCompleteRecipe.I
             newCompleteRecipe.Mg = ewCompleteRecipe.Mg.nil? ? 0 : ewCompleteRecipe.Mg + productInfo.Mg * product.weight rescue newCompleteRecipe.Mg
-            newCompleteRecipe.Cu = newCompleteRecipe.Cu.nil? ? 0 : newCompleteRecipe.Cu + productInfo.Cu * product.weight rescue newCompleteRecipe.Cu 
+            newCompleteRecipe.Cu = newCompleteRecipe.Cu.nil? ? 0 : newCompleteRecipe.Cu + productInfo.Cu * product.weight rescue newCompleteRecipe.Cu
             newCompleteRecipe.K = newCompleteRecipe.K.nil? ? 0 : newCompleteRecipe.K + productInfo.K * product.weight rescue newCompleteRecipe.K
             newCompleteRecipe.Se = newCompleteRecipe.Se.nil? ? 0 : newCompleteRecipe.Se + productInfo.Se * product.weight rescue newCompleteRecipe.Se
             newCompleteRecipe.Na = newCompleteRecipe.Na.nil? ? 0 : newCompleteRecipe.Na + productInfo.Na  * product.weight rescue newCompleteRecipe.Na

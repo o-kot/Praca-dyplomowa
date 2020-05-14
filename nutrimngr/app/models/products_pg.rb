@@ -65,67 +65,74 @@ class ProductsPg
                 newUserProduct.Fe = fe
             else
                 temp = 100/weight
-                newUserProduct.Calories = calories * temp
-                newUserProduct.Protein = protein * temp rescue nil
-                newUserProduct.Carbs = carbs * temp rescue nil
-                newUserProduct.Fat = fat * temp rescue nil
-                newUserProduct.Sugars = sugars * temp rescue nil
-                newUserProduct.Fiber = fiber * temp rescue nil
-                newUserProduct.Omega3 = omega3 * temp rescue nil
-                newUserProduct.ALA = ala * temp rescue nil
-                newUserProduct.SFA = sfa * temp rescue nil
-                newUserProduct.WNKT = wnkt * temp rescue nil
-                newUserProduct.Trans = trans * temp rescue nil
-                newUserProduct.Cholesterol = cholesterol * temp rescue nil
-                newUserProduct.Valine = valine * temp rescue nil
-                newUserProduct.Isoleucine = isoleucine * temp rescue nil
-                newUserProduct.Leucine = leucine * temp rescue nil
-                newUserProduct.Lysine = lysine * temp rescue nil
-                newUserProduct.Methionine = methionine * temp rescue nil
-                newUserProduct.Threonine = threonine * temp rescue nil
-                newUserProduct.Tryptophan = tryptophan * temp rescue nil
-                newUserProduct.Phenylalanine = phenylalanine * temp rescue nil
-                newUserProduct.VitA = vitA * temp rescue nil
-                newUserProduct.VitB1 = vitB1 * temp rescue nil
-                newUserProduct.VitB2 = vitB2 * temp rescue nil
-                newUserProduct.VitB3 = vitB3 * temp rescue nil
-                newUserProduct.VitB4 = vitB4 * temp rescue nil
-                newUserProduct.VitB5 = vitB5 * temp rescue nil
-                newUserProduct.VitB6 = vitB6 * temp rescue nil
-                newUserProduct.VitB9 = vitB9 * temp rescue nil
-                newUserProduct.VitB12 = vitB12 * temp rescue nil
-                newUserProduct.VitC = vitC * temp rescue nil
-                newUserProduct.VitD = vitD * temp rescue nil
-                newUserProduct.VitE = vitE * temp rescue nil
-                newUserProduct.VitH = vitH * temp rescue nil
-                newUserProduct.VitK = vitK * temp rescue nil
-                newUserProduct.Cl = cl * temp rescue nil
-                newUserProduct.Zn = zn * temp rescue nil
-                newUserProduct.F = f * temp rescue nil
-                newUserProduct.P = p * temp rescue nil
-                newUserProduct.I = i * temp rescue nil
-                newUserProduct.Mg = mg * temp rescue nil
-                newUserProduct.Cu = cu * temp rescue nil
-                newUserProduct.K = k * temp rescue nil
-                newUserProduct.Se = se * temp rescue nil
-                newUserProduct.Na = na  * temp rescue nil
-                newUserProduct.Ca = ca * temp rescue nil
-                newUserProduct.Fe = fe * temp rescue nil
+                puts temp
+                newUserProduct.Calories = calories.to_f * temp
+                newUserProduct.Protein = protein.to_f * temp rescue nil
+                newUserProduct.Carbs = carbs.to_f * temp rescue nil
+                newUserProduct.Fat = fat.to_f * temp rescue nil
+                newUserProduct.Sugars = sugars.to_f * temp rescue nil
+                newUserProduct.Fiber = fiber.to_f * temp rescue nil
+                newUserProduct.Omega3 = omega3.to_f * temp rescue nil
+                newUserProduct.ALA = ala.to_f * temp rescue nil
+                newUserProduct.SFA = sfa.to_f * temp rescue nil
+                newUserProduct.WNKT = wnkt.to_f * temp rescue nil
+                newUserProduct.Trans = trans.to_f * temp rescue nil
+                newUserProduct.Cholesterol = cholesterol.to_f * temp rescue nil
+                newUserProduct.Valine = valine.to_f * temp rescue nil
+                newUserProduct.Isoleucine = isoleucine.to_f * temp rescue nil
+                newUserProduct.Leucine = leucine.to_f * temp rescue nil
+                newUserProduct.Lysine = lysine.to_f * temp rescue nil
+                newUserProduct.Methionine = methionine.to_f * temp rescue nil
+                newUserProduct.Threonine = threonine.to_f * temp rescue nil
+                newUserProduct.Tryptophan = tryptophan.to_f * temp rescue nil
+                newUserProduct.Phenylalanine = phenylalanine.to_f * temp rescue nil
+                newUserProduct.VitA = vitA.to_f * temp rescue nil
+                newUserProduct.VitB1 = vitB1.to_f * temp rescue nil
+                newUserProduct.VitB2 = vitB2.to_f * temp rescue nil
+                newUserProduct.VitB3 = vitB3.to_f * temp rescue nil
+                newUserProduct.VitB4 = vitB4.to_f * temp rescue nil
+                newUserProduct.VitB5 = vitB5.to_f * temp rescue nil
+                newUserProduct.VitB6 = vitB6.to_f * temp rescue nil
+                newUserProduct.VitB9 = vitB9.to_f * temp rescue nil
+                newUserProduct.VitB12 = vitB12.to_f * temp rescue nil
+                newUserProduct.VitC = vitC.to_f * temp rescue nil
+                newUserProduct.VitD = vitD.to_f * temp rescue nil
+                newUserProduct.VitE = vitE.to_f * temp rescue nil
+                newUserProduct.VitH = vitH.to_f * temp rescue nil
+                newUserProduct.VitK = vitK.to_f * temp rescue nil
+                newUserProduct.Cl = cl.to_f * temp rescue nil
+                newUserProduct.Zn = zn.to_f * temp rescue nil
+                newUserProduct.F = f.to_f * temp rescue nil
+                newUserProduct.P = p.to_f * temp rescue nil
+                newUserProduct.I = i.to_f * temp rescue nil
+                newUserProduct.Mg = mg.to_f * temp rescue nil
+                newUserProduct.Cu = cu.to_f * temp rescue nil
+                newUserProduct.K = k.to_f * temp rescue nil
+                newUserProduct.Se = se.to_f * temp rescue nil
+                newUserProduct.Na = na.to_f  * temp rescue nil
+                newUserProduct.Ca = ca.to_f * temp rescue nil
+                newUserProduct.Fe = fe.to_f * temp rescue nil
             end
         newUserProduct.save
         return 'success'
         end
     end
-    def editUserProduct(product,edited)
+    def editProductInfo(product,edited)        
+        puts edited
+        if ProductInfoDbModel.where(Name:edited['Name']).exists?
+            return 'Produkt o takiej nazwie istnieje już w bazie danych.'  
+        end
         product = ProductInfoDbModel.find(product)
-        product.Name = edited['name'] if edited.key?('name')
+        product.Name = edited['Name'] if edited.key?('Name')           
         if edited['weight'] == 100
             edited.each do |key,value|
+                next if %w[weight authenticity_token Name product defaultWeight controller action].include?(key)          
                 product.update_attributes(key => value)
             end
         else
-            temp = 100/weight
+            temp = 100/edited['weight']
             edited.each do |key,value|
+                next if %w[weight authenticity_token Name product defaultWeight controller action].include?(key)                 
                 product.update_attributes(key => value * temp)
             end
         end
@@ -135,5 +142,6 @@ class ProductsPg
     def deleteUserProduct(product)
         temp = ProductInfoDbModel.find(product)
         temp.delete
+        tempR = RecipeProductsDbModel.where(IDP:product).delete_all
     end
 end

@@ -114,14 +114,14 @@ class UserProfilePg
         newUserRequisition.CPM = cpm
         newUserRequisition.Protein = weight*ProteinRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\"").first.Requirement
         newUserRequisition.Carbs = 130
-        newUserRequisition.Valine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Valine'").first.Requirement
-        newUserRequisition.Isoleucine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Isoleucine'").first.Requirement
-        newUserRequisition.Leucine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Leucine'").first.Requirement
-        newUserRequisition.Lysine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Lysine'").first.Requirement
-        newUserRequisition.Methionine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Methionine'").first.Requirement
-        newUserRequisition.Threonine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Threonine'").first.Requirement
-        newUserRequisition.Tryptophan = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Tryptophan'").first.Requirement
-        newUserRequisition.Phenylalanine = AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Phenylalanine'").first.Requirement
+        newUserRequisition.Valine = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Valine'").first.Requirement
+        newUserRequisition.Isoleucine = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Isoleucine'").first.Requirement
+        newUserRequisition.Leucine = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Leucine'").first.Requirement
+        newUserRequisition.Lysine = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Lysine'").first.Requirement
+        newUserRequisition.Methionine = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Methionine'").first.Requirement
+        newUserRequisition.Threonine = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Threonine'").first.Requirement
+        newUserRequisition.Tryptophan = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Tryptophan'").first.Requirement
+        newUserRequisition.Phenylalanine = weight*AminoAcidsRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'Phenylalanine'").first.Requirement
         newUserRequisition.VitA = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitA' and \"IsWoman\" = #{gender}").first.Requirement
         newUserRequisition.VitB1 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB1' and \"IsWoman\" = #{gender}").first.Requirement
         newUserRequisition.VitB2 = GeneralRequisitionDbModel.where("#{age} >= \"FromAge\" and #{age} <=\"ToAge\" and \"Name\" LIKE 'VitB2' and \"IsWoman\" = #{gender}").first.Requirement
