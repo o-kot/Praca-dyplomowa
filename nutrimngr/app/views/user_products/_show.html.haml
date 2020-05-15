@@ -1,47 +1,230 @@
-=@product.productName 
-=@product.productCalories 
-=@product.productProtein 
-=@product.productCarbs
-=@product.productFat
-=@product.productSugars
-=@product.productFiber 
-=@product.productOmega3 
-=@product.productALA 
-=@product.productSFA 
-=@product.productWNKT 
-=@product.productTrans 
-=@product.productCholesterol
-=@product.productValine 
-=@product.productIsoleucine
-=@product.productLeucine 
-=@product.productLysine 
-=@product.productMethionine 
-=@product.productThreonine 
-=@product.productTryptophan 
-=@product.productPhenylalanine 
-=@product.productVitA
-=@product.productVitB1
-=@product.productVitB2 
-=@product.productVitB3 
-=@product.productVitB4 
-=@product.productVitB5 
-=@product.productVitB6 
-=@product.productVitB9 
-=@product.productVitB12 
-=@product.productVitC
-=@product.productVitD 
-=@product.productVitE
-=@product.productVitH 
-=@product.productVitK 
-=@product.productCl
-=@product.productZn
-=@product.productF 
-=@product.productP 
-=@product.productI
-=@product.productMg
-=@product.productCu 
-=@product.productK
-=@product.productSe
-=@product.productNa
-=@product.productCa
-=@product.productFe
+%table{class:'table table-sm'}
+    %tr
+        %td='Kalorie: '
+        %td=@product.productCalories
+        %td=' kcal'
+    - if !@product.productProtein.nil?
+        %tr
+            %td='Białko: '
+            %td=@product.productProtein 
+            %td=' g'
+    - if !@product.productCarbs.nil?
+        %tr
+            %td='Węglowodany: '
+            %td=@product.productCarbs
+            %td=' g'
+    - if !@product.productFat.nil?
+        %tr
+            %td='Tłuszcz: '
+            %td=@product.productFat
+            %td=' g'
+    - if !@product.productSugars.nil?
+        %tr
+            %td='Cukier: '
+            %td=@product.productSugars
+            %td=' g'
+    - if !@product.productFiber.nil?
+        %tr
+            %td='Błonnik: '
+            %td=@product.productFiber
+            %td=' g'
+    - if !@product.productOmega3.nil?
+        %tr
+            %td='Kwasy Omega 3: '
+            %td=@product.productOmega3
+            %td=' g'
+    - if !@product.productALA.nil?
+        %tr
+            %td='ALA: '
+            %td=@product.productALA
+            %td=' g'
+    - if !@product.productSFA.nil?
+        %tr
+            %td='Tłuszcze nasycone: '
+            %td=@product.productSFA
+            %td=' g'
+    - if !@product.productWNKT.nil?
+        %tr
+            %td='Tłuszcze wielonienasycone: '
+            %td=@product.productWNKT
+            %td=' g'
+    - if !@product.productTrans.nil?
+        %tr
+            %td='Tłuszcze trans: '
+            %td=@product.productTrans
+            %td=' g'
+    - if !@product.productCholesterol.nil?
+        %tr
+            %td='Cholesterol: '
+            %td=@product.productCholesterol
+            %td=' mg'
+    - if !@product.productValine.nil?
+        %tr
+            %td='Walina: '
+            %td=@product.productValine
+            %td=' mg'
+    - if !@product.productIsoleucine.nil?
+        %tr
+            %td='Izoleucyna: '
+            %td=@product.productIsoleucine
+            %td=' mg'
+    - if !@product.productLeucine.nil?
+        %tr
+            %td='Leucyna: '
+            %td=@product.productLeucine
+            %td=' mg'
+    - if !@product.productLysine.nil?
+        %tr
+            %td='Lizyna: '
+            %td=@product.productLysine
+            %td=' mg'
+    - if !@product.productMethionine.nil?
+        %tr
+            %td='Metionina + cysteina: '
+            %td=@product.productMethionine
+            %td=' mg'
+    - if !@product.productThreonine.nil?
+        %tr
+            %td='Treonina: '
+            %td=@product.productThreonine
+            %td=' mg'
+    - if !@product.productTryptophan.nil?
+        %tr
+            %td='Tryptofan: '
+            %td=@product.productTryptophan
+            %td=' mg'
+    - if !@product.productPhenylalanine.nil?
+        %tr
+            %td='Fenyalanina: '
+            %td=@product.productPhenylalanine
+            %td=' mg'
+    - if !@product.productVitA.nil?
+        %tr
+            %td='Witamina A(RAE): '
+            %td=@product.productVitA
+            %td=' &#181;g'
+    - if !@product.productVitB1.nil?
+        %tr
+            %td='Witamina B1: '
+            %td=@product.productVitB1
+            %td=' mg'
+    - if !@product.productVitB2.nil?
+        %tr
+            %td='Witamina B2: '
+            %td=@product.productVitB2
+            %td=' mg'
+    - if !@product.productVitB3.nil?
+        %tr
+            %td='Witamina B3: '
+            %td=@product.productVitB3
+            %td=' mg'
+    - if !@product.productVitB4.nil?
+        %tr
+            %td='Witamina B4: '
+            %td=@product.productVitB4
+            %td=' mg'
+    - if !@product.productVitB5.nil?
+        %tr
+            %td='Witamina B5: '
+            %td=@product.productVitB5
+            %td=' mg'
+    - if !@product.productVitB6.nil?
+        %tr
+            %td='Witamina B6: '
+            %td=@product.productVitB6
+            %td=' mg'
+    - if !@product.productVitB9.nil?
+        %tr
+            %td='Witamina B9: '
+            %td=@product.productVitB9
+            %td=' &#181;g'
+    - if !@product.productVitB12.nil?
+        %tr
+            %td='Witamina B12: '
+            %td=@product.productVitB12
+            %td=' &#181;g'
+    - if !@product.productVitC.nil?
+        %tr
+            %td='Witamina C: '
+            %td=@product.productVitC
+            %td=' mg'
+    - if !@product.productVitD.nil?
+        %tr
+            %td='Witamina D: '
+            %td=@product.productVitD
+            %td=' &#181;g'
+    - if !@product.productVitE.nil?
+        %tr
+            %td='Witamina E: '
+            %td=@product.productVitE
+            %td=' mg'
+    - if !@product.productVitH.nil?
+        %tr
+            %td='Witamina H: '
+            %td=@product.productVitH
+            %td=' &#181;g'
+    - if !@product.productVitK.nil?
+        %tr
+            %td='Witamina K: '
+            %td=@product.productVitK
+            %td=' &#181;g'
+    - if !@product.productCl.nil?
+        %tr
+            %td='Chlor: '
+            %td=@product.productCl
+            %td=' mg'
+    - if !@product.productZn.nil?
+        %tr
+            %td='Cynk: '
+            %td=@product.productZn
+            %td=' mg'
+    - if !@product.productF.nil?
+        %tr
+            %td='Fluor: '
+            %td=@product.productF
+            %td=' &#181;g'
+    - if !@product.productP.nil?
+        %tr
+            %td='Fosfor: '
+            %td=@product.productP
+            %td=' mg'
+    - if !@product.productI.nil?
+        %tr
+            %td='Jod: '
+            %td=@product.productI
+            %td=' &#181;g'
+    - if !@product.productMg.nil?
+        %tr
+            %td='Magnez: '
+            %td=@product.productMg
+            %td=' mg'
+    - if !@product.productCu.nil?
+        %tr
+            %td='Miedź: '
+            %td=@product.productCu
+            %td=' mg'
+    - if !@product.productK.nil?
+        %tr
+            %td='Potas: '
+            %td=@product.productK
+            %td=' mg'
+    - if !@product.productSe.nil?
+        %tr
+            %td='Selen: '
+            %td=@product.productSe
+            %td=' &#181;g'
+    - if !@product.productNa.nil?
+        %tr
+            %td='Sód: '
+            %td=@product.productNa
+            %td=' mg'
+    - if !@product.productCa.nil?
+        %tr
+            %td='Wapń: '
+            %td=@product.productCa
+            %td=' mg'
+    - if !@product.productFe.nil?
+        %tr
+            %td='Żelazo: '
+            %td=@product.productFe
+            %td=' mg'

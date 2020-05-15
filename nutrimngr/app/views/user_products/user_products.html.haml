@@ -49,7 +49,7 @@
                             %td=product.Carbs
                             %td=product.Fat
                             %td
-                                = link_to '', modal_path(body: 'user_products/show', product: product.id, title: product.Name, size: 'lg'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
+                                = link_to '', modal_path(body: 'user_products/show', product: product.id, title: product.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
                             %td
                                 = link_to '', modal_path(body: 'user_products/edit', product: product.id, title: 'Edytuj wybrane dane', size: 'lg'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'
                             %td
@@ -61,7 +61,7 @@
                 %td=@searched.Carbs
                 %td=@searched.Fat
                 %td
-                    = link_to '', modal_path(body: 'user_products/show', product: @searched.id, title: @searched.Name, size: 'lg'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
+                    = link_to '', modal_path(body: 'user_products/show', product: @searched.id, title: @searched.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
                 %td
                     = link_to '', modal_path(body: 'user_products/edit', product: @searched.id, title: 'Edytuj wybrane dane', size: 'lg'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'
                 %td
