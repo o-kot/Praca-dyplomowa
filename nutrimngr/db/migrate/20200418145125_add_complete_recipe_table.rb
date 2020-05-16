@@ -3,9 +3,9 @@ class AddCompleteRecipeTable < ActiveRecord::Migration[5.2]
     create_table :CompleteRecipe do |t|
       t.integer :IDR
       t.boolean :IsActive
-      t.boolean :HasPortion
+      t.boolean :HasPortions
       t.integer :HowManyPortion, null: true
-      t.boolean :IsWeighed
+      t.boolean :IsWeighted
       t.float :Weight, precission: 6, scale: 2, null: true
       t.float :WhatIsLeft, precission: 6, scale: 2 
       t.float :Calories, precission: 6, scale: 2 
@@ -53,7 +53,7 @@ class AddCompleteRecipeTable < ActiveRecord::Migration[5.2]
       t.float :Na, precission: 4, scale: 2, null: true 
       t.float :Ca, precission: 4, scale: 2, null: true 
       t.float :Fe, precission: 4, scale: 2, null: true
-      t.float :Cholesterol, precission: 5, scale: 2, null: true 
+      t.float :Cholesterol, precission: 6, scale: 2, null: true 
      end
   end
 end

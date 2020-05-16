@@ -224,4 +224,13 @@
     $("#error").css("display","block");
     $("#success").css("display","none");
     }    
+    else if(xhr.responseText == "Add products"){
+    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
+    $("#modal-title").html('Dodaj składniki przepisu');
+    $("#modal-body").html("#{ escape_javascript(render 'recipes/add_products') }");
+    $(".modal").modal('show');    
+    $(".btn-close").click(function () {
+    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
+    $(".modal").modal('hide');
     });
+    }); 

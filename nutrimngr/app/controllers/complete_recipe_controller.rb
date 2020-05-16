@@ -7,8 +7,8 @@ class CompleteRecipeController < ApplicationController
             if !weight.blank?
                 begin
                     weight = Float(weight)
-                    newWeighted = CompleteRecipeViewModel.new(session[:sessionID])
-                    newWeighted.weightedProducts(params['recipe'],id,weight)
+                    newWeighted = RecipeProductsViewModel.new(session[:sessionID])
+                    newWeighted.weightProduct(params['recipe'],id,weight)
                 rescue
                     render plain: "Wprowadzono błędną wartość"  and return
                 end
@@ -18,7 +18,7 @@ class CompleteRecipeController < ApplicationController
         end
         newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
         newCompleteRecipeID = newCompleteRecipe.createCompleteRecipe(params['recipe'])
-        if params['goToPortioning']) == 'on'
+        if params['goToPortioning'] == 'on'
             render plain: 'Go to portioning' and return
         else
             newCompleteRecipe.calculateNutrition(newCompleteRecipeID)

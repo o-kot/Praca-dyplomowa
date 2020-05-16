@@ -6,25 +6,29 @@ class RecipeController < ApplicationController
             render plain: 'Pole nazwa nie może być puste.' and return
         end     
         newRecipe = RecipeViewModel.new(session[:sessionID])
-        if newRecipe.addRecipe(params['name']) == 'success' && params['goToProducts']=='on'
+        added = newRecipe.addRecipe(params['name'])
+        if added == 'success' && params['goToProducts']=='on'
             render plain: 'Add products' and return
-        elsif  newRecipe.addRecipe(params['name']) == 'success' && !params['goToProducts']=='on'
+        elsif  added == 'success' && params['goToProducts']!='on'
             session[:message]='Przepis został zapisany.'
-            redirect_to '/recipes/recipes'  
+            redirect_to '/recipes/recipes' 
+        else
+            render plain: added
         end       
     end
     def addProduct
         newRecipeProduct = RecipeProductsViewModel.new(session[:sessionID])
         existingProductsList = ProductInfoViewModel.new(session[:sessionID])
-        existingProductsList = existingProductsList.getProductList.each {|existing|existing.id}
-        productsIDs = []
+        existingProductsList = existingProductsList.getProductList 
+        productNames = []
         params['product'].each do |product|
-            if !existingProductsList.include?(product)
+            if !existingProductsList.map {|existing|existing.Name}.include?(product)
                 render plain: 'Podany produkt nie istnieje' and return
             end
-            if !productsIDs.include?(product['value'])
-                newRecipeProduct.addProduct(params['recipe'],product['value'])
-                productsIDs << product['value']
+            if !productNames.include?(product)
+                productID = existingProductsList.find{|p| p.Name == product}.id
+                newRecipeProduct.addProduct(params['recipe'],productID)                
+                productNames << product
             end
         end
         session[:message]='Dodano składniki do przepisu.'
@@ -40,9 +44,11 @@ class RecipeController < ApplicationController
             end
     end
     def delete
-        newRecipe = RecipeProductsViewModel.new(session[:sessionID])
+        newRecipe = RecipeViewModel.new(session[:sessionID])
         if newRecipe.deleteRecipe(params['recipe']) == 'success'
-            render plain: 'Przepis został usunięty.'
+            session[:message]='Przepis został usunięty.'
+            redirect_to '/recipes/recipes' 
+        end
     end
     def deleteProduct
         recipeProduct = RecipeProductsViewModel.new(session[:sessionID])

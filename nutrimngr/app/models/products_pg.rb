@@ -7,11 +7,11 @@ class ProductsPg
         newProductInfo = ProductInfoDbModel.find(product)
     end
     def getProductList(userOnly)
-        userOnly ? ProductInfoDbModel.where(IDU:@userID) : ProductInfoDbModel.all
+        userOnly ? ProductInfoDbModel.where(IDU:@userID) : ProductInfoDbModel.where("\"IDU\" =? or \"IDU\" is NULL",@userID)
     end
     def addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,cholesterol,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,weight)
         if ProductInfoDbModel.where(Name:name).exists?
-            return 'Produkt o takiej nazwie istnieje już w bazie danych.'
+            return 'Produkt o takiej nazwie istnieje już w bazie danych'
         else
             newUserProduct = ProductInfoDbModel.new
             newUserProduct.Name = name
@@ -65,7 +65,6 @@ class ProductsPg
                 newUserProduct.Fe = fe
             else
                 temp = 100/weight
-                puts temp
                 newUserProduct.Calories = calories.to_f * temp
                 newUserProduct.Protein = protein.to_f * temp rescue nil
                 newUserProduct.Carbs = carbs.to_f * temp rescue nil
@@ -114,11 +113,10 @@ class ProductsPg
                 newUserProduct.Fe = fe.to_f * temp rescue nil
             end
         newUserProduct.save
-        return 'success'
         end
+        return 'success'
     end
     def editProductInfo(product,edited)        
-        puts edited
         if ProductInfoDbModel.where(Name:edited['Name']).exists?
             return 'Produkt o takiej nazwie istnieje już w bazie danych.'  
         end

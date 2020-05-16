@@ -11,5 +11,7 @@ class RecipesController < ApplicationController
         @recipes = @recipes.getRecipeList
         @completeRecipes = CompleteRecipeViewModel.new(session[:sessionID])
         @completeRecipes = @completeRecipes.getCompleteRecipeList
+        @productList = ProductInfoViewModel.new(session[:sessionID])
+        @productList = @productList.getProductList
     end
 end

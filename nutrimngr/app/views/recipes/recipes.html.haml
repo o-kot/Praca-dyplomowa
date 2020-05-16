@@ -1,3 +1,6 @@
+%div{style:'display:none'}
+    = link_to 'Dodaj składniki', modal_path(body: 'recipes/add_products', title: 'Dodaj składniki przepisu'), id:'addPr', remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder'
+
 -# Top central space
 
 %div{class:'top-space'}
@@ -30,20 +33,22 @@
                             %td
                                 = link_to '', delete_recipe_path(recipe: recipe.id), class: 'fas fa-times btn-delete delete'
                             %td
-                                = link_to '', modal_path(body: 'recipes/create', title: 'Uzupełnij dane'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-mortar-pestle btn-edit'     
+                                = link_to '', modal_path(body: 'recipes/create', title: 'Uzupełnij dane', recipe: recipe.id), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-mortar-pestle btn-edit'     
 
             #cookedRecipes{class:'col-sm-6 col-md-4'}
-                %h4{class:'inside-header'}='Przygotowane potrawy'
-                %table{class:'table'} 
-                    - @completeRecipes.each do |cr|
-                        %tr
-                            %td=cr.Name
-                            - if cr.IsWeighted == false && cr.HasPortioned == false
+                - if !@completeRecipes.empty?
+                    %h4{class:'inside-header'}='Przygotowane potrawy'
+                    %table{class:'table'} 
+                        - @completeRecipes.each do |cr|
+                            %tr
+                                %td=@recipes.find{|rec|rec.id==cr.IDR}.Name
+                                - if cr.IsWeighted == false && cr.HasPortions == false
+                                    %td
+                                        = link_to '', modal_path(body: 'recipes/measure_recipe', recipe: cr.id), class: 'fas fa-balance-scale btn-add divide'
                                 %td
-                                    = link_to '', modal_path(body: 'recipes/measure_recipe', recipe: cr.id), class: 'fas fa-balance scale btn-add divide'
-                            %td
-                                = link_to '', end_recipe_path(recipe: cr.id), class: 'fas fa-times btn-delete end'
-                          
+                                    = link_to '', end_recipe_path(recipe: cr.id), class: 'fas fa-times btn-delete end'
+
+                         
 %script
     $(document).off('ajax:success').on('ajax:success',function(event){
     var xhr = event.detail[2];
@@ -55,36 +60,6 @@
     $("#error").css("display","block");
     $("#success").css("display","none");
     }
-    else if(xhr.responseText == "Add products"){
-    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
-    $("#modal-title").html('Dodaj składniki przepisu');
-    $("#modal-body").html("#{ escape_javascript(render 'recipes/add_products') }");
-    $(".modal").modal('show');    
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
-    }    
-    else if(xhr.responseText == "Edited name"){
-    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
-    $("#modal-title").html('Edytuj przepis');
-    $("#modal-body").html("#{ escape_javascript(render 'recipes/edit') }");
-    $(".modal").modal('show');    
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
-    }   
-    else if(xhr.responseText == "Go to portioning"){
-    $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
-    $("#modal-title").html('Pomiar gotowej potrawy');
-    $("#modal-body").html("#{ escape_javascript(render 'recipes/measure_recipe') }");
-    $(".modal").modal('show'); 
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');   
-    });
-    } 
     else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
     $("#error").html(xhr.responseText);
     $("#error").css("display","block");
@@ -95,6 +70,7 @@
     $(".delete").click(function () {
     if(!confirm("Czy na pewno chcesz usunąć ten przepis?"))
     return false;
+    });
     });
     $(document).ready(function (){
     $(".end").click(function () {

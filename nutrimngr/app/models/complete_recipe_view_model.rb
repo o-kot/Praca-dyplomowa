@@ -4,35 +4,35 @@ class CompleteRecipeViewModel
         @userID = id
     end
     def createCompleteRecipe(recipe)
-        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipe.createCompleteRecipe(recipe)
     end
     def calculateNutrition(id)
-        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipe.calculateNutrition(id)
     end
     def measureRecipe(recipe,how,measurement)
-        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipeNa.measureRecipe(recipe,how,measurement)
     end
     def findAmount(completeRecipe)
-        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipe.findAmount(completeRecipe)
     end
     def calculateWhatsLeft(id,eaten)
-        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipe.calculateWhatsLeft(id,eaten)
     end
     def getCompleteRecipeList
         completeRecipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipes = completeRecipes.getCompleteRecipeList
     end
-    def findLast
+    def findLastComplete
         completeRecipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipes = completeRecipes.findLast
     end 
     def markAsEaten(id)
-        completeRecipe = UserProfileInterface.new(ConfigDb::RECIPES.constantize.new)
+        completeRecipe = UserProfileInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipe.markAsEaten(id)
     end
     @completeRecipeRecipeID = completeRecipe.IDR rescue ''

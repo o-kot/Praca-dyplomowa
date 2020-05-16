@@ -88,8 +88,9 @@ class UserProductsController < ApplicationController
         elsif newUserProduct.addUserProduct(params['name'], params['kcal'], params['protein'], params['carbs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe'], weight) == 'success'
             session[:message]='Produkt został zapisany.'
             redirect_to '/user_products/user_products'
+        else
+            render plain: newUserProduct.addUserProduct(params['name'], params['kcal'], params['protein'], params['carbs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe'], weight)
         end
-        render plain: newUserProduct.addUserProduct(params['name'], params['kcal'], params['protein'], params['carbs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe'], weight)
     end
     def edit
         edited = {}
@@ -100,12 +101,8 @@ class UserProductsController < ApplicationController
                 edited[key]=value.to_f
             elsif key=='defaultWeight' && value == 'on'
                 edited['weight']=100
-                puts 'Dupa'
-                puts edited['weight']                
             elsif key=='weight' && !value.blank?
                 edited[key]=value.to_f
-                puts 'Dupa'
-                puts edited['weight']                
             end
         end
         editedProduct = ProductInfoViewModel.new(session[:sessionID])
@@ -120,12 +117,5 @@ class UserProductsController < ApplicationController
         userProduct = ProductInfoViewModel.new(session[:sessionID])
         userProduct.deleteUserProduct(params['product'])
         redirect_to '/user_products/user_products'
-    end
-    def search
-        if params['name'].blank?
-            render plain: 'Nie wprowadzono produktu do wyszukania.' and return
-        end
-        params['searching']=params['name']
-        redirect_to "/user_products/user_products?#{params['searching']}"
     end
 end

@@ -1,8 +1,15 @@
 class RecipeViewModel
-    attr_accessor :recipeName
     def initialize(id)
         @userID = id
     end
+    def find(recipe)
+        searched = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        searched.find(recipe)
+    end
+    def findLast
+        last = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        last = last.findLast
+    end 
     def getRecipeList
         recipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         recipes = recipes.getRecipeList       
@@ -12,15 +19,15 @@ class RecipeViewModel
         recipe = recipe.addRecipe(name)
     end
     def editRecipe(recipe,name)
-        recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        recipe = recipe.editRecipe(id,name)
+        edited = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        edited = edited.editRecipe(recipe,name)
     end
     def deleteRecipe(id)
         recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         recipe = recipe.deleteRecipe(id)
     end
-    @recipeID = ''
-    @recipeIsActive = ''
-    private
-    @recipeIsActive = ''
+    def set(id,name)
+        recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        recipe.set(id,name)
+     end
 end

@@ -7,24 +7,38 @@ class ModalController < ActionController::Base
         when 'user_products/edit'
             @product = ProductInfoViewModel.new(session[:sessionID])
             @product.getProductInfo(params['product'])
+        when 'recipes/add'
+            @recipe = RecipeViewModel.new(session[:sessionID])
+            @recipe = @recipe.set(-1,'tmp')                    
         when 'recipes/add_products'
             @recipe = RecipeViewModel.new(session[:sessionID])
-            @recipe = @recipe.find(params['recipe'])
-            @products = ProductInfoViewModel.new(session[:sessionID])
-            @products = @products.getProductList(@recipe.id)['ingredients']
-            @productsInfo = @products.map{|product|{"name" => product.Name, "value" => product.id}}
+            if params['recipe'].present?
+                @recipe = RecipeViewModel.new(session[:sessionID])
+                @recipe = @recipe.find(params['recipe'])
+            else
+                @recipe = RecipeViewModel.new(session[:sessionID])
+                @recipe = @recipe.findLast
+            end
+            if @recipe.nil?
+                @recipe = @recipe.set(-1,'tmp')
+            end
+            @products = RecipeProductsViewModel.new(session[:sessionID])
+            @products = @products.getProductList(@recipe.id)[:ingredients] rescue []
+            @productList = ProductInfoViewModel.new(session[:sessionID])
+            @productList = @productList.getProductList
         when 'recipes/edit'
             @recipe = RecipeViewModel.new(session[:sessionID])
             @recipe = @recipe.find(params['recipe'])
-            @productList = RecipeProductViewModel.new(session[:sessionID])
-            @productList = @productList.getProductList(params['recipe'])['ingredients']
+            @productList = RecipeProductsViewModel.new(session[:sessionID])
+            puts @productList.getProductList(params['recipe'])
+            @productList = @productList.getProductList(params['recipe'])[:ingredients]
         when 'recipes/create'
             @recipe = RecipeViewModel.new(session[:sessionID])
             @recipe = @recipe.find(params['recipe'])
             @productList = RecipeProductsViewModel.new(session[:sessionID])
-            @productList = @productList.getProductList(@recipe.id)['ingredients']
+            @productList = @productList.getProductList(@recipe.id)[:ingredients]
             @productWeightList = RecipeProductsViewModel.new(session[:sessionID])
-            @productWeightList = @productWeightList.getProductList(@recipe.id)['ingredientsWeight']
+            @productWeightList = @productWeightList.getProductList(@recipe.id)[:ingredientsWeight]
         when 'recipes/measure_recipe'
             @recipe = CompleteRecipeViewModel.new
             @recipe = @recipe.findLast

@@ -1,6 +1,7 @@
 class RecipeProductsViewModel
     attr_accessor :recipeID, :productID, :productWeight
-    def initialize
+    def initialize(id)
+        @userID = id
     end
     def addProduct(recipe,product)
         recipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
@@ -10,13 +11,9 @@ class RecipeProductsViewModel
         recipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         recipes.deleteProduct(recipe,product)
     end
-    def find(recipe)
-        recipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        recipe.find(recipe)
-    end
-    def weightProducts(recipe,products,weight)
+    def weightProduct(recipe,product,weight)
         weightedProducts = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        weightedProducts.weightedProducts(recipe,products,weight)
+        weightedProducts.weightProduct(recipe,product,weight)
     end
     def getProductList(recipe)
         productList = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)

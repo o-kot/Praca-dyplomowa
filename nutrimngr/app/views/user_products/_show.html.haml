@@ -102,7 +102,7 @@
         %tr
             %td='Witamina A(RAE): '
             %td=@product.productVitA
-            %td=' &#181;g'
+            %td= raw('&#181;g')
     - if !@product.productVitB1.nil?
         %tr
             %td='Witamina B1: '
@@ -137,12 +137,12 @@
         %tr
             %td='Witamina B9: '
             %td=@product.productVitB9
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productVitB12.nil?
         %tr
             %td='Witamina B12: '
             %td=@product.productVitB12
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productVitC.nil?
         %tr
             %td='Witamina C: '
@@ -152,7 +152,7 @@
         %tr
             %td='Witamina D: '
             %td=@product.productVitD
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productVitE.nil?
         %tr
             %td='Witamina E: '
@@ -162,12 +162,12 @@
         %tr
             %td='Witamina H: '
             %td=@product.productVitH
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productVitK.nil?
         %tr
             %td='Witamina K: '
             %td=@product.productVitK
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productCl.nil?
         %tr
             %td='Chlor: '
@@ -182,7 +182,7 @@
         %tr
             %td='Fluor: '
             %td=@product.productF
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productP.nil?
         %tr
             %td='Fosfor: '
@@ -192,7 +192,7 @@
         %tr
             %td='Jod: '
             %td=@product.productI
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productMg.nil?
         %tr
             %td='Magnez: '
@@ -212,7 +212,7 @@
         %tr
             %td='Selen: '
             %td=@product.productSe
-            %td=' &#181;g'
+            %td=raw('&#181;g')
     - if !@product.productNa.nil?
         %tr
             %td='Sód: '

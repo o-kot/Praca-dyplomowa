@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   post 'addRecipe' => 'recipe#add'
   post 'editRecipe' => 'recipe#edit'
   post 'addProductsToRecipe' => 'recipe#addProduct'
-  post 'weightProducts' => 'recipe_products#weightProducts'
+  post 'weightProducts' => 'complete_recipe#weightProducts'
   post 'measureRecipe' => 'complete_recipe#measureRecipe'
   post 'addMeal' => 'eaten#addMeal'
   post 'addRecipeToMeal' => 'eaten#addCompleteRecipe'

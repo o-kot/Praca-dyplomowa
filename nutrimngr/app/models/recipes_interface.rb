@@ -3,6 +3,9 @@ class RecipesInterface
         @object = object     
         @object.setID(id)
     end
+    def set(id,name)
+        @object.set(id,name)
+    end
     def getRecipeList
         @object.getRecipeList
     end
@@ -24,8 +27,8 @@ class RecipesInterface
     def deleteProduct(recipe,product)
         @object.deleteProduct(recipe,product)
     end
-    def weightProducts(id,product,weight)
-        @object.weightProducts(id,product,weight)
+    def weightProduct(recipe,product,weight)
+        @object.weightProduct(recipe,product,weight)
     end
     def getProductList(recipe)
         @object.getProductList(recipe)
@@ -41,6 +44,9 @@ class RecipesInterface
     end
     def findLast
         @object.findLast
+    end
+    def findLastComplete
+        @object.findLastComplete
     end
     def findAmount(completeRecipe)
         @object.findAmount(completeRecipe)
