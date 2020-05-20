@@ -4,7 +4,7 @@ class AddCompleteRecipeTable < ActiveRecord::Migration[5.2]
       t.integer :IDR
       t.boolean :IsActive
       t.boolean :HasPortions
-      t.integer :HowManyPortion, null: true
+      t.integer :HowManyPortions, null: true
       t.boolean :IsWeighted
       t.float :Weight, precission: 6, scale: 2, null: true
       t.float :WhatIsLeft, precission: 6, scale: 2 

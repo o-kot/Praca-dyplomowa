@@ -73,9 +73,9 @@ class EatenViewModel
         newMeal = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
         newMeal = newMeal.addProduct(meal,product,weight)
     end
-    def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
+    def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,cholesterol,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe)
         newMeal = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
-        newMeal = newMeal.addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
+        newMeal = newMeal.addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,cholesterol,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe)
     end
     def addCompleteRecipe(meal,recipe,portion)
         newMeal = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
@@ -95,7 +95,7 @@ class EatenViewModel
     end
     def decompose(customProduct,product,weight)
         newEaten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
-        newEaten = newEaten.decompose(params['customProduct'],params['product'],params['weight'])
+        newEaten = newEaten.decompose(customProduct,product,weight)
     end
     private
     @eatenID = ''

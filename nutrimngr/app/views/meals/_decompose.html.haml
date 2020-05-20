@@ -1,41 +1,40 @@
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
 
+%h4{class:'modal-inside-header'}=@decName
+
 %form{id:'decompose-form', action:'/decompose', method:'post', 'data-remote' => 'true'}
-    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+    %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}   
     %div{class:'form-group row'}
-        - if @decomposable.present?
-            %label{for:'customProduct', class:'col-sm-4 col-form-label'}=@decomposable.name
+        - if @decomposable.present?          
             %input{type:'hidden',name:'customProduct',value:@decomposable.id}
     #ingredient
-        %div{class:'form-group row',id:'products'}
-            %label{for:'product', class:'col-sm-4 col-form-label'}='Wybierz produkt'
-            %input{class:'form-control', type:'text', for:'product', id:'product', name:'product'}
-        %div{class:'form-group row',id:'weight'}
-            %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga'
-            %input{class:'form-control', for:'weight', id:'weight', name:'weight'}
-    %div
-        %button{class:'btn-add'}
-            %i{class:'fas fa-plus-square'}
-        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+        %div{id:'adding'}
+            %div{class:'form-group row',id:'products'}
+                %label{for:'product', class:'col-sm-4 col-form-label'}='Wybierz produkt'
+                %input{class:'product form-control form-control-obligatory col-sm-7', type:'text', for:'product', name:'product[]'}
+            %div{class:'form-group row',id:'weight'}
+                %label{for:'weight', class:'col-sm-4 col-form-label'}='Waga'
+                %input{class:'form-control form-control-obligatory col-sm-7', for:'weight', id:'weight', name:'weight[]'}
+    
+    %div{class:'col-5', style:'float:right'}
+        %input{class:'btn-form col-6', type:'submit', value:'Zapisz'}
 
+%button{class:'btn col-2 fas fa-plus-square btn-add', style:'margin-top:15px'}  
 
-%script
-    $(function() {
-    $("#product").autocomplete({
-    source: function(request, response) {
-    var productList = [
-    - if @products.present?
-        -@products.each do |product|
-            ="{name:'#{product.Name}',value:'#{product.id}'},"
-    ];
-    response(productList);
-    },
-    select: function( event, ui ) {
-    $( "#product" ).val( ui.item.id);
-    return false;
-    }
-    });
-    });
-    $(".btn-add").click(function(){
-    $("#decompose-form").append($("#ingredient").clone().html());
-    });
+- if @products
+    %script
+        $(function() {
+        var productList = #{raw(@products.map{|z|z.Name})};
+        $(".product").autocomplete({
+        source: productList,
+        appendTo: '#decompose-form'
+        });
+        $(".btn-add").click(function(){
+        $("#ingredient").append($("#adding").clone().html());
+        var productList = #{raw(@products.map{|z|z.Name})};
+        $(".product").autocomplete({
+        source: productList,
+        appendTo: '#decompose-form'
+        });
+        });
+        });

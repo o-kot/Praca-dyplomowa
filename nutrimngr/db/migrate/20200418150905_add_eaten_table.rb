@@ -55,7 +55,7 @@ class AddEatenTable < ActiveRecord::Migration[5.2]
       t.float :Na, precission: 4, scale: 2, null: true 
       t.float :Ca, precission: 4, scale: 2, null: true 
       t.float :Fe, precission: 4, scale: 2, null: true 
-      t.float :Cholesterol, precission: 5, scale: 2, null: true 
+      t.float :Cholesterol, precission: 6, scale: 2, null: true 
       end
   end
 end

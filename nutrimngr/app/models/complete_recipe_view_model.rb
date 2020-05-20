@@ -1,6 +1,6 @@
 class CompleteRecipeViewModel
     attr_accessor :completeRecipeID, :completeRecipeIsActive, :completeRecipeHasPortions, :completeRecipeIsWeighted, :completeRecipeCalories, :completeRecipeProtein, :completeRecipeCarbs, :completeRecipeFat, :completeRecipeSugars, :completeRecipeFiber, :completeRecipeOmega3, :completeRecipeALA, :completeRecipeSFA, :completeRecipeWNKT, :completeRecipeTrans, :completeRecipeValine, :completeRecipeIsoleucine, :completeRecipeLeucine, :completeRecipeLysine, :completeRecipeMehionine, :completeRecipeThreonine, :completeRecipeTryptophan, :completeRecipePhenylalanine, :completeRecipeVitA, :completeRecipeVitB1, :completeRecipeVitB2, :completeRecipeVitB3, :completeRecipeVitB4, :completeRecipeVitB5, :completeRecipeVitB6, :completeRecipeVitB9, :completeRecipeVitB12, :completeRecipeVitC, :completeRecipeVitD, :completeRecipeVitE, :completeRecipeVitH, :completeRecipeVitK, :completeRecipeCl, :completeRecipeZn, :completeRecipeF, :completeRecipeP, :completeRecipeI, :completeRecipeMg, :completeRecipeCu, :completeRecipeK, :completeRecipeSe, :completeRecipeNa, :completeRecipeCa, :completeRecipeFe, :completeRecipeCholesterol
-    def initialize(id)
+    def initialize (id)
         @userID = id
     end
     def createCompleteRecipe(recipe)
@@ -13,11 +13,11 @@ class CompleteRecipeViewModel
     end
     def measureRecipe(recipe,how,measurement)
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        completeRecipe = completeRecipeNa.measureRecipe(recipe,how,measurement)
+        completeRecipe = completeRecipe.measureRecipe(recipe,how,measurement)
     end
     def findAmount(completeRecipe)
-        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        completeRecipe = completeRecipe.findAmount(completeRecipe)
+        complRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        complRecipe = complRecipe.findAmount(completeRecipe)
     end
     def calculateWhatsLeft(id,eaten)
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
@@ -32,7 +32,7 @@ class CompleteRecipeViewModel
         completeRecipes = completeRecipes.findLast
     end 
     def markAsEaten(id)
-        completeRecipe = UserProfileInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
+        completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipe.markAsEaten(id)
     end
     @completeRecipeRecipeID = completeRecipe.IDR rescue ''

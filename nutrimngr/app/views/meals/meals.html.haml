@@ -1,31 +1,31 @@
 -# Top central space
 %div{class:'top-space'}
     %div{class:'row centered-for-flex'}
-        - if @eaten.empty?
-            %div{class:'col-md-6'}
+        - if @eatenMeals.empty?
+            %div{class:'col-md-6 meals-header'}
                 %h4="Dziś jeszcze nie został dodany żaden posiłek."
-                %h5="Dodaj posiłek, żeby sprawdzić czy zaspakajasz swoje zapotrzebowanie na składniki odżywcze."
+                %h6="Dodaj posiłek, żeby sprawdzić czy zaspakajasz swoje zapotrzebowanie na składniki odżywcze."
             %div{classs:'col-md-1'}
                 = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
         - else
-            %div{class:'row'}
-                %div{class:'col-md-1'}
+            %div{class:'row justify-content-center date-nav'}
+                %div{class:'col-md-2'}
                     %i{class:'far fa-arrow-alt-circle-left'}
-                %div{class:'col-md-6'}
+                %div{class:'col-md-8'}
                     %p="#{@today}"
-                %div{class:'col-md-1'}
+                %div{class:'col-md-2'}
                     %i{class:'far fa-arrow-alt-circle-right'}
-            %div{class:'row'}
-                #calories{class:'col-md-2'}
+            %div{class:'row justify-content-center req-short-info'}
+                #calories{class:'col-3'}
                     %p="Kalorie: "
                     %span{class:"#{@resultkc}"}= "#{@gotten.Calories}"
-                #protein{class:'col-md-2'}
+                #protein{class:'col-3'}
                     %p="Białko: "
                     %span{class:"#{@resultp}"}="#{@gotten.Protein}"
-                #carbs{class:'col-md-2'}
+                #carbs{class:'col-3'}
                     %p="Węglowodany: "
                     %span{class:"#{@resultc}"}="#{@gotten.Carbs}"
-                #fat{class:'col-md-2'}
+                #fat{class:'col-3'}
                     %p="Tłuszcze: "
                     %span{class:"#{@resultf}"}="#{@gotten.Fat}"
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
@@ -36,24 +36,39 @@
 
 %div{class:'container'}
     %div{class:'row'}
-        - if !@eaten.empty?
+        - if !@eatenMeals.empty?
             %table{class:'table'}
-                %thead
+                %thead{class:'t-header'}
                     %tr
                     - @meals.each do |meal|
                         %th=meal.Name
-                    %tr
-                        %td
+                %tr
+                    - @meals.each do |meal|
+                        %td{class:'calories'}
                             - caloriesForMeal = 0
-                            - @eaten.each do |eaten|
-                                - if eaten.IDP == @meal.id
-                                    - caloriesForMeal += eaten.Calories
-                            =caloriesForMeal
-                    %tr='CALORIES ToDo'
-                    - @eaten.each do |eat|
-                        - if eat.IDP == meal.id
-                            %td=eat.Time
-                            %td=eat.Name
+                            - @eatenMeals.each do |eaten|                            
+                                - if eaten[:IDP] == meal.id
+                                    - caloriesForMeal = caloriesForMeal + eaten[:Calories] rescue 0
+                            - if caloriesForMeal > 0
+                                = caloriesForMeal
+
+                - while !@eatenMeals.empty?
+                    - eat = nil
+                    %tr
+                        - @meals.each do |meal|
+                            - eat = @eatenMeals.sort_by{|eaten| eaten[:Time] }.find{|eaten| eaten[:IDP] == meal.id }
+                            - if eat
+                                - @eatenMeals.delete_if{|eaten| eaten[:id] == eat[:id] }
+                                %td                                    
+                                    - if @tmp == eat[:Time].to_s(:time)
+                                        %p{class:'invisible'}=eat[:Time].to_s(:time)
+                                    - else                                            
+                                        %p{class:'hour'}=eat[:Time].to_s(:time)
+                                        - @tmp=eat[:Time].to_s(:time)
+                                        %hr                                                                          
+                                    %p{class:'eaten'}=@eatenNames[eat[:id]]
+                            - else
+                                %td
 
 
     %div{class:'row justify-content-end'}
@@ -71,22 +86,19 @@
     $("#modal-title").html('Wybierz co chcesz dodać');
     $("#modal-body").html("#{ escape_javascript(render 'meals/how_to_add') }");
     $(".modal").modal('show');
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
+    }
     else if(xhr.responseText == "Comeback"){
     $("#modal-title").html('Wybierz produkt');
     $("#modal-body").html("#{ escape_javascript(render 'meals/add_from_products') }");
     $(".modal").modal('show');
     $("#success").css("display","block");
     $("#error").css("display","none");
-    });
+    }
     else if(xhr.responseText == "Decompose"){
     $("#modal-title").html('Wybierz produkt');
     $("#modal-body").html("#{ escape_javascript(render 'meals/decompose') }");
     $(".modal").modal('show');
     $("#success").css("display","block");
     $("#error").css("display","none");
-    });
+    }
     });

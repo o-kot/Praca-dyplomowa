@@ -9,20 +9,33 @@ class MealsController < ApplicationController
             @message=session[:message]
             session[:message]=nil
         end
+        @tmp=''
+        @productList = ProductInfoViewModel.new(session[:sessionID])
+        @productList = @productList.getProductList
         @today = Date.today
         @meals = MealViewModel.new(session[:sessionID])
-        @meals.getMeals
+        @meals =@meals.getMeals
         @eaten = EatenViewModel.new(session[:sessionID])
-        @eaten = @eaten.getEaten(@today)
+        @eatenMeals = @eaten.getEaten(@today)
+        @eatenMeals = @eatenMeals[:mealsList] #productList.getProductList(@recipe.id)[:ingredients]
+        @eatenMeals = @eatenMeals.map do |eaten|
+            {
+                id: eaten.id,
+                Calories: eaten.Calories,
+                IDP: eaten.IDP,
+                Time: eaten.Time
+            }
+        end
+        @eatenNames = @eaten.getEaten(@today)[:mealsNames]
         @gotten = EatenViewModel.new(session[:sessionID])
         @gotten = @gotten.calculateDailyRequisition(@today)
         @requisition = UserRequisitionViewModel.new(session[:sessionID])
         @requisition = @requisition.getUserRequisition
-        @resultkc = ''
-        if @requisition.present?
-            if @gotten.Calories <= 0.9 * @requisition.Calories
+        @resultkc = ''        
+        if @requisition.present? && !@gotten.id.nil?
+            if @gotten.Calories <= 0.9 * @requisition.TargetCalories
                 @resultkc = 'too-little'
-            elsif @gotten.Calories >= 1.1 * @requisition.Calories
+            elsif @gotten.Calories >= 1.1 * @requisition.TargetCalories
                 @resultkc = 'too-much'
             else @resultkc = 'neutral'
             end

@@ -5,11 +5,9 @@
     %div{class:'form-group row'}
         %label{for:'recipe', class:'col-sm-4 col-form-label'}='Wybierz potrawę'
         %div{class:'col-sm-8'}
-            %select{class:'form-control form-control-sm', name:'recipe'}
-            - @availableRecipes.each do |recipe|
-                %option{hover:'backgroud:#068506 !important', value:recipe.id}=recipe.Name
-                %input{name:'recipe', type:'date', class:'form-control form-control-obligatory'}
-                #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
+            %select{class:'form-control form-control-obligatory form-control-sm', name:'meal'}
+                - @availableRecipes.each do |recipe|
+                    %option{hover:'backgroud:#068506 !important', value:recipe.id}=@recipes.find{|r|r.id == recipe.IDR}.Name
     %div{class:'form-group row'}
         %label{class:'col-sm-4 col-form-label', for:'portion'}='Wprowadź wagę lub liczbę porcji'
         %div{class:'col-sm-8'}
@@ -18,7 +16,8 @@
     %div
         %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 
-$(document).off('ajax:success').on('ajax:success',function(event){
+%script
+    $(document).off('ajax:success').on('ajax:success',function(event){
     var xhr = event.detail[2];
     if(xhr.responseText == "error"){
     $("#error").css("display","block");

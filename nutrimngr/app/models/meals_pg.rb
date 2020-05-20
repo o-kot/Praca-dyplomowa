@@ -12,10 +12,19 @@ class MealsPg
     end
     def getEaten(date)
         mealsList = EatenDbModel.where(IDU:@userID,Date:date)
-        mealsList.each do |meal|
-            meal.name = meal.CustomProductName.present? ? meal.CustomProductName : ProductInfoDbModel.where(id:meal.IDPR).first.Name
+        mealsNames = {}
+        mealsList.each do |meal|          
+            if meal.CustomProductName.present? 
+                mealsNames[meal.id] = meal.CustomProductName
+            elsif meal.IDPr.present?
+                mealsNames[meal.id] = ProductInfoDbModel.where(id:meal.IDPr).first.Name
+            elsif meal.IDDR.present?
+                mealsNames[meal.id] = RecipeDbModel.where(id:meal.IDDR).first.Name
+            else
+                return "Error"
+            end    
         end
-        return mealsList
+        return {mealsList:mealsList,mealsNames:mealsNames}
     end
     def addMeal(date,time,meal)
         newMealTMP = EatenDbModel.new
@@ -35,68 +44,69 @@ class MealsPg
     end
     def addProduct(meal,product,weight)
         newMealTMP = EatenDbModel.new
+        weightForCalc = weight/100
         eatenProduct = ProductInfoDbModel.where(id:product).first
         newMealTMP.IDU = @userID
-        newMealTMP.IDP = meal.IDP
-        newMealTMP.Date = meal.Date
-        newMealTMP.Time = meal.Time
-        newMealTMP.IDPR = product
+        newMealTMP.IDP = meal['IDP']
+        newMealTMP.Date = meal['Date']
+        newMealTMP.Time = meal['Time']
+        newMealTMP.IDPr = product
         newMealTMP.Weight = weight
-        newMealTMP.Calories = eatenProduct.Calories * weight
-        newMealTMP.Protein = eatenProduct.Protein * weight
-        newMealTMP.Carbs = eatenProduct.Carbs * weight
-        newMealTMP.Fat = eatenProduct.Fat * weight
-        newMealTMP.Sugars = eatenProduct.Sugars * weight rescue nil
-        newMealTMP.Fiber = eatenProduct.Fiber * weight rescue nil
-        newMealTMP.Omega3 = eatenProduct.Omega3 * weight rescue nil
-        newMealTMP.ALA = eatenProduct.ALA * weight rescue nil
-        newMealTMP.SFA = eatenProduct.SFA * weight rescue nil
-        newMealTMP.WNKT = eatenProduct.WNKT * weight rescue nil
-        newMealTMP.Trans = eatenProduct.Trans * weight rescue nil
-        newMealTMP.Cholesterol = eatenProduct.Cholesterol * weight rescue nil
-        newMealTMP.Valine = eatenProduct.Valine * weight rescue nil
-        newMealTMP.Isoleucine = eatenProduct.Isoleucine * weight rescue nil
-        newMealTMP.Leucine = eatenProduct.Leucine * weight rescue nil
-        newMealTMP.Lysine = eatenProduct.Lysine * weight rescue nil
-        newMealTMP.Methionine = eatenProduct.Methionine * weight rescue nil
-        newMealTMP.Threonine = eatenProduct.Threonine * weight rescue nil
-        newMealTMP.Tryptophan = eatenProduct.Tryptophan * weight rescue nil
-        newMealTMP.Phenylalanine = eatenProduct.Phenylalanine * weight rescue nil
-        newMealTMP.VitA = eatenProduct.VitA * weight rescue nil
-        newMealTMP.VitB1 = eatenProduct.VitB1 * weight rescue nil
-        newMealTMP.VitB2 = eatenProduct.VitB2 * weight rescue nil
-        newMealTMP.VitB3 = eatenProduct.VitB3 * weight rescue nil
-        newMealTMP.VitB4 = eatenProduct.VitB4 * weight rescue nil
-        newMealTMP.VitB5 = eatenProduct.VitB5 * weight rescue nil
-        newMealTMP.VitB6 = eatenProduct.VitB6 * weight rescue nil
-        newMealTMP.VitB9 = eatenProduct.VitB9 * weight rescue nil
-        newMealTMP.VitB12 = eatenProduct.VitB12 * weight rescue nil
-        newMealTMP.VitC = eatenProduct.VitC * weight rescue nil
-        newMealTMP.VitD = eatenProduct.VitD * weight rescue nil
-        newMealTMP.VitE = eatenProduct.VitE * weight rescue nil
-        newMealTMP.VitH = eatenProduct.VitH * weight rescue nil
-        newMealTMP.VitK = eatenProduct.VitK * weight rescue nil
-        newMealTMP.Cl = eatenProduct.Cl * weight rescue nil
-        newMealTMP.Zn = eatenProduct.Zn * weight rescue nil
-        newMealTMP.F = eatenProduct.F * weight rescue nil
-        newMealTMP.P = eatenProduct.P * weight rescue nil
-        newMealTMP.I = eatenProduct.I * weight rescue nil
-        newMealTMP.Mg = eatenProduct.Mg * weight rescue nil
-        newMealTMP.Cu = eatenProduct.Cu * weight rescue nil
-        newMealTMP.K = eatenProduct.K * weight rescue nil
-        newMealTMP.Se = eatenProduct.Se * weight rescue nil
-        newMealTMP.Na = eatenProduct.Na * weight rescue nil
-        newMealTMP.Ca = eatenProduct.Ca * weight rescue nil
-        newMealTMP.Fe = eatenProduct.Fe * weight rescue nil
+        newMealTMP.Calories = eatenProduct.Calories * weightForCalc
+        newMealTMP.Protein = eatenProduct.Protein * weightForCalc
+        newMealTMP.Carbs = eatenProduct.Carbs * weightForCalc
+        newMealTMP.Fat = eatenProduct.Fat * weightForCalc
+        newMealTMP.Sugars = eatenProduct.Sugars * weightForCalc rescue nil
+        newMealTMP.Fiber = eatenProduct.Fiber * weightForCalc rescue nil
+        newMealTMP.Omega3 = eatenProduct.Omega3 * weightForCalc rescue nil
+        newMealTMP.ALA = eatenProduct.ALA * weightForCalc rescue nil
+        newMealTMP.SFA = eatenProduct.SFA * weightForCalc rescue nil
+        newMealTMP.WNKT = eatenProduct.WNKT * weightForCalc rescue nil
+        newMealTMP.Trans = eatenProduct.Trans * weightForCalc rescue nil
+        newMealTMP.Cholesterol = eatenProduct.Cholesterol * weightForCalc rescue nil
+        newMealTMP.Valine = eatenProduct.Valine * weightForCalc rescue nil
+        newMealTMP.Isoleucine = eatenProduct.Isoleucine * weightForCalc rescue nil
+        newMealTMP.Leucine = eatenProduct.Leucine * weightForCalc rescue nil
+        newMealTMP.Lysine = eatenProduct.Lysine * weightForCalc rescue nil
+        newMealTMP.Methionine = eatenProduct.Methionine * weightForCalc rescue nil
+        newMealTMP.Threonine = eatenProduct.Threonine * weightForCalc rescue nil
+        newMealTMP.Tryptophan = eatenProduct.Tryptophan * weightForCalc rescue nil
+        newMealTMP.Phenylalanine = eatenProduct.Phenylalanine * weightForCalc rescue nil
+        newMealTMP.VitA = eatenProduct.VitA * weightForCalc rescue nil
+        newMealTMP.VitB1 = eatenProduct.VitB1 * weightForCalc rescue nil
+        newMealTMP.VitB2 = eatenProduct.VitB2 * weightForCalc rescue nil
+        newMealTMP.VitB3 = eatenProduct.VitB3 * weightForCalc rescue nil
+        newMealTMP.VitB4 = eatenProduct.VitB4 * weightForCalc rescue nil
+        newMealTMP.VitB5 = eatenProduct.VitB5 * weightForCalc rescue nil
+        newMealTMP.VitB6 = eatenProduct.VitB6 * weightForCalc rescue nil
+        newMealTMP.VitB9 = eatenProduct.VitB9 * weightForCalc rescue nil
+        newMealTMP.VitB12 = eatenProduct.VitB12 * weightForCalc rescue nil
+        newMealTMP.VitC = eatenProduct.VitC * weightForCalc rescue nil
+        newMealTMP.VitD = eatenProduct.VitD * weightForCalc rescue nil
+        newMealTMP.VitE = eatenProduct.VitE * weightForCalc rescue nil
+        newMealTMP.VitH = eatenProduct.VitH * weightForCalc rescue nil
+        newMealTMP.VitK = eatenProduct.VitK * weightForCalc rescue nil
+        newMealTMP.Cl = eatenProduct.Cl * weightForCalc rescue nil
+        newMealTMP.Zn = eatenProduct.Zn * weightForCalc rescue nil
+        newMealTMP.F = eatenProduct.F * weightForCalc rescue nil
+        newMealTMP.P = eatenProduct.P * weightForCalc rescue nil
+        newMealTMP.I = eatenProduct.I * weightForCalc rescue nil
+        newMealTMP.Mg = eatenProduct.Mg * weightForCalc rescue nil
+        newMealTMP.Cu = eatenProduct.Cu * weightForCalc rescue nil
+        newMealTMP.K = eatenProduct.K * weightForCalc rescue nil
+        newMealTMP.Se = eatenProduct.Se * weightForCalc rescue nil
+        newMealTMP.Na = eatenProduct.Na * weightForCalc rescue nil
+        newMealTMP.Ca = eatenProduct.Ca * weightForCalc rescue nil
+        newMealTMP.Fe = eatenProduct.Fe * weightForCalc rescue nil
         newMealTMP.save
         return 'success'
     end
-    def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,cholesterol,weight)
+    def addCustomProduct(meal,name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,cholesterol,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe)
         newMealTMP = EatenDbModel.new
         newMealTMP.IDU = @userID
-        newMealTMP.IDP = meal.IDP
-        newMealTMP.Date = meal.Date
-        newMealTMP.Time = meal.Time
+        newMealTMP.IDP = meal['IDP']
+        newMealTMP.Date = meal['Date']
+        newMealTMP.Time = meal['Time']
         newMealTMP.CustomProductName = name
         newMealTMP.Calories = calories rescue nil
         newMealTMP.Protein = protein rescue nil
@@ -148,18 +158,18 @@ class MealsPg
         return 'success'
     end
     def findLast
-        last = EatenDbModel.where("IDU = ? and CustomProductName is not null",@userID).last
+        last = EatenDbModel.where("\"IDU\" = ? and \"CustomProductName\" is not null",@userID).last
         return last
     end
     def addCompleteRecipe(meal,recipe,portion)
         newMealTMP = EatenDbModel.new
         recipe = CompleteRecipeDbModel.where(id:recipe).first
         newMealTMP.IDU = @userID
-        newMealTMP.IDP = meal.IDP
-        newMealTMP.Date = meal.Date
-        newMealTMP.Time = meal.Time
-        newMealTMP.IDDR = recipe
-        if recipe.HasPortion == true
+        newMealTMP.IDP = meal['IDP']
+        newMealTMP.Date = meal['Date']
+        newMealTMP.Time = meal['Time']
+        newMealTMP.IDDR = recipe.id
+        if recipe.HasPortions == true
             newMealTMP.Portions = portion
         elsif recipe.IsWeighted == true
             newMealTMP.Weight = portion
@@ -175,10 +185,10 @@ class MealsPg
         calculating = EatenDbModel.where(id:meal).first
         completeRecipe = CompleteRecipeDbModel.where(id:calculating.IDDR).first
         quantity = 0
-        if completeRecipe.HasPortion == true
-            quantity = calculating.Portions
+        if completeRecipe.HasPortions == true
+            quantity = ((calculating.Portions).to_f/(completeRecipe.HowManyPortions).to_f).to_f
         elsif completeRecipe.IsWeighted == true
-            quantity = calculating.Weight
+            quantity = ((calculating.Weight).to_f/(completeRecipe.Weight).to_f).to_f
         else "Error: data has an invalid value"
         end
         calculating.Calories = completeRecipe.Calories * quantity
@@ -232,6 +242,7 @@ class MealsPg
     end
     def calculateDailyRequisition(date)
         gotten = EatenDbModel.new
+        gotten.Calories = 0
         gotten.Protein = 0
         gotten.Carbs = 0
         gotten.Fat = 0
@@ -279,51 +290,52 @@ class MealsPg
         gotten.Fe = 0
         eaten = EatenDbModel.where(Date:date)
         eaten.each do |e|
-            gotten.Protein += e.Protein rescue gotten.Protein
-            gotten.Carbs += e.Carbs rescue gotten.Carbs
-            gotten.Fat += e.Fat rescue gotten.Fat
-            gotten.Sugars += e.Sugars rescue gotten.Sugars
-            gotten.Fiber += e.Fiber rescue gotten.Fiber
-            gotten.Omega3 += e.Omega3 rescue gotten.Omega3
-            gotten.ALA += e.ALA rescue gotten.ALA
-            gotten.SFA += e.SFA rescue gotten.SFA
-            gotten.WNKT += e.WNKT rescue gotten.WNKT
-            gotten.Trans += e.Trans rescue gotten.Trans
-            gotten.Cholesterol += e.Cholesterol rescue gotten.Cholesterol
-            gotten.Valine += e.Valine rescue gotten.Valine
-            gotten.Isoleucine += e.Isoleucine rescue gotten.Isoleucine
-            gotten.Leucine += e.Leucine rescue gotten.Leucine
-            gotten.Lysine += e.Lysine rescue gotten.Lysine
-            gotten.Methionine += e.Methionine rescue gotten.Methionine
-            gotten.Threonine += e.Threonine rescue gotten.Threonine
-            gotten.Tryptophan += e.Tryptophan rescue gotten.Tryptophan
-            gotten.Phenylalanine += e.Phenylalanine rescue gotten.Phenylalanine
-            gotten.VitA += e.VitA rescue gotten.VitA
-            gotten.VitB1 += e.VitB1 rescue gotten.VitB1
-            gotten.VitB2 += e.VitB2 rescue gotten.VitB2
-            gotten.VitB3 += e.VitB3 rescue gotten.VitB3
-            gotten.VitB4 += e.VitB4 rescue gotten.VitB4
-            gotten.VitB5 += e.VitB5 rescue gotten.VitB5
-            gotten.VitB6 += e.VitB6 rescue gotten.VitB6
-            gotten.VitB9 += e.VitB9 rescue gotten.VitB9
-            gotten.VitB12 += e.VitB12 rescue gotten.VitB12
-            gotten.VitC += e.VitC rescue gotten.VitC
-            gotten.VitD += e.VitB6 rescue gotten.VitD
-            gotten.VitE += e.VitE rescue gotten.VitE
-            gotten.VitH += e.VitH rescue gotten.VitH
-            gotten.VitK += e.VitK rescue gotten.VitK
-            gotten.Cl += e.Cl rescue gotten.Cl
-            gotten.Zn += e.Zn rescue gotten.Zn
-            gotten.F += e.F rescue gotten.F
-            gotten.P += e.P rescue gotten.P
-            gotten.I += e.I rescue gotten.I
-            gotten.Mg += e.Mg rescue gotten.Mg
-            gotten.Cu += e.Cu rescue gotten.Cu
-            gotten.K += e.K rescue gotten.K
-            gotten.Se += e.Se rescue gotten.Se
-            gotten.Na += e.Na rescue gotten.Na
-            gotten.Ca += e.Ca rescue gotten.Ca
-            gotten.Fe += e.Fe rescue gotten.Fe
+            gotten.Calories += e.Calories unless e.Calories.nil?
+            gotten.Protein += e.Protein unless e.Protein.nil?
+            gotten.Carbs += e.Carbs unless e.Carbs.nil?
+            gotten.Fat += e.Fat unless e.Fat.nil?
+            gotten.Sugars += e.Sugars unless e.Sugars.nil?
+            gotten.Fiber += e.Fiber unless e.Fiber.nil?
+            gotten.Omega3 += e.Omega3 unless e.Omega3.nil?
+            gotten.ALA += e.ALA unless e.ALA.nil?
+            gotten.SFA += e.SFA unless e.SFA.nil?
+            gotten.WNKT += e.WNKT unless e.WNKT.nil?
+            gotten.Trans += e.Trans unless e.Trans.nil?
+            gotten.Cholesterol += e.Cholesterol unless e.Cholesterol.nil?
+            gotten.Valine += e.Valine unless e.Valine.nil?
+            gotten.Isoleucine += e.Isoleucine unless e.Isoleucine.nil?
+            gotten.Leucine += e.Leucine unless e.Leucine.nil?
+            gotten.Lysine += e.Lysine unless e.Lysine.nil?
+            gotten.Methionine += e.Methionine unless e.Methionine.nil?
+            gotten.Threonine += e.Threonine unless e.Threonine.nil?
+            gotten.Tryptophan += e.Tryptophan unless e.Tryptophan.nil?
+            gotten.Phenylalanine += e.Phenylalanine unless e.Phenylalanine.nil?
+            gotten.VitA += e.VitA unless e.VitA.nil?
+            gotten.VitB1 += e.VitB1 unless e.VitB1.nil?
+            gotten.VitB2 += e.VitB2 unless e.VitB2.nil?
+            gotten.VitB3 += e.VitB3 unless e.VitB3.nil?
+            gotten.VitB4 += e.VitB4 unless e.VitB4.nil?
+            gotten.VitB5 += e.VitB5 unless e.VitB5.nil?
+            gotten.VitB6 += e.VitB6 unless e.VitB6.nil?
+            gotten.VitB9 += e.VitB9 unless e.VitB9.nil?
+            gotten.VitB12 += e.VitB12 unless e.VitB12.nil?
+            gotten.VitC += e.VitC unless e.VitC.nil?
+            gotten.VitD += e.VitB6 unless e.VitD.nil?
+            gotten.VitE += e.VitE unless e.VitE.nil?
+            gotten.VitH += e.VitH unless e.VitH.nil?
+            gotten.VitK += e.VitK unless e.VitK.nil?
+            gotten.Cl += e.Cl unless e.Cl.nil?
+            gotten.Zn += e.Zn unless e.Zn.nil?
+            gotten.F += e.F unless e.F.nil?
+            gotten.P += e.P unless e.P.nil?
+            gotten.I += e.I unless e.I.nil?
+            gotten.Mg += e.Mg unless e.Mg.nil?
+            gotten.Cu += e.Cu unless e.Cu.nil?
+            gotten.K += e.K unless e.K.nil?
+            gotten.Se += e.Se unless e.Se.nil?
+            gotten.Na += e.Na unless e.Na.nil?
+            gotten.Ca += e.Ca unless e.Ca.nil?
+            gotten.Fe += e.Fe unless e.Fe.nil?
         end
         return gotten
     end
@@ -378,51 +390,52 @@ class MealsPg
         eatenTMP.Fe = 0
         product.each_with_index do |p,index|
             productInfo = ProductInfoDbModel.find(p)
-            eatenTMP.Calories += p.Calories * weight[index] rescue eatenTMP.Calories
-            eatenTMP.Protein += p.Protein * weight[index] rescue eatenTMP.Protein
-            eatenTMP.Carbs += p.Carb * weight[index] rescue eatenTMP.Carbs
-            eatenTMP.Fat += p.Fat * weight[index] rescue eatenTMP.Fat
-            eatenTMP.Sugars += p.Sugars * weight[index] rescue eatenTMP.Sugars
-            eatenTMP.Fiber += p.Fiber * weight[index] rescue eatenTMP.Fiber
-            eatenTMP.Omega3 += p.Omega3 * weight[index] rescue eatenTMP.Omega3
-            eatenTMP.ALA += p.ALA * weight[index] rescue eatenTMP.ALA
-            eatenTMP.SFA += p.SFA * weight[index] rescue eatenTMP.SFA
-            eatenTMP.WNKT += p.WNKT * weight[index] rescue eatenTMP.WNKT
-            eatenTMP.Trans += p.Trans * weight[index] rescue eatenTMP.Trans
-            eatenTMP.Cholesterol += p.Cholesterol * weight[index] rescue eatenTMP.Cholesterol
-            eatenTMP.Valine += p.Valine * weight[index] rescue eatenTMP.Valine
-            eatenTMP.Isoleucine += p.Isoleucine * weight[index] rescue eatenTMP.Isoleucine
-            eatenTMP.Leucine += p.Leucine * weight[index] rescue eatenTMP.Leucine
-            eatenTMP.Lysine += p.Lysine * weight[index] rescue eatenTMP.Lysine
-            eatenTMP.Methionine += p.Methionine * weight[index] rescue eatenTMP.Methionine
-            eatenTMP.Threonine += p.Threonine * weight[index] rescue eatenTMP.Threonine
-            eatenTMP.Tryptophan += p.Tryptophan * weight[index] rescue eatenTMP.Tryptophan
-            eatenTMP.Phenylalanine += p.Phenylalanine * weight[index] rescue eatenTMP.Phenylalanine
-            eatenTMP.VitA += p.VitA * weight[index] rescue eatenTMP.VitA
-            eatenTMP.VitB1 += p.VitB1 * weight[index] rescue eatenTMP.VitB1
-            eatenTMP.VitB2 += p.VitB2 * weight[index] rescue eatenTMP.VitB2
-            eatenTMP.VitB3 += p.VitB3 * weight[index] rescue eatenTMP.VitB3
-            eatenTMP.VitB4 += p.VitB4 * weight[index] rescue eatenTMP.VitB4
-            eatenTMP.VitB5 += p.VitB5 * weight[index] rescue eatenTMP.VitB5
-            eatenTMP.VitB6 += p.VitB6 * weight[index] rescue eatenTMP.VitB6
-            eatenTMP.VitB9 += p.VitB9 * weight[index] rescue eatenTMP.VitB9
-            eatenTMP.VitB12 += p.VitB12 * weight[index] rescue eatenTMP.VitB12
-            eatenTMP.VitC += p.VitC * weight[index] rescue eatenTMP.VitC
-            eatenTMP.VitD += p.VitD * weight[index] rescue eatenTMP.VitD
-            eatenTMP.VitE += p.VitE * weight[index] rescue eatenTMP.VitE
-            eatenTMP.VitH += p.VitH * weight[index] rescue eatenTMP.VitH
-            eatenTMP.VitK += p.VitK * weight[index] rescue eatenTMP.VitK
-            eatenTMP.Cl += p.Cl * weight[index] rescue eatenTMP.Cl
-            eatenTMP.Zn += p.Zn * weight[index] rescue eatenTMP.Zn
-            eatenTMP.F += p.F * weight[index] rescue eatenTMP.F
-            eatenTMP.P += p.P * weight[index] rescue eatenTMP.P
-            eatenTMP.I += p.I * weight[index] rescue eatenTMP.I
-            eatenTMP.Mg += p.Mg * weight[index] rescue eatenTMP.Mg
-            eatenTMP.Cu += p.Cu * weight[index] rescue eatenTMP.Cu
-            eatenTMP.K += p.K * weight[index] rescue eatenTMP.K
-            eatenTMP.Se += p.Se * weight[index] rescue eatenTMP.Se
-            eatenTMP.Na += p.Na * weight[index] rescue eatenTMP.Na
-            eatenTMP.Ca += p.Ca * weight[index] rescue eatenTMP.Ca
+            eatenTMP.Calories += productInfo.Calories * (weight[index]).to_f/100 rescue eatenTMP.Calories
+            eatenTMP.Protein += productInfo.Protein * (weight[index]).to_f/100 rescue eatenTMP.Protein
+            eatenTMP.Carbs += productInfo.Carb * (weight[index]).to_f/100 rescue eatenTMP.Carbs
+            eatenTMP.Fat += productInfo.Fat * (weight[index]).to_f/100 rescue eatenTMP.Fat
+            eatenTMP.Sugars += productInfo.Sugars * (weight[index]).to_f/100 rescue eatenTMP.Sugars
+            eatenTMP.Fiber += productInfo.Fiber * (weight[index]).to_f/100 rescue eatenTMP.Fiber
+            eatenTMP.Omega3 += productInfo.Omega3 * (weight[index]).to_f/100 rescue eatenTMP.Omega3
+            eatenTMP.ALA += productInfo.ALA * (weight[index]).to_f/100 rescue eatenTMP.ALA
+            eatenTMP.SFA += productInfo.SFA * (weight[index]).to_f/100 rescue eatenTMP.SFA
+            eatenTMP.WNKT += productInfo.WNKT * (weight[index]).to_f/100 rescue eatenTMP.WNKT
+            eatenTMP.Trans += productInfo.Trans * (weight[index]).to_f/100 rescue eatenTMP.Trans
+            eatenTMP.Cholesterol += productInfo.Cholesterol * (weight[index]).to_f/100 rescue eatenTMP.Cholesterol
+            eatenTMP.Valine += productInfo.Valine * (weight[index]).to_f/100 rescue eatenTMP.Valine
+            eatenTMP.Isoleucine += productInfo.Isoleucine * (weight[index]).to_f/100 rescue eatenTMP.Isoleucine
+            eatenTMP.Leucine += productInfo.Leucine * (weight[index]).to_f/100 rescue eatenTMP.Leucine
+            eatenTMP.Lysine += productInfo.Lysine * (weight[index]).to_f/100 rescue eatenTMP.Lysine
+            eatenTMP.Methionine += productInfo.Methionine * (weight[index]).to_f/100 rescue eatenTMP.Methionine
+            eatenTMP.Threonine += productInfo.Threonine * (weight[index]).to_f/100 rescue eatenTMP.Threonine
+            eatenTMP.Tryptophan += productInfo.Tryptophan * (weight[index]).to_f/100 rescue eatenTMP.Tryptophan
+            eatenTMP.Phenylalanine += productInfo.Phenylalanine * (weight[index]).to_f/100 rescue eatenTMP.Phenylalanine
+            eatenTMP.VitA += productInfo.VitA * (weight[index]).to_f/100 rescue eatenTMP.VitA
+            eatenTMP.VitB1 += productInfo.VitB1 * (weight[index]).to_f/100 rescue eatenTMP.VitB1
+            eatenTMP.VitB2 += productInfo.VitB2 * (weight[index]).to_f/100 rescue eatenTMP.VitB2
+            eatenTMP.VitB3 += productInfo.VitB3 * (weight[index]).to_f/100 rescue eatenTMP.VitB3
+            eatenTMP.VitB4 += productInfo.VitB4 * (weight[index]).to_f/100 rescue eatenTMP.VitB4
+            eatenTMP.VitB5 += productInfo.VitB5 * (weight[index]).to_f/100 rescue eatenTMP.VitB5
+            eatenTMP.VitB6 += productInfo.VitB6 * (weight[index]).to_f/100 rescue eatenTMP.VitB6
+            eatenTMP.VitB9 += productInfo.VitB9 * (weight[index]).to_f/100 rescue eatenTMP.VitB9
+            eatenTMP.VitB12 += productInfo.VitB12 * (weight[index]).to_f/100 rescue eatenTMP.VitB12
+            eatenTMP.VitC += productInfo.VitC * (weight[index]).to_f/100 rescue eatenTMP.VitC
+            eatenTMP.VitD += productInfo.VitD * (weight[index]).to_f/100 rescue eatenTMP.VitD
+            eatenTMP.VitE += productInfo.VitE * (weight[index]).to_f/100 rescue eatenTMP.VitE
+            eatenTMP.VitH += productInfo.VitH * (weight[index]).to_f/100 rescue eatenTMP.VitH
+            eatenTMP.VitK += productInfo.VitK * (weight[index]).to_f/100 rescue eatenTMP.VitK
+            eatenTMP.Cl += productInfo.Cl * (weight[index]).to_f/100 rescue eatenTMP.Cl
+            eatenTMP.Zn += productInfo.Zn * (weight[index]).to_f/100 rescue eatenTMP.Zn
+            eatenTMP.F += productInfo.F * (weight[index]).to_f/100 rescue eatenTMP.F
+            eatenTMP.P += productInfo.P * (weight[index]).to_f/100 rescue eatenTMP.P
+            eatenTMP.I += productInfo.I * (weight[index]).to_f/100 rescue eatenTMP.I
+            eatenTMP.Mg += productInfo.Mg * (weight[index]).to_f/100 rescue eatenTMP.Mg
+            eatenTMP.Cu += productInfo.Cu * (weight[index]).to_f/100 rescue eatenTMP.Cu
+            eatenTMP.K += productInfo.K * (weight[index]).to_f/100 rescue eatenTMP.K
+            eatenTMP.Se += productInfo.Se * (weight[index]).to_f/100 rescue eatenTMP.Se
+            eatenTMP.Na += productInfo.Na * (weight[index]).to_f/100 rescue eatenTMP.Na
+            eatenTMP.Ca += productInfo.Ca * (weight[index]).to_f/100 rescue eatenTMP.Ca
+            eatenTMP.Fe += productInfo.Fe * (weight[index]).to_f/100 rescue eatenTMP.Fe
         end
         eaten.Protein = eatenTMP.Protein if eaten.Protein.blank? && eatenTMP.Protein != 0
         eaten.Carbs = eatenTMP.Carbs if eaten.Carbs.blank? && eatenTMP.Carbs  != 0

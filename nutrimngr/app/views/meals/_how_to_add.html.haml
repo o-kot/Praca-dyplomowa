@@ -1,5 +1,6 @@
-%div{class:'row'}
-    %div{class:''}
-        = link_to 'Dodaj produkt', modal_path(body: 'meals/add_from_products', title: 'Wybierz produkt'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'    
-    %div{class:''}
-        = link_to 'Dodaj potrawę', modal_path(body: 'meals/add_from_recipes', title: 'Wybierz potrawę'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'    
+%div{class:'row justify-content-md-center'}
+    %div{class:'col-4'}
+        = link_to 'Dodaj produkt', modal_path(body: 'meals/add_from_products', title: 'Wybierz produkt'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements'    
+    - if !@recipe.nil?
+        %div{class:'col-4'}
+            = link_to 'Dodaj potrawę', modal_path(body: 'meals/add_from_recipes', title: 'Wybierz potrawę'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements'    

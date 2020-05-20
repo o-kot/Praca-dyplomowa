@@ -3,7 +3,7 @@ class CompleteRecipeController < ApplicationController
     end
     def weightProducts
         params['ingredientID'].each_with_index do |id,index|
-            weight = params['ingredientWeight'][index]      
+            weight = params['ingredientWeight'][index]
             if !weight.blank?
                 begin
                     weight = Float(weight)
@@ -18,12 +18,12 @@ class CompleteRecipeController < ApplicationController
         end
         newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
         newCompleteRecipeID = newCompleteRecipe.createCompleteRecipe(params['recipe'])
+        newCompleteRecipe.calculateNutrition(newCompleteRecipeID)
         if params['goToPortioning'] == 'on'
             render plain: 'Go to portioning' and return
         else
-            newCompleteRecipe.calculateNutrition(newCompleteRecipeID)
-                session[:message]='Stworzono potrawę z przepisu'  
-                redirect_to 'recipes/recipes'  
+            session[:message]='Stworzono potrawę z przepisu'
+            redirect_to '/recipes/recipes'
         end
     end
     def measureRecipe
@@ -39,10 +39,17 @@ class CompleteRecipeController < ApplicationController
         end
         newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
         if newCompleteRecipe.measureRecipe(params['recipe'],params['howToMeasure'],params['measurement']) == 'success'
-            if newCompleteRecipe.calculateNutrition(params['recipe']) == 'success'
-                session[:message]='Stworzono potrawę z przepisu'  
-                redirect_to 'recipes/recipes'  
-            end
+            session[:message]='Potrawa jest gotowa'
+            redirect_to '/recipes/recipes'
+        else
+            render plain: newCompleteRecipe.measureRecipe(params['recipe'],params['howToMeasure'],params['measurement'])
+        end
+    end
+    def markAsEaten
+        newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
+        if newCompleteRecipe.markAsEaten(params['recipe']) == 'success'
+            session[:message]='Potrawa się skończyła.'
+            redirect_to '/recipes/recipes'
         end
     end
 end

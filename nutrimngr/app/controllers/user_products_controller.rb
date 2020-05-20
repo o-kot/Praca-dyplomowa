@@ -72,13 +72,17 @@ class UserProductsController < ApplicationController
             params['ca'] = Float(params['ca']) if !params['ca'].blank?
             params['fe'] = Float(params['fe']) if !params['fe'].blank?
         rescue
-            render plain: "Wprowadzono błędną wartość"  and return
+            render plain: "Wprowadzono błędną wartość" and return
         end
         weight = -1
         if params['defaultWeight'] == 'on'
             weight = 100
         else
-            weight = params['weight'].to_f
+            begin
+                weight = Float(params['weight'])
+            rescue
+                render plain: "Wprowadzono nieprawidłową wartość wagi" and return
+            end
         end
         newUserProduct = ProductInfoViewModel.new(session[:sessionID])
         if(params['comeback']=='true')

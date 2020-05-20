@@ -30,7 +30,6 @@ class ModalController < ActionController::Base
             @recipe = RecipeViewModel.new(session[:sessionID])
             @recipe = @recipe.find(params['recipe'])
             @productList = RecipeProductsViewModel.new(session[:sessionID])
-            puts @productList.getProductList(params['recipe'])
             @productList = @productList.getProductList(params['recipe'])[:ingredients]
         when 'recipes/create'
             @recipe = RecipeViewModel.new(session[:sessionID])
@@ -39,23 +38,41 @@ class ModalController < ActionController::Base
             @productList = @productList.getProductList(@recipe.id)[:ingredients]
             @productWeightList = RecipeProductsViewModel.new(session[:sessionID])
             @productWeightList = @productWeightList.getProductList(@recipe.id)[:ingredientsWeight]
-        when 'recipes/measure_recipe'
-            @recipe = CompleteRecipeViewModel.new
-            @recipe = @recipe.findLast
+        when 'recipes/measure'
+            @recipe = CompleteRecipeViewModel.new(session[:sessionID])
+            if !params['recipe'].present?
+                @recipe = CompleteRecipeViewModel.new(session[:sessionID])
+                @recipe = @recipe.findLastComplete
+            end
         when 'meals/add'
             @meal = MealViewModel.new(session[:sessionID])
             @meal = @meal.getMeals
-            @session[:meal] = nil
-        when 'meal/add_from_recipes'
+            session[:meal] = nil
+        when 'meals/how_to_add'
+            @recipe = CompleteRecipeViewModel.new(session[:sessionID])
+            @recipe = @recipe.findLastComplete
+        when 'meals/add_from_recipes'
             @completeRecipes = CompleteRecipeViewModel.new(session[:sessionID])
             @completeRecipes = @completeRecipes.getCompleteRecipeList
             @availableRecipes = @completeRecipes.select{|cr| cr.HasPortions == true || cr.IsWeighted == true}
-        when 'meal/add_from_products'
-            @products = ProductInfoViewModel.new(session[:sessionID])
-            @products = @products.getProductList
-        when 'meal/decompose'
+            @recipes = RecipeViewModel.new(session[:sessionID])
+            @recipes = @recipes.getRecipeList
+        when 'meals/add_from_products'
+            @productList = ProductInfoViewModel.new(session[:sessionID])
+            @productList = @productList.getProductList
+        when 'meals/decompose'
             @decomposable = EatenViewModel.new(session[:sessionID])
             @decomposable = @decomposable.findLast
+            @decName = ''
+            if !@decomposable.CustomProductName.nil? 
+                @decName = @decomposable.CustomProductName
+            elsif !decomposable.IDPr.nil?
+                @decName = ProductInfoDbModel.where(id:@decomposable.IDPr).first.Name
+            elsif meal.IDDR.present?
+                @decName = RecipeDbModel.where(id:@decomposable.IDDR).first.Name
+            else
+                return "Error"
+            end   
             @products = ProductInfoViewModel.new(session[:sessionID])
             @products = @products.getProductList
         end

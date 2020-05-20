@@ -6,32 +6,25 @@
     %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
     %div{class:'form-group row',id:'products'}
         %label{for:'product', class:'col-sm-4 col-form-label'}='Wybierz produkt'
-        %input{class:'form-control', type:'text', for:'product', id:'product', name:'product'}
+        %input{class:'form-control form-control-obligatory col-sm-6 product', type:'text', for:'product', id:'product', name:'product'}
     %div{class:'form-group row'}
         %label{class:'col-sm-4 col-form-label', for:'weight'}='Wprowadź wagę'
-        %div{class:'col-sm-8'}
+        %div{class:'col-sm-6'}
             %input{name:'weight', type:'text', class:'form-control form-control-obligatory'}
             #nameHelp{class:'form-text text-muted'}='Pole obowiązkowe.'
-    %div
-        %input{class: 'btn-form', type:'submit', value:'Zapisz'}
-    %div
-        = link_to 'Dodaj produkt spoza bazy', modal_path(body: 'meals/how_to_add_product', title: 'Dodać na stałe?'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form'
+    %div{class:'form-group row'}
+    %input{class: 'btn-form col-3', type:'submit', value:'Zapisz'}
+
+%div{class:'row'}
+    = link_to 'Dodaj produkt spoza bazy', modal_path(body: 'meals/how_to_add_product', title: 'Dodać na stałe?'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'outsider'
+    %i{class:'fas fa-long-arrow-alt-right col-1'}
 
 %script
     $(function() {
-    $("#product").autocomplete({
-    source: function(request, response) {
-    var productList = [
-    - if @products.present?
-        - @products.each do |product|
-            ="{name:'#{product.Name}',value:'#{product.id}'},"
-    ];
-    response(productList);
-    },
-    select: function( event, ui ) {
-    $( "#product" ).val( ui.item.id);
-    return false;
-    }
+    var productList = #{raw(@productList.map{|z|z.Name})};  
+    $(".product").autocomplete({
+    source: productList,
+    appendTo: '#add-product-form'
     });
     });
     $(document).off('ajax:success').on('ajax:success',function(event){

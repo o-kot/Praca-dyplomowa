@@ -1,6 +1,6 @@
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
 %div{style: 'display: none'}
-    = link_to 'Dodaj składniki', modal_path(body: 'recipes/add_products', title: 'Dodaj składniki przepisu'), id:'addPr', remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder'
+    = link_to '', modal_path(body: 'recipes/add_products', title: 'Dodaj składniki przepisu'), id:'addPr'
 
 %form{id:'data-form', action:'/addRecipe', method:'post', 'data-remote' => 'true'}
     %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
@@ -12,26 +12,30 @@
     %div{class:'form-check'}
         %input{type:'checkbox', class:'form-check-input', name: 'goToProducts', id:'goToProducts', checked:'true'}
         %label{class:'form-check-label', for:'goToProducts'}='Czy chcesz dodać produkty?'
-        
+
     %div
         %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 
 %script
     $(document).off('ajax:success').on('ajax:success',function(event){
-    var xhr = event.detail[2];   
+    var xhr = event.detail[2];
     if(xhr.responseText == "Add products"){
     $.ajax({
     url: $('#addPr').attr('href'),  dataType: 'json',
-    success: function() { },
-    error: function(data) { 
+    success: function() {  },
+    error: function(data) {
     $('.modal-backdrop').remove();
     eval(data.responseText);
-    } 
+    }
     });
+    }
+    else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
     }
     });
     $(".btn-close").click(function () {
     if(confirm("Czy na pewno chcesz zamknąć to okno?"))
     $(".modal").modal('hide');
-    });    
-    
+    });
