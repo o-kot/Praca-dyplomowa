@@ -29,8 +29,8 @@ class CompleteRecipeViewModel
     end
     def findLastComplete
         completeRecipes = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
-        completeRecipes = completeRecipes.findLast
-    end 
+        completeRecipes = completeRecipes.findLastComplete
+    end
     def markAsEaten(id)
         completeRecipe = RecipesInterface.new(ConfigDb::RECIPES.constantize.new,@userID)
         completeRecipe = completeRecipe.markAsEaten(id)

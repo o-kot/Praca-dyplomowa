@@ -1,6 +1,7 @@
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}
+
 %div{style: 'display: none'}
-    = link_to 'Dodaj składniki', modal_path(body: 'recipes/measure', title: 'Wybierz sposób pomiaru potrawy', recipe: @recipe.id), id:'measure'
+    = link_to '', modal_path(body: 'recipes/measure', title: 'Wybierz sposób pomiaru potrawy'), id:'measure'
 
 %h5{class:'modal-inside-header'}=@recipe.Name
 

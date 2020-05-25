@@ -10,11 +10,11 @@ class EatenController < ApplicationController
         end
         if params['time'].blank?
             params['time'] = Time.now
-            params['time'] = params['time'].to_s(:time)         
+            params['time'] = params['time'].to_s(:time)
         end
         newEaten = EatenViewModel.new(session[:sessionID])
         session[:meal] = newEaten.addMeal(params['date'],params['time'],params['meal'])
-        if !session[:meal].nil? 
+        if !session[:meal].nil?
             render plain: "Choose how"
         else
             render plain: "error"
@@ -22,7 +22,7 @@ class EatenController < ApplicationController
     end
     def addProduct
         existingProductsList = ProductInfoViewModel.new(session[:sessionID])
-        existingProductsList = existingProductsList.getProductList 
+        existingProductsList = existingProductsList.getProductList
         if !existingProductsList.map{|existing|existing.Name}.include?(params['product'])
             render plain: 'Podany produkt nie istnieje' and return
         end
@@ -30,18 +30,18 @@ class EatenController < ApplicationController
             render plain: 'Nie wybrano produktu.' and return
         end
         begin
-            params['weight'] = Float(params['weight']) 
+            params['weight'] = Float(params['weight'])
         rescue
-            render plain: 'Wprowadzoną błędną wagę.' and return     
+            render plain: 'Wprowadzoną błędną wagę.' and return
         end
         if params['weight'] <= 0
-            render plain: 'Wprowadzoną błędną wagę.' and return     
+            render plain: 'Wprowadzoną błędną wagę.' and return
         end
         productID = existingProductsList.find{|p| p.Name == params['product']}.id
         newEaten = EatenViewModel.new(session[:sessionID])
         if newEaten.addProduct(session[:meal],productID,params['weight']) == 'success'
             session[:message]='Dodano spożyty posiłek'
-            redirect_to '/meals/meals' 
+            redirect_to '/meals/meals'
         end
     end
     def addCustomProduct
@@ -102,7 +102,7 @@ class EatenController < ApplicationController
         if params['decompose'] == 'on'
             if newEaten.addCustomProduct(session[:meal],params['name'], params['kcal'], params['protein'], params['carbs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe']) == 'success'
                 render plain: 'Decompose'
-            end 
+            end
         elsif newEaten.addCustomProduct(session[:meal],params['name'], params['kcal'], params['protein'], params['carbs'], params['fat'], params['sugars'], params['fiber'], params['omega3'], params['ala'], params['sfa'], params['wnkt'], params['trans'], params['cholesterol'], params['valine'], params['isoleucine'], params['leucine'], params['lysine'], params['methionine'], params['threonine'], params['tryptophan'], params['phenylalanine'], params['vitA'], params['vitB1'], params['vitB2'], params['vitB3'], params['vitB4'], params['vitB5'], params['vitB6'], params['vitB9'], params['vitB12'], params['vitC'], params['vitD'], params['vitE'], params['vitH'], params['vitK'], params['cl'], params['zn'], params['f'], params['p'], params['i'], params['mg'], params['cu'], params['k'], params['se'], params['na'], params['ca'], params['fe']) == 'success'
             session[:message]='Dodano spożyty produkt.'
             redirect_to '/meals/meals'
@@ -114,16 +114,16 @@ class EatenController < ApplicationController
             render plain: 'Nie wybrano potrawy.' and return
         end
         begin
-            params['portion'] = Float(params['portion']) 
+            params['portion'] = Float(params['portion'])
         rescue
-            render plain: 'Wprowadzoną błędną wartość porcji.' and return     
+            render plain: 'Wprowadzoną błędną wartość porcji.' and return
         end
-        amount = eatenRecipe.findAmount(params['meal'])          
+        amount = eatenRecipe.findAmount(params['meal'])
         if params['portion'] > amount
-            render plain: 'Wprowadzono większą porcję, niż zostało potrawy.' and return     
+            render plain: 'Wprowadzono większą porcję, niż zostało potrawy.' and return
         end
         if params['portion'] <= 0
-            render plain: 'Wprowadzoną błędną wartość porcji.' and return     
+            render plain: 'Wprowadzoną błędną wartość porcji.' and return
         end
         newEaten = EatenViewModel.new(session[:sessionID])
         eatenID = newEaten.addCompleteRecipe(session[:meal],params['meal'],params['portion'])
@@ -132,22 +132,22 @@ class EatenController < ApplicationController
             eatenRecipe.calculateWhatsLeft(params['meal'],params['portion'])
             if newEaten.calculateMealRequisition(eatenID) == 'success'
                 session[:message]='Dodano spożyty posiłek'
-                redirect_to '/meals/meals' 
+                redirect_to '/meals/meals'
             end
         end
     end
-    def decompose       
+    def decompose
         if params['product'].blank?
             render plain: 'Nie wybrano żadnego składnika.' and return
-        end 
+        end
         params['weight'].each do |w|
             begin
-                w = Float(w) 
+                w = Float(w)
             rescue
-                render plain: 'Wprowadzoną błędną wagę.' and return     
+                render plain: 'Wprowadzoną błędną wagę.' and return
             end
             if w <= 0
-                render plain: 'Wprowadzoną błędną wagę.' and return     
+                render plain: 'Wprowadzoną błędną wagę.' and return
             end
         end
         existingProductsList = ProductInfoViewModel.new(session[:sessionID])
@@ -163,11 +163,18 @@ class EatenController < ApplicationController
                 productsIDs << productID
                 weights << params['weight'][index]
             end
-        end  
+        end
         newEaten = EatenViewModel.new(session[:sessionID])
         if newEaten.decompose(params['customProduct'],productsIDs,weights) == "success"
             session[:message]='Dodano zdekomponowany produkt'
-            redirect_to '/meals/meals' 
+            redirect_to '/meals/meals'
+        end
+    end
+    def delete
+        newEaten = EatenViewModel.new(session[:sessionID])
+        if newEaten.delete(params['eaten']) == "success"
+            session[:message]='Usunięto spożyty posiłek'
+            redirect_to '/meals/meals'
         end
     end
 end

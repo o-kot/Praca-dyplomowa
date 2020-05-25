@@ -97,6 +97,10 @@ class EatenViewModel
         newEaten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
         newEaten = newEaten.decompose(customProduct,product,weight)
     end
+    def delete(eaten)
+        delEaten = MealsInterface.new(ConfigDb::MEALS.constantize.new,@userID)
+        delEaten = delEaten.deleteMeal(eaten)
+    end
     private
     @eatenID = ''
     @eatenIDU = ''

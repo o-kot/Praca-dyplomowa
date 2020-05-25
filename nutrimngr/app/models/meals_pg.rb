@@ -13,16 +13,17 @@ class MealsPg
     def getEaten(date)
         mealsList = EatenDbModel.where(IDU:@userID,Date:date)
         mealsNames = {}
-        mealsList.each do |meal|          
-            if meal.CustomProductName.present? 
+        mealsList.each do |meal|
+            if meal.CustomProductName.present?
                 mealsNames[meal.id] = meal.CustomProductName
             elsif meal.IDPr.present?
                 mealsNames[meal.id] = ProductInfoDbModel.where(id:meal.IDPr).first.Name
             elsif meal.IDDR.present?
-                mealsNames[meal.id] = RecipeDbModel.where(id:meal.IDDR).first.Name
+                completeRecipeID = CompleteRecipeDbModel.where(id:meal.IDDR).first.IDR
+                mealsNames[meal.id] = RecipeDbModel.where(id:completeRecipeID).first.Name
             else
                 return "Error"
-            end    
+            end
         end
         return {mealsList:mealsList,mealsNames:mealsNames}
     end
@@ -53,9 +54,9 @@ class MealsPg
         newMealTMP.IDPr = product
         newMealTMP.Weight = weight
         newMealTMP.Calories = eatenProduct.Calories * weightForCalc
-        newMealTMP.Protein = eatenProduct.Protein * weightForCalc
-        newMealTMP.Carbs = eatenProduct.Carbs * weightForCalc
-        newMealTMP.Fat = eatenProduct.Fat * weightForCalc
+        newMealTMP.Protein = eatenProduct.Protein * weightForCalc rescue nil
+        newMealTMP.Carbs = eatenProduct.Carbs * weightForCalc rescue nil
+        newMealTMP.Fat = eatenProduct.Fat * weightForCalc rescue nil
         newMealTMP.Sugars = eatenProduct.Sugars * weightForCalc rescue nil
         newMealTMP.Fiber = eatenProduct.Fiber * weightForCalc rescue nil
         newMealTMP.Omega3 = eatenProduct.Omega3 * weightForCalc rescue nil
@@ -288,7 +289,7 @@ class MealsPg
         gotten.Na = 0
         gotten.Ca = 0
         gotten.Fe = 0
-        eaten = EatenDbModel.where(Date:date)
+        eaten = EatenDbModel.where(Date:date,IDU:@userID)
         eaten.each do |e|
             gotten.Calories += e.Calories unless e.Calories.nil?
             gotten.Protein += e.Protein unless e.Protein.nil?
@@ -437,6 +438,7 @@ class MealsPg
             eatenTMP.Ca += productInfo.Ca * (weight[index]).to_f/100 rescue eatenTMP.Ca
             eatenTMP.Fe += productInfo.Fe * (weight[index]).to_f/100 rescue eatenTMP.Fe
         end
+        eaten.Calories = eatenTMP.Calories if eaten.Calories.blank? && eatenTMP.Calories !=0
         eaten.Protein = eatenTMP.Protein if eaten.Protein.blank? && eatenTMP.Protein != 0
         eaten.Carbs = eatenTMP.Carbs if eaten.Carbs.blank? && eatenTMP.Carbs  != 0
         eaten.Fat = eatenTMP.Fat if eaten.Fat.blank? && eatenTMP.Fat != 0

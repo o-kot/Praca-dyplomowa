@@ -1,7 +1,7 @@
 class IndexController < ApplicationController
  def index
     if session[:sessionID]
-        redirect_to "/profile/profile"
+        redirect_to "/meals/meals"
     end
  end
 

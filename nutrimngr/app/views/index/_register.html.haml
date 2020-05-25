@@ -3,7 +3,7 @@
 
 %form{id:'register-form', action:'/register', method:'post', 'data-remote' => 'true'}
     %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
-    %div{class:'form-group row'}    
+    %div{class:'form-group row'}
         %label{for:'email', class:'col-sm-4 col-form-label'}='Adres e-mail'
         %div{class:'col-sm-8'}
             %input{name:"email", type:'text', class:'form-control'}
@@ -12,9 +12,27 @@
         %div{class:'col-sm-8'}
             %input{name:'password', type:'password', class:'form-control'}
             #emailHelp{class:'form-text text-muted'}='Hasło powinno składać się z co najmniej 8. znakow, 1. małej litery, 1. wielkiej litery, 1. cyfry i 1. znaku specjalnego.'
-    %div{class:'form-group row'} 
-        %label{for:'confirm_password', class:'col-sm-4 col-form-label'}='Powtórz hasło'    
-        %div{class:'col-sm-8'}    
+    %div{class:'form-group row'}
+        %label{for:'confirm_password', class:'col-sm-4 col-form-label'}='Powtórz hasło'
+        %div{class:'col-sm-8'}
             %input{name:'confirm_password', type:'password', class:'form-control'}
     %div
         %input{class:'btn-form', type:'submit', value:'Zarejestruj'}
+
+%script
+    $(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText == "error"){
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    else if(xhr.responseText == "success"){
+    $("#error").css("display","none");
+    $("#success").css("display","block");
+    }
+    else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    });

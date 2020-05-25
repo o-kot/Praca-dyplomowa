@@ -9,7 +9,7 @@ class ModalController < ActionController::Base
             @product.getProductInfo(params['product'])
         when 'recipes/add'
             @recipe = RecipeViewModel.new(session[:sessionID])
-            @recipe = @recipe.set(-1,'tmp')                    
+            @recipe = @recipe.set(-1,'tmp')
         when 'recipes/add_products'
             @recipe = RecipeViewModel.new(session[:sessionID])
             if params['recipe'].present?
@@ -41,7 +41,6 @@ class ModalController < ActionController::Base
         when 'recipes/measure'
             @recipe = CompleteRecipeViewModel.new(session[:sessionID])
             if !params['recipe'].present?
-                @recipe = CompleteRecipeViewModel.new(session[:sessionID])
                 @recipe = @recipe.findLastComplete
             end
         when 'meals/add'
@@ -64,15 +63,16 @@ class ModalController < ActionController::Base
             @decomposable = EatenViewModel.new(session[:sessionID])
             @decomposable = @decomposable.findLast
             @decName = ''
-            if !@decomposable.CustomProductName.nil? 
+            if !@decomposable.CustomProductName.nil?
                 @decName = @decomposable.CustomProductName
             elsif !decomposable.IDPr.nil?
                 @decName = ProductInfoDbModel.where(id:@decomposable.IDPr).first.Name
             elsif meal.IDDR.present?
-                @decName = RecipeDbModel.where(id:@decomposable.IDDR).first.Name
+                completeRecipeID = CompleteRecipeDbModel.where(id:@decomposable.IDDR).first.IDR
+                @decName = RecipeDbModel.where(id:completeRecipeID).first.Name
             else
                 return "Error"
-            end   
+            end
             @products = ProductInfoViewModel.new(session[:sessionID])
             @products = @products.getProductList
         end

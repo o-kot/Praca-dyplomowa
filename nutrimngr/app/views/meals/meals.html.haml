@@ -18,16 +18,16 @@
             %div{class:'row justify-content-center req-short-info'}
                 #calories{class:'col-3'}
                     %p="Kalorie: "
-                    %span{class:"#{@resultkc}"}= "#{@gotten.Calories}"
+                    %span{class:"#{@resultkc}"}= "#{@gotten.Calories.round(2)}"
                 #protein{class:'col-3'}
                     %p="Białko: "
-                    %span{class:"#{@resultp}"}="#{@gotten.Protein}"
+                    %span{class:"#{@resultp}"}="#{@gotten.Protein.round(2)}"
                 #carbs{class:'col-3'}
                     %p="Węglowodany: "
-                    %span{class:"#{@resultc}"}="#{@gotten.Carbs}"
+                    %span{class:"#{@resultc}"}="#{@gotten.Carbs.round(2)}"
                 #fat{class:'col-3'}
                     %p="Tłuszcze: "
-                    %span{class:"#{@resultf}"}="#{@gotten.Fat}"
+                    %span{class:"#{@resultf}"}="#{@gotten.Fat.round(2)}"
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
     - if @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
@@ -46,27 +46,31 @@
                     - @meals.each do |meal|
                         %td{class:'calories'}
                             - caloriesForMeal = 0
-                            - @eatenMeals.each do |eaten|                            
+                            - @eatenMeals.each do |eaten|
                                 - if eaten[:IDP] == meal.id
                                     - caloriesForMeal = caloriesForMeal + eaten[:Calories] rescue 0
                             - if caloriesForMeal > 0
-                                = caloriesForMeal
+                                = caloriesForMeal.round(2)
 
                 - while !@eatenMeals.empty?
-                    - eat = nil
+                    - eats = nil
                     %tr
                         - @meals.each do |meal|
-                            - eat = @eatenMeals.sort_by{|eaten| eaten[:Time] }.find{|eaten| eaten[:IDP] == meal.id }
-                            - if eat
-                                - @eatenMeals.delete_if{|eaten| eaten[:id] == eat[:id] }
-                                %td                                    
-                                    - if @tmp == eat[:Time].to_s(:time)
-                                        %p{class:'invisible'}=eat[:Time].to_s(:time)
-                                    - else                                            
-                                        %p{class:'hour'}=eat[:Time].to_s(:time)
-                                        - @tmp=eat[:Time].to_s(:time)
-                                        %hr                                                                          
-                                    %p{class:'eaten'}=@eatenNames[eat[:id]]
+                            - eats = nil
+                            - eats = @eatenMeals.sort_by{|eaten| eaten[:Time] }.select{|eaten| eaten[:IDP] == meal.id }
+                            - unless eats.empty?
+                                - time = eats.first[:Time]
+                                - eats = eats.select{|eaten| eaten[:Time] == time }
+                                - eats.each do |eat|
+                                    - @eatenMeals.delete_if{|eaten| eaten[:id] == eat[:id] }
+                                %td
+                                    %p{class:'hour'}=eats.first[:Time].to_s(:time)
+                                    %hr
+                                    - eats.each do |eat|
+                                        %p{class:'eaten'}
+                                            =@eatenNames[eat[:id]]
+                                            = link_to '', delete_meal_path(eaten: eat[:id]), class: 'fas fa-times btn-delete delete'
+
                             - else
                                 %td
 
@@ -101,4 +105,10 @@
     $("#success").css("display","block");
     $("#error").css("display","none");
     }
+    });
+    $(document).ready(function (){
+    $(".delete").click(function () {
+    if(!confirm("Czy na pewno chcesz usunąć ten posiłek?"))
+    return false;
+    });
     });

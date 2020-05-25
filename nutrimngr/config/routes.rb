@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   get 'logout' => 'login#logout'
   post 'register' => 'register#register'
   post 'login' => 'login#login'
-  post 'data' => 'user_data#data'
+  post 'data' => 'user_data#userData'
   post 'editData' => 'user_data#edit'
-  post 'measurements' => 'user_measurements#measurements'
+  post 'measurements' => 'user_measurements#userMeasurements'
   post 'editMeasurement' => 'user_measurements#edit'
   post 'target' => 'target#target'
   post 'activity' => 'activity#activity'
@@ -37,4 +37,5 @@ Rails.application.routes.draw do
   post 'addProductToMeal' => 'eaten#addProduct'
   post 'addCustomProduct' => 'eaten#addCustomProduct'
   post 'decompose' =>'eaten#decompose'
+  get 'meals/delete' => 'eaten#delete', :as => :delete_meal
 end
