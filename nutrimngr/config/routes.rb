@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'profile/profile' => 'profile#profile', :as => :profile
   get 'about/about' => 'about#about', :as => :about
   get 'meals/meals' => 'meals#meals', :as => :meals
+  get 'products/products' => 'products#products', :as => :products
   get 'recipes/recipes' => 'recipes#recipes', :as => :recipes
   get 'recipes/delete' => 'recipe#delete', :as => :delete_recipe
   get 'recipes/mark_as_eaten' => 'complete_recipe#markAsEaten', :as => :end_recipe
@@ -37,5 +38,6 @@ Rails.application.routes.draw do
   post 'addProductToMeal' => 'eaten#addProduct'
   post 'addCustomProduct' => 'eaten#addCustomProduct'
   post 'decompose' =>'eaten#decompose'
+  post 'nutrients' => 'products#searchForNutrient'
   get 'meals/delete' => 'eaten#delete', :as => :delete_meal
 end

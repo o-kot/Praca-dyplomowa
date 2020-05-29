@@ -71,4 +71,8 @@ class ProductInfoViewModel
         userProduct = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
         userProduct.deleteUserProduct(id)
     end
+    def searchForNutrient(nutrient,sort)
+        searching = ProductsInterface.new(ConfigDb::PRODUCTS.constantize.new,@userID)
+        searching.searchForNutrient(nutrient,sort)
+    end
 end

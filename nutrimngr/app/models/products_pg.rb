@@ -142,4 +142,12 @@ class ProductsPg
         temp.delete
         tempR = RecipeProductsDbModel.where(IDP:product).delete_all
     end
+    def searchForNutrient(nutrient,sort)
+        case sort
+        when '1'
+            return ProductInfoDbModel.limit(20).order("\"#{nutrient}\" DESC")
+        when '2'
+            return ProductInfoDbModel.limit(20).order("\"#{nutrient}\" ASC")
+        end
+    end
 end

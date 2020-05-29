@@ -39,6 +39,7 @@ class UserProfilePg
         newUserMeasurements.Weight = weight
         newUserMeasurements.Waist = waist
         newUserMeasurements.Hips = hips
+        newUserMeasurements.Hips = Date.today
         newUserMeasurements.save
         return 'success'
     end
@@ -60,8 +61,41 @@ class UserProfilePg
         end
         return 'success'
     end
-    def getUserMeasurements
-        newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
+    def addNewMeasurement(what,measurement)
+        case what
+        when 1
+            newUserMeasurement = UserMeasurementsDbModel.new
+            newUserMeasurement.IDU = @userID
+            newUserMeasurement.Date = Date.today
+            newUserMeasurement.Weight = measurement
+            newUserMeasurement.save            
+        when 2
+            newUserMeasurement = UserMeasurementsDbModel.new
+            newUserMeasurement.IDU = @userID
+            newUserMeasurement.Date = Date.today
+            newUserMeasurement.Waist = measurement
+            newUserMeasurement.save
+        when 3
+            newUserMeasurement = UserMeasurementsDbModel.new
+            newUserMeasurement.IDU = @userID
+            newUserMeasurement.Date = Date.today
+            newUserMeasurement.Hips = measurement
+            newUserMeasurement.save            
+        else "Error: data has an invalid value (#{what})"
+        end
+        return 'success'
+    end
+    def getUserMeasurement
+        newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID)
+    end
+    def getLatestMeasurements
+        latestWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).last.Weight
+        latestHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).last.Hips
+        latestWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).last.Waist
+        return [latestWeight,latestHips,latestWaist]
+    end
+    def calculateDifference
+        
     end
     def saveActivity (activity)
         newUserActivity = UserDataDbModel.where(IDU:@userID).first

@@ -10,7 +10,7 @@ class ProfileController < ApplicationController
         @data = UserDataViewModel.new(session[:sessionID])
         @data.getUserData
         @measurements = UserMeasurementsViewModel.new(session[:sessionID])
-        @measurements.getUserMeasurements
+        @measurements.getLatestMeasurements
         @target = TargetViewModel.new(session[:sessionID])
         @target.getTarget
         @activity = ActivityViewModel.new(session[:sessionID])

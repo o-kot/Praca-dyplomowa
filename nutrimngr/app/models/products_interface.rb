@@ -18,4 +18,7 @@ class ProductsInterface
     def deleteUserProduct(product)
         @object.deleteUserProduct(product)
     end
+    def searchForNutrient(nutrient,sort)
+        @object.searchForNutrient(nutrient,sort)
+    end
 end

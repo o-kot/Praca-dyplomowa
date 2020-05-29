@@ -18,8 +18,17 @@ class UserProfileInterface
     def editUserMeasurement(what,value)
         @object.editUserMeasurement(what,value)
     end
+    def addNewMeasurement(what,value)
+        @object.addNewMeasurement(what,value)
+    end
     def getUserMeasurements 
         @object.getUserMeasurements
+    end
+    def getLatestMeasurements
+        @object.getLatestMeasurements
+    end
+    def calculateDifference
+        @object.calculateDifference
     end
     def saveActivity (activity)
         @object.saveActivity(activity)

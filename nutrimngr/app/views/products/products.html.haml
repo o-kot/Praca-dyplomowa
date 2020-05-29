@@ -1,0 +1,131 @@
+-# Top central space
+
+%div{class:'top-space row justify-content-end'}
+    %form{class:'search-nutrient-form', action:'/nutrients', method:'post'}
+        %div{class:'form-row'}
+            %div{class:'col-6'}
+                %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
+                %input{class:'form-control mr-sm-2', type:'search', name:'searched', id:'searched', placeholder:'Wyszukaj', 'aria-label' => 'Search'}
+            %div{class:'col-5'}                    
+                %select{class:'form-control', name:'sort'}
+                    %option{value:''}='Zawartość składnika:'
+                    %option{value:'1'}='Jak największa'
+                    %option{value:'2'}='Jak najmniejsza'
+            %div{class:'col-1'}
+                %button{class:'btn my-2 my-sm-0', type:'submit'}
+                    %i{class:'fas fa-search btn-search'}           
+- if @error.present?
+    #error{class:'alert alert-danger centered', role:'alert', style:'text-align:center'}=@error
+- else
+    #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
+- if @message.present?
+    #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
+
+-# Table
+
+%div{class:'container'}    
+    %table{class:'table table-striped'}
+        %thead
+            %tr
+                %th='Nazwa produktu'
+                %th='Kalorie'
+                %th='Białko'
+                %th='Węglowodany'
+                %th='Tłuszcz'
+                %th=''
+
+            - if @searched.nil?
+                - @products.each do |product|
+                    %tr
+                        %td=product.Name
+                        %td=product.Calories
+                        %td=product.Protein
+                        %td=product.Carbs
+                        %td=product.Fat
+                        %td
+                            = link_to '', modal_path(body: 'user_products/show', product: product.id, title: product.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
+   
+            - else
+                %td=@searched.Name
+                %td=@searched.Calories
+                %td=@searched.Protein
+                %td=@searched.Carbs
+                %td=@searched.Fat
+                %td
+                    = link_to '', modal_path(body: 'user_products/show', product: @searched.id, title: @searched.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
+                %td
+                    = link_to '', modal_path(body: 'user_products/edit', product: @searched.id, title: 'Edytuj wybrane dane', size: 'lg'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'
+                %td
+                    = link_to '', delete_product_path(product: @searched.id), class: 'fas fa-times btn-delete delete'
+
+    -# Tu kod wstawiający tabelę
+
+%script
+    $(function() {
+    var nutrients = [
+    "Kalorie",
+    "Białko",
+    "Węglowodany",
+    "Tłuszcz",
+    "Błonnik",
+    "Kwasy tł. Omega3",
+    "Kwas tł. ALA",        
+    "Tłuszcze nasycone",
+    "Tłuszcze wielonienasycone",
+    "Tłuszcze trans",
+    "Cholesterol",
+    "Walina",
+    "Izoleucyna",
+    "Leucyna",
+    "Lizyna",
+    "Metionina",
+    "Treonina",
+    "Tryptofan",
+    "Fenyalanina",
+    "Witamina A",
+    "Witamina B1",    
+    "Witamina B2",    
+    "Witamina B3",    
+    "Witamina B4",    
+    "Witamina B5",    
+    "Witamina B6",
+    "Witamina B9",
+    "Witamina B12",    
+    "Witamina C",    
+    "Witamina D",    
+    "Witamina E",    
+    "Witamina H",
+    "Witamina K",    
+    "Chlor",
+    "Cynk",
+    "Fluor",
+    "Fosfor",
+    "Jod",
+    "Magnez",
+    "Miedź",
+    "Potas",
+    "Selen",
+    "Sód",
+    "Wapń",
+    "Żelazo"
+    ];
+    $("#searched").autocomplete({
+    source: nutrients
+    });
+    });
+    $(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText == "success"){
+    $("#success").css("display","block");
+    $("#error").css("display","none");
+    }
+    else if(xhr.responseText == "error"){
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    });

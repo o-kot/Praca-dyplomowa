@@ -21,64 +21,68 @@
 
 %div{class:'container'}
     %div{class:'row'}
-        #data{class:'col-sm-6 col-md-4'}
-            %h4{class:'inside-header'}='Moje dane'
-            - if @data.userDataHeight.present?
-                %div{class:'row'}
-                    %p="Wzrost: #{@data.userDataHeight} cm"
-                    = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'hgt'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'   
-                %div{class:'row'}
-                    %p="Data urodzenia: #{@data.userDataBirthDay}"
-                    = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'bd'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'    
-                %div{class:'row'}
-                    %p
-                        ='Płeć: '
-                        - if @data.userDataIsWoman
-                            ='Kobieta'
-                        - else
-                            ='Mężczyzna'
-                    = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'sx'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'  
-            - else                    
-                %p='Nie wprowadziłeś jeszcze swoich danych'                
-                = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
-        
-        #measurement{class:'col-sm-6 col-md-4'}
-            %h4{class:'inside-header'}='Moje wymiary'
-            - if @measurements.userMeasurementsWeight.present?
-                %div{class:'row'}
-                    %p="Waga: #{@measurements.userMeasurementsWeight} kg"
-                    = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wght'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'   
-                %div{class:'row'}
-                    %p="Obwód pasa: #{@measurements.userMeasurementsWaist} cm"
-                    = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wst'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'    
-                %div{class:'row'}        
-                    %p="Obwód bioder: #{@measurements.userMeasurementsHips} cm"
-                    = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'hps'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'    
-            - else                    
-                %p='Nie wprowadziłeś jeszcze swoich wymiarów'           
-                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
-
-        %div{class:'col-sm-6 col-md-4'}
-            #activity
-                %h4{class:'inside-header'}='Stopień aktywności fizycznej'
-                - if @data.userDataActivityID.present?
-                    %div{class:'row'}
-                        %p='Twój stopień aktywności fizycznej: '
-                    %div{class:'row'}    
-                        %p="#{@activity.activityDescription}"
-                        = link_to '', modal_path(body: 'profile/activity', title: 'Wybierz stopień aktywności'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'    
-                - else                        
-                    %div
-                    = render :partial => 'activity'
-        
-            #target-part
-                %h4{class:'inside-header'}='Moj cel'
-                - if @data.userDataTargetID.present?
-                    %div{class:'row'}
-                        %p="Twój cel to: #{@target.targetDescription}"
-                        = link_to '', modal_path(body: 'profile/target', title: 'Wybierz cel'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'    
-                - else                        
-                    %div    
+        %div{class:'col-8'}
+            %div{class:'row'}
+                %p='Jestem sobie napisem testowym, bo Oki chce coś sprawdzić. Nie jestem dupą Igora.'
+        %div{class:'col-4 user-data'}
+            %div{class:'row'}
+                #data
+                    %h5{class:'inside-header-for-profile'}='Moje dane'
+                    - if @data.userDataHeight.present?
+                        %div{class:'row'}
+                            %p="Wzrost: #{@data.userDataHeight} cm"
+                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'hgt'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'   
+                        %div{class:'row'}
+                            %p="Data urodzenia: #{@data.userDataBirthDay}"
+                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'bd'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
+                        %div{class:'row'}
+                            %p
+                                ='Płeć: '
+                                - if @data.userDataIsWoman
+                                    ='Kobieta'
+                                - else
+                                    ='Mężczyzna'
+                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'sx'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'  
+                    - else                    
+                        %p='Nie wprowadziłeś jeszcze swoich danych'                
+                        = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
+            %div{class:'row'}    
+                #measurement
+                    %h6{class:'inside-header-for-profile'}='Moje wymiary'
+                    - if @measurements.userMeasurementsWeight.present?
+                        %div{class:'row'}
+                            %p="Waga: #{@measurements.userMeasurementsWeight} kg"
+                            = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wght'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'   
+                        %div{class:'row'}
+                            %p="Obwód pasa: #{@measurements.userMeasurementsWaist} cm"
+                            = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wst'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
+                        %div{class:'row'}        
+                            %p="Obwód bioder: #{@measurements.userMeasurementsHips} cm"
+                            = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'hps'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
+                    - else                    
+                        %p='Nie wprowadziłeś jeszcze swoich wymiarów'           
+                        = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
+            %div{class:'row'}   
+                #activity
+                    %h6{class:'inside-header-for-profile'}='Stopień aktywności fizycznej'
+                    - if @data.userDataActivityID.present?
+                        %div{class:'row'}
+                            %p='Twój stopień aktywności fizycznej: '
+                        %div{class:'row'}    
+                            %p="#{@activity.activityDescription}"
+                            = link_to '', modal_path(body: 'profile/activity', title: 'Wybierz stopień aktywności'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
+                    - else                        
+                        %div
+                        = render :partial => 'activity'
+            %div{class:'row'}       
+                #target
+                    %h6{class:'inside-header-for-profile'}='Moj cel'
+                    - if @data.userDataTargetID.present?
+                        %div{class:'row'}
+                            %p="Twój cel to: #{@target.targetDescription}"
+                            = link_to '', modal_path(body: 'profile/target', title: 'Wybierz cel'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
+                    - else                        
+                        %div    
                         = render :partial => 'target'
 
 %script

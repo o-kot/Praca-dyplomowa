@@ -321,7 +321,7 @@ class MealsPg
             gotten.VitB9 += e.VitB9 unless e.VitB9.nil?
             gotten.VitB12 += e.VitB12 unless e.VitB12.nil?
             gotten.VitC += e.VitC unless e.VitC.nil?
-            gotten.VitD += e.VitB6 unless e.VitD.nil?
+            gotten.VitD += e.VitD unless e.VitD.nil?
             gotten.VitE += e.VitE unless e.VitE.nil?
             gotten.VitH += e.VitH unless e.VitH.nil?
             gotten.VitK += e.VitK unless e.VitK.nil?
