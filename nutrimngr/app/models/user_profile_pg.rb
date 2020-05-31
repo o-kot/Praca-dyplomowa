@@ -96,6 +96,9 @@ class UserProfilePg
             newUserMeasurements.update_attributes(Hips:nil)
         else "Error: data has an invalid value (#{what})"
         end
+        if newUserMeasurements.Weight == 0 && newUserMeasurements.Waist == 0 && newUserMeasurements.Hips == 0
+            newUserMeasurements.delete
+        end
         return 'success'
     end
     def getUserMeasurements
