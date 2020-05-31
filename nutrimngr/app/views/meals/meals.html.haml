@@ -1,42 +1,68 @@
+- @tmp = false
+
 -# Top central space
 %div{class:'top-space'}
     %div{class:'row centered-for-flex'}
         - if @eatenMeals.empty?
+            %div{class:'row justify-content-center date-nav'}
+                %div{class:'col-md-2'}
+                    %a{ href: "/meals/meals?day=#{@day - 1}"}
+                        %i{class:'far fa-arrow-alt-circle-left'}
             %div{class:'col-md-6 meals-header'}
                 %h4="Dziś jeszcze nie został dodany żaden posiłek."
                 %h6="Dodaj posiłek, żeby sprawdzić czy zaspakajasz swoje zapotrzebowanie na składniki odżywcze."
+            %div{class:'col-md-2 date-nav'}
+                - unless @day == Date.today
+                    %a{ href: "/meals/meals?day=#{@day + 1}"}
+                        %i{class:'far fa-arrow-alt-circle-right'}
             %div{classs:'col-md-1'}
                 = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
         - else
             %div{class:'row justify-content-center date-nav'}
                 %div{class:'col-md-2'}
-                    %i{class:'far fa-arrow-alt-circle-left'}
+                    %a{ href: "/meals/meals?day=#{@day - 1}"}
+                        %i{class:'far fa-arrow-alt-circle-left'}
                 %div{class:'col-md-8'}
-                    %p="#{@today}"
+                    %p="#{@day}"
                 %div{class:'col-md-2'}
-                    %i{class:'far fa-arrow-alt-circle-right'}
+                    - unless @day == Date.today
+                        %a{ href: "/meals/meals?day=#{@day + 1}"}
+                            %i{class:'far fa-arrow-alt-circle-right'}
             %div{class:'row justify-content-center req-short-info'}
                 #calories{class:'col-3'}
                     %p="Kalorie: "
-                    %span{class:"#{@resultkc}"}= "#{@gotten.Calories.round(2)}"
+                    %span{class:@resultkc}= "#{@gotten.Calories.round(2)}"
+                    %span=" kcal"
                 #protein{class:'col-3'}
                     %p="Białko: "
-                    %span{class:"#{@resultp}"}="#{@gotten.Protein.round(2)}"
+                    %span{class:@resultp}="#{@gotten.Protein.round(2)}"
+                    %span=" g"
                 #carbs{class:'col-3'}
                     %p="Węglowodany: "
-                    %span{class:"#{@resultc}"}="#{@gotten.Carbs.round(2)}"
+                    %span{class:@resultc}="#{@gotten.Carbs.round(2)}"
+                    %span=" g"
                 #fat{class:'col-3'}
                     %p="Tłuszcze: "
-                    %span{class:"#{@resultf}"}="#{@gotten.Fat.round(2)}"
+                    %span="#{@gotten.Fat.round(2)}"
+                    %span=" g"
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
     - if @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
+
+-#Highcharts
+
+- if !@eatenMeals.empty?
+    %div
+        = link_to 'Witaminy i pierwiastki', modal_path(body: 'meals/other_nutrients', title: 'Witaminy i pierwiastki'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form btn-big link-adjustements'
+
+#pie-chart
 
 -# Table with meals
 
 %div{class:'container'}
     %div{class:'row'}
         - if !@eatenMeals.empty?
+            - @tmp = true
             %table{class:'table'}
                 %thead{class:'t-header'}
                     %tr
@@ -74,9 +100,9 @@
                             - else
                                 %td
 
-
-    %div{class:'row justify-content-end'}
-        = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
+    - if @tmp
+        %div{class:'row justify-content-end'}
+            = link_to '', modal_path(body: 'meals/add', title: 'Wprowadź posiłek'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
 
 %script
     $(document).off('ajax:success').on('ajax:success',function(event){
@@ -110,5 +136,39 @@
     $(".delete").click(function () {
     if(!confirm("Czy na pewno chcesz usunąć ten posiłek?"))
     return false;
+    });
+    Highcharts.chart('pie-chart', {
+    chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie'
+    },
+    title: {
+    text: 'Rozkład procentowy dystrybucji makroskładników'
+    },
+    tooltip: {
+    pointFormat: '{point.tooltip_info}'
+    },
+    accessibility: {
+    point: {
+    valueSuffix: '%'
+    }
+    },
+    plotOptions: {
+    pie: {
+    allowPointSelect: true,
+    cursor: 'pointer',
+    dataLabels: {
+    enabled: true,
+    format: '<b>{point.name}</b>: <span style="color: {point.class}">{point.percentage:.1f} %'
+    }
+    }
+    },
+    series: [{
+    name: 'Makroskładniki',
+    colorByPoint: true,
+    data: #{raw(@chart_data)}
+    }]
     });
     });

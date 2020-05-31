@@ -6,14 +6,14 @@
             %div{class:'col-6'}
                 %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
                 %input{class:'form-control mr-sm-2', type:'search', name:'searched', id:'searched', placeholder:'Wyszukaj', 'aria-label' => 'Search'}
-            %div{class:'col-5'}                    
+            %div{class:'col-5'}
                 %select{class:'form-control', name:'sort'}
                     %option{value:''}='Zawartość składnika:'
                     %option{value:'1'}='Jak największa'
                     %option{value:'2'}='Jak najmniejsza'
             %div{class:'col-1'}
                 %button{class:'btn my-2 my-sm-0', type:'submit'}
-                    %i{class:'fas fa-search btn-search'}           
+                    %i{class:'fas fa-search btn-search'}
 - if @error.present?
     #error{class:'alert alert-danger centered', role:'alert', style:'text-align:center'}=@error
 - else
@@ -23,7 +23,7 @@
 
 -# Table
 
-%div{class:'container'}    
+%div{class:'container'}
     %table{class:'table table-striped'}
         %thead
             %tr
@@ -32,7 +32,7 @@
                 %th='Białko'
                 %th='Węglowodany'
                 %th='Tłuszcz'
-                %th=''
+                %th=@searched_text
 
             - if @searched.nil?
                 - @products.each do |product|
@@ -42,9 +42,10 @@
                         %td=product.Protein
                         %td=product.Carbs
                         %td=product.Fat
+                        %td=product[params['searched']]
                         %td
                             = link_to '', modal_path(body: 'user_products/show', product: product.id, title: product.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
-   
+
             - else
                 %td=@searched.Name
                 %td=@searched.Calories
@@ -69,7 +70,7 @@
     "Tłuszcz",
     "Błonnik",
     "Kwasy tł. Omega3",
-    "Kwas tł. ALA",        
+    "Kwas tł. ALA",
     "Tłuszcze nasycone",
     "Tłuszcze wielonienasycone",
     "Tłuszcze trans",
@@ -83,19 +84,19 @@
     "Tryptofan",
     "Fenyalanina",
     "Witamina A",
-    "Witamina B1",    
-    "Witamina B2",    
-    "Witamina B3",    
-    "Witamina B4",    
-    "Witamina B5",    
+    "Witamina B1",
+    "Witamina B2",
+    "Witamina B3",
+    "Witamina B4",
+    "Witamina B5",
     "Witamina B6",
     "Witamina B9",
-    "Witamina B12",    
-    "Witamina C",    
-    "Witamina D",    
-    "Witamina E",    
+    "Witamina B12",
+    "Witamina C",
+    "Witamina D",
+    "Witamina E",
     "Witamina H",
-    "Witamina K",    
+    "Witamina K",
     "Chlor",
     "Cynk",
     "Fluor",

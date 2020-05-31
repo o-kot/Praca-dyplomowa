@@ -15,8 +15,11 @@ class UserProfileInterface
     def saveUserMeasurements (weight,waist,hips)
         @object.saveUserMeasurements(weight,waist,hips)
     end
-    def editUserMeasurement(what,value)
-        @object.editUserMeasurement(what,value)
+    def editUserMeasurement(id,what,value)
+        @object.editUserMeasurement(id,what,value)
+    end
+    def deleteUserMeasurement(id,what)
+        @object.deleteUserMeasurement(id,what)
     end
     def addNewMeasurement(what,value)
         @object.addNewMeasurement(what,value)

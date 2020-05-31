@@ -14,11 +14,13 @@ Rails.application.routes.draw do
   get 'recipe/delete' => 'recipe#deleteProduct', :as => :delete_product_from_recipe
   get 'modal/modal' => 'modal#modal', :as => :modal
   get 'logout' => 'login#logout'
+  get 'profile/delete' => 'user_measurements#delete', :as => :delete_measurement
   post 'register' => 'register#register'
   post 'login' => 'login#login'
   post 'data' => 'user_data#userData'
   post 'editData' => 'user_data#edit'
   post 'measurements' => 'user_measurements#userMeasurements'
+  post 'addMeasurement' => 'user_measurements#addNew'
   post 'editMeasurement' => 'user_measurements#edit'
   post 'target' => 'target#target'
   post 'activity' => 'activity#activity'

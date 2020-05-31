@@ -39,24 +39,21 @@ class UserProfilePg
         newUserMeasurements.Weight = weight
         newUserMeasurements.Waist = waist
         newUserMeasurements.Hips = hips
-        newUserMeasurements.Hips = Date.today
+        newUserMeasurements.Date = Date.today
         newUserMeasurements.save
         return 'success'
     end
-    def editUserMeasurement(what,edited)
+    def editUserMeasurement(id,what,edited)
         case what
         when 1
-            newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
-            newUserMeasurements.Weight = edited
-            newUserMeasurements.save            
+            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+            newUserMeasurements.update_attributes(Weight:edited)
         when 2
-            newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
-            newUserMeasurements.Waist = edited
-            newUserMeasurements.save
+            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+            newUserMeasurements.update_attributes(Waist:edited)
         when 3
-            newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).first
-            newUserMeasurements.Hips = edited
-            newUserMeasurements.save            
+            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+            newUserMeasurements.update_attributes(Hips:edited)
         else "Error: data has an invalid value (#{what})"
         end
         return 'success'
@@ -68,7 +65,7 @@ class UserProfilePg
             newUserMeasurement.IDU = @userID
             newUserMeasurement.Date = Date.today
             newUserMeasurement.Weight = measurement
-            newUserMeasurement.save            
+            newUserMeasurement.save
         when 2
             newUserMeasurement = UserMeasurementsDbModel.new
             newUserMeasurement.IDU = @userID
@@ -80,13 +77,29 @@ class UserProfilePg
             newUserMeasurement.IDU = @userID
             newUserMeasurement.Date = Date.today
             newUserMeasurement.Hips = measurement
-            newUserMeasurement.save            
+            newUserMeasurement.save
         else "Error: data has an invalid value (#{what})"
         end
         return 'success'
     end
-    def getUserMeasurement
-        newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID)
+    def deleteUserMeasurement(id,what)
+        newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+        case what
+        when 'wght'
+            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+            newUserMeasurements.update_attributes(Weight:nil)
+        when 'wst'
+            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+            newUserMeasurements.update_attributes(Waist:nil)
+        when 'hps'
+            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+            newUserMeasurements.update_attributes(Hips:nil)
+        else "Error: data has an invalid value (#{what})"
+        end
+        return 'success'
+    end
+    def getUserMeasurements
+        newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).order("\"Date\" ASC")
     end
     def getLatestMeasurements
         latestWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).last.Weight
@@ -95,7 +108,16 @@ class UserProfilePg
         return [latestWeight,latestHips,latestWaist]
     end
     def calculateDifference
-        
+        latestWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).last.Weight
+        latestHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).last.Hips
+        latestWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).last.Waist
+        firstWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).first.Weight
+        firstHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).first.Hips
+        firstWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).first.Waist
+        diffWeight = latestWeight - firstWeight
+        diffHips = latestHips - firstHips
+        diffWaist = latestWaist - firstWaist
+        return [diffWeight,diffWaist,diffHips]
     end
     def saveActivity (activity)
         newUserActivity = UserDataDbModel.where(IDU:@userID).first
@@ -129,7 +151,7 @@ class UserProfilePg
         newTargetID = UserDataDbModel.where(IDU:@userID).first.IDT rescue ''
         newTarget = TargetDbModel.where(id:newTargetID).first rescue ''
     end
-    def calculateUserRequisition(gender,height,weight,activity,age,target)  
+    def calculateUserRequisition(gender,height,weight,activity,age,target)
         case gender
         when false
             ppm = 66.47 + 13.75*weight + 5*height - 6.78*age
@@ -137,7 +159,7 @@ class UserProfilePg
             ppm = 665.1 + 9.567*weight + 1.85*height - 4.87*age
         else "Error: data has an invalid value (#{gender})"
         end
-        pal = ActivityDbModel.where(id:activity).first.PAL        
+        pal = ActivityDbModel.where(id:activity).first.PAL
         cpm = ppm.to_f * pal.to_f
         newUserRequisition = UserRequisitionDbModel.where(IDU:@userID).first
         if newUserRequisition.nil?

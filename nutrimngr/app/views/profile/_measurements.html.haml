@@ -28,7 +28,7 @@
         %div
             %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 - when 'wght'
-    %form{id:'measurements-form', action:'/editMeasurement', method:'post', 'data-remote' => 'true'}
+    %form{id:'measurements-form', action:'/addMeasurement', method:'post', 'data-remote' => 'true'}
         %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
         %div{class:'form-group row'}
             %label{for:'edited', class:'col-sm-4 col-form-label'}='Waga'
@@ -40,7 +40,7 @@
             %input{class: 'btn-form', type:'submit', value:'Zapisz'}    
 
 - when 'wst'
-    %form{id:'measurements-form', action:'/editMeasurement', method:'post', 'data-remote' => 'true'}
+    %form{id:'measurements-form', action:'/addMeasurement', method:'post', 'data-remote' => 'true'}
         %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
         %div{class:'form-group row'}
             %label{for:'edited', class:'col-sm-4 col-form-label'}='Obwód pasa'
@@ -51,7 +51,7 @@
             %input{type:'hidden', name:'what',value:'2'}
             %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 - when 'hps'
-    %form{id:'measurements-form', action:'/editMeasurement', method:'post', 'data-remote' => 'true'}
+    %form{id:'measurements-form', action:'/addMeasurement', method:'post', 'data-remote' => 'true'}
         %input{name: 'authenticity_token',type:'hidden', value:"#{form_authenticity_token}"}
         %div{class:'form-group row'}
             %label{for:'edited', class:'col-sm-4 col-form-label'}='Obwód bioder'

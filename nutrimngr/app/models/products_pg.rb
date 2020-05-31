@@ -116,21 +116,21 @@ class ProductsPg
         end
         return 'success'
     end
-    def editProductInfo(product,edited)        
+    def editProductInfo(product,edited)
         if ProductInfoDbModel.where(Name:edited['Name']).exists?
-            return 'Produkt o takiej nazwie istnieje już w bazie danych.'  
+            return 'Produkt o takiej nazwie istnieje już w bazie danych.'
         end
         product = ProductInfoDbModel.find(product)
-        product.Name = edited['Name'] if edited.key?('Name')           
+        product.Name = edited['Name'] if edited.key?('Name')
         if edited['weight'] == 100
             edited.each do |key,value|
-                next if %w[weight authenticity_token Name product defaultWeight controller action].include?(key)          
+                next if %w[weight authenticity_token Name product defaultWeight controller action].include?(key)
                 product.update_attributes(key => value)
             end
         else
             temp = 100/edited['weight']
             edited.each do |key,value|
-                next if %w[weight authenticity_token Name product defaultWeight controller action].include?(key)                 
+                next if %w[weight authenticity_token Name product defaultWeight controller action].include?(key)
                 product.update_attributes(key => value * temp)
             end
         end
@@ -145,9 +145,9 @@ class ProductsPg
     def searchForNutrient(nutrient,sort)
         case sort
         when '1'
-            return ProductInfoDbModel.limit(20).order("\"#{nutrient}\" DESC")
+            return ProductInfoDbModel.limit(20).order("\"#{nutrient}\" DESC NULLS LAST")
         when '2'
-            return ProductInfoDbModel.limit(20).order("\"#{nutrient}\" ASC")
+            return ProductInfoDbModel.limit(20).order("\"#{nutrient}\" ASC NULLS LAST")
         end
     end
 end

@@ -6,14 +6,14 @@
             %div{class:'col-md-8'}
                 %h4="Żeby osiągnąć swój cel powinieneś spożywać: #{@requisition.userRequisitionTargetCalories} kcal dziennie"
             %div{classs:'col-md-1'}
-                = link_to 'Przelicz ponownie', '/user_requisition/requisition', class:'btn-form link-adjustements', remote: true   
-        - else   
-            %div{class:'col-md-10'}     
+                = link_to 'Przelicz ponownie', '/user_requisition/requisition', class:'btn-form link-adjustements', remote: true
+        - else
+            %div{class:'col-md-10'}
                 %h3='Wprowadź swoje dane, żeby obliczyć swoje zapotrzebowanie energetyczne'
             %div{classs:'col-md-1'}
-            = link_to 'Oblicz', '/user_requisition/requisition', class:'btn-form link-adjustements', remote: true   
+            = link_to 'Oblicz', '/user_requisition/requisition', class:'btn-form link-adjustements', remote: true
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
-    #advice{class:'alert alert-warning centered', role:'alert', style:'display:none; text-align:center'}      
+    #advice{class:'alert alert-warning centered', role:'alert', style:'display:none; text-align:center'}
     - if @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
 
@@ -23,7 +23,14 @@
     %div{class:'row'}
         %div{class:'col-8'}
             %div{class:'row'}
-                %p='Jestem sobie napisem testowym, bo Oki chce coś sprawdzić. Nie jestem dupą Igora.'
+                #weight-chart
+                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'wght'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
+            %div{class:'row'}
+                #waist-chart
+                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'wst'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
+            %div{class:'row'}
+                #hips-chart
+                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'hps'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
         %div{class:'col-4 user-data'}
             %div{class:'row'}
                 #data
@@ -31,10 +38,10 @@
                     - if @data.userDataHeight.present?
                         %div{class:'row'}
                             %p="Wzrost: #{@data.userDataHeight} cm"
-                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'hgt'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'   
+                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'hgt'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'
                         %div{class:'row'}
                             %p="Data urodzenia: #{@data.userDataBirthDay}"
-                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'bd'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
+                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'bd'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'
                         %div{class:'row'}
                             %p
                                 ='Płeć: '
@@ -42,47 +49,44 @@
                                     ='Kobieta'
                                 - else
                                     ='Mężczyzna'
-                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'sx'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'  
-                    - else                    
-                        %p='Nie wprowadziłeś jeszcze swoich danych'                
-                        = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
-            %div{class:'row'}    
+                            = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'sx'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'
+                    - else
+                        %p='Nie wprowadziłeś jeszcze swoich danych'
+                        = link_to '', modal_path(body: 'profile/data', title: 'Wprowadź dane', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
+            %div{class:'row'}
                 #measurement
                     %h6{class:'inside-header-for-profile'}='Moje wymiary'
                     - if @measurements.userMeasurementsWeight.present?
                         %div{class:'row'}
                             %p="Waga: #{@measurements.userMeasurementsWeight} kg"
-                            = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wght'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'   
                         %div{class:'row'}
                             %p="Obwód pasa: #{@measurements.userMeasurementsWaist} cm"
-                            = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'wst'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
-                        %div{class:'row'}        
+                        %div{class:'row'}
                             %p="Obwód bioder: #{@measurements.userMeasurementsHips} cm"
-                            = link_to '', modal_path(body: 'profile/measurements', title: 'Wprowadź wartość', which: 'hps'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
-                    - else                    
-                        %p='Nie wprowadziłeś jeszcze swoich wymiarów'           
-                        = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'   
-            %div{class:'row'}   
+                    - else
+                        %p='Nie wprowadziłeś jeszcze swoich wymiarów'
+                        = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'all'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add'
+            %div{class:'row'}
                 #activity
                     %h6{class:'inside-header-for-profile'}='Stopień aktywności fizycznej'
                     - if @data.userDataActivityID.present?
                         %div{class:'row'}
                             %p='Twój stopień aktywności fizycznej: '
-                        %div{class:'row'}    
+                        %div{class:'row'}
                             %p="#{@activity.activityDescription}"
-                            = link_to '', modal_path(body: 'profile/activity', title: 'Wybierz stopień aktywności'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
-                    - else                        
+                            = link_to '', modal_path(body: 'profile/activity', title: 'Wybierz stopień aktywności'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'
+                    - else
                         %div
                         = render :partial => 'activity'
-            %div{class:'row'}       
+            %div{class:'row'}
                 #target
                     %h6{class:'inside-header-for-profile'}='Moj cel'
                     - if @data.userDataTargetID.present?
                         %div{class:'row'}
                             %p="Twój cel to: #{@target.targetDescription}"
-                            = link_to '', modal_path(body: 'profile/target', title: 'Wybierz cel'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'    
-                    - else                        
-                        %div    
+                            = link_to '', modal_path(body: 'profile/target', title: 'Wybierz cel'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'
+                    - else
+                        %div
                         = render :partial => 'target'
 
 %script
@@ -116,7 +120,7 @@
     $("#modal-holder").html("#{ escape_javascript(render 'modal/modal') }");
     $("#modal-title").html('Uzupełnij wymiary');
     $("#modal-body").html("#{ escape_javascript(render 'profile/measurements', which: 'all') }");
-    $(".modal").modal('show');    
+    $(".modal").modal('show');
     $(".btn-close").click(function () {
     if(confirm("Czy na pewno chcesz zamknąć to okno?"))
     $(".modal").modal('hide');
@@ -158,4 +162,158 @@
     if(confirm("Czy na pewno chcesz zamknąć to okno?"))
     $(".modal").modal('hide');
     });
+    });
+    var edit_link_template = '#{link_to '', modal_path(body: 'profile/edit_measurement', title: 'Wprowadź wartość', id: 'STUB', which: 'TMP'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'}';
+    var del_link_template = '#{link_to '', delete_measurement_path(id: 'STUB', what: 'TMP'), class:'fas fa-times btn-delete'}';
+    Highcharts.chart('weight-chart', {
+    chart: {
+    type: 'line'
+    },
+    title: {
+    text: 'Zmiana wagi w czasie'
+    },
+    subtitle: {
+    text: 'Całkowita zmiana wagi: #{@differences[0].round(2)} kg'
+    },
+    xAxis: {
+    categories: #{raw(@dates_weights.to_json)}
+    },
+    yAxis: {
+    title: {
+    text: 'Waga (kg)'
+    }
+    },
+    tooltip: {
+    pointFormat: '{point.diff}'
+    },
+    plotOptions: {
+    line: {
+    dataLabels: {
+    enabled: true
+    },
+    enableMouseTracking: true
+    }
+    },
+    series: [{
+    name: 'Waga',
+    cursor: 'pointer',
+    point: {
+    events: {
+    click: function (e) {
+    hs.htmlExpand(null, {
+    pageOrigin: {
+    x: e.pageX || e.clientX,
+    y: e.pageY || e.clientY
+    },
+    headingText: this.series.name,
+    maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' kg<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'wght') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'wght'),
+    width: 200
+    });
+    }
+    }
+    },
+    data: #{raw(@weights.to_json)}
+    }]
+    });
+    Highcharts.chart('waist-chart', {
+    chart: {
+    type: 'line'
+    },
+    title: {
+    text: 'Zmiana obwodu pasa w czasie'
+    },
+    subtitle: {
+    text: 'Całkowita zmiana obwodu pasa: #{@differences[1].round(2)} cm'
+    },
+    xAxis: {
+    categories: #{raw(@dates_waist.to_json)}
+    },
+    yAxis: {
+    title: {
+    text: 'Obwód pasa (cm)'
+    }
+    },
+    tooltip: {
+    pointFormat: '{point.diff}'
+    },
+    plotOptions: {
+    line: {
+    dataLabels: {
+    enabled: true
+    },
+    enableMouseTracking: true
+    }
+    },
+    series: [{
+    name: 'Obwód pasa',
+    cursor: 'pointer',
+    point: {
+    events: {
+    click: function (e) {
+    hs.htmlExpand(null, {
+    pageOrigin: {
+    x: e.pageX || e.clientX,
+    y: e.pageY || e.clientY
+    },
+    headingText: this.series.name,
+    maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' cm<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'wst') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'wst'),
+    width: 200
+    });
+    }
+    }
+    },
+    data: #{raw(@waist.to_json)}
+    }]
+    });
+    Highcharts.chart('hips-chart', {
+    chart: {
+    type: 'line'
+    },
+    title: {
+    text: 'Zmiana obwodu bioder w czasie'
+    },
+    subtitle: {
+    text: 'Całkowita zmiana obwodu bioder: #{@differences[2].round(2)} cm'
+    },
+    xAxis: {
+    categories: #{raw(@dates_hips.to_json)}
+    },
+    tooltip: {
+    pointFormat: '{point.diff}'
+    },
+    yAxis: {
+    title: {
+    text: 'Obwód bioder (cm)'
+    }
+    },
+    plotOptions: {
+    line: {
+    allowPointSelect: true,
+    cursor: 'pointer',
+    dataLabels: {
+    enabled: true
+    },
+    enableMouseTracking: true
+    }
+    },
+    series: [{
+    name: 'Obwód bioder',
+    cursor: 'pointer',
+    point: {
+    events: {
+    click: function (e) {
+    hs.htmlExpand(null, {
+    pageOrigin: {
+    x: e.pageX || e.clientX,
+    y: e.pageY || e.clientY
+    },
+    headingText: this.series.name,
+    maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' cm<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'hps') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'hps'),
+    width: 200
+    });
+    }
+    }
+    },
+    data: #{raw(@hips.to_json)}
+    }]
     });
