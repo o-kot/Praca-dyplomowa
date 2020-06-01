@@ -33,4 +33,9 @@
     $("#error").css("display","block");
     $("#success").css("display","none");
     }
+    else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
     });

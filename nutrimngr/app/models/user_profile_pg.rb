@@ -84,19 +84,23 @@ class UserProfilePg
     end
     def deleteUserMeasurement(id,what)
         newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
+
         case what
         when 'wght'
-            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
-            newUserMeasurements.update_attributes(Weight:nil)
+            firstM = UserMeasurementsDbModel.where("\"IDU\" = #{@userID} AND \"Weight\" IS NOT NULL").order('ID ASC').first.id
+            lastM = UserMeasurementsDbModel.where("\"IDU\" = #{@userID} AND \"Weight\" IS NOT NULL").order('ID DESC').first.id
+            unless firstM == id.to_i && firstM == lastM
+                newUserMeasurements.update_attributes(Weight:nil)
+            else 
+                return ''                
+            end
         when 'wst'
-            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
             newUserMeasurements.update_attributes(Waist:nil)
         when 'hps'
-            newUserMeasurements = UserMeasurementsDbModel.where(id:id).first
             newUserMeasurements.update_attributes(Hips:nil)
         else "Error: data has an invalid value (#{what})"
         end
-        if newUserMeasurements.Weight == 0 && newUserMeasurements.Waist == 0 && newUserMeasurements.Hips == 0
+        if newUserMeasurements.Weight == nil && newUserMeasurements.Waist == nil && newUserMeasurements.Hips == nil
             newUserMeasurements.delete
         end
         return 'success'
@@ -105,22 +109,26 @@ class UserProfilePg
         newUserMeasurements = UserMeasurementsDbModel.where(IDU:@userID).order("\"Date\" ASC")
     end
     def getLatestMeasurements
-        latestWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).last.Weight
-        latestHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).last.Hips
-        latestWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).last.Waist
+        if UserMeasurementsDbModel.where(IDU:@userID).exists?
+            latestWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).last.Weight
+            latestHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).last.Hips
+            latestWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).last.Waist
+        end
         return [latestWeight,latestHips,latestWaist]
     end
     def calculateDifference
-        latestWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).last.Weight
-        latestHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).last.Hips
-        latestWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).last.Waist
-        firstWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).first.Weight
-        firstHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).first.Hips
-        firstWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).first.Waist
-        diffWeight = latestWeight - firstWeight
-        diffHips = latestHips - firstHips
-        diffWaist = latestWaist - firstWaist
-        return [diffWeight,diffWaist,diffHips]
+        if UserMeasurementsDbModel.where(IDU:@userID).exists?
+            latestWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).last.Weight
+            latestHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).last.Hips
+            latestWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).last.Waist
+            firstWeight = UserMeasurementsDbModel.where("\"IDU\" =? and \"Weight\" is not NULL",@userID).first.Weight
+            firstHips = UserMeasurementsDbModel.where("\"IDU\" =? and \"Hips\" is not NULL",@userID).first.Hips
+            firstWaist = UserMeasurementsDbModel.where("\"IDU\" =? and \"Waist\" is not NULL",@userID).first.Waist
+            diffWeight = latestWeight - firstWeight
+            diffHips = latestHips - firstHips
+            diffWaist = latestWaist - firstWaist            
+            return [diffWeight,diffWaist,diffHips]
+        end
     end
     def saveActivity (activity)
         newUserActivity = UserDataDbModel.where(IDU:@userID).first
@@ -232,7 +240,7 @@ class UserProfilePg
         target = UserDataDbModel.where(IDU:@userID).first.IDT
         if(calories < newUserRequisition.PPM)
             return 'Docelowa dzienna kaloryczność nie może być mniejsza niż Twoja podstawowa przemiana materii'
-        elsif ((calories < newUserRequisition.CPM & target == 3) || (calories > newUserRequisition.CPM - 50 & target == 1) || ((newUserRequisition.CPM - 100 >= calories || calories > newUserRequisition.CPM ) & target == 2))
+        elsif ((calories < newUserRequisition.CPM && target == 3) || (calories > newUserRequisition.CPM - 50 && target == 1) || ((newUserRequisition.CPM - 100 >= calories || calories > newUserRequisition.CPM ) && target == 2))
             return 'Podana wartość kalorii nie pozwoli Ci osiągnąć Twojego celu'
         else
             return saveUserRequisition(calories)

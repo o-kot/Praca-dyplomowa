@@ -59,19 +59,23 @@ class MealsController < ApplicationController
             else @resultkc = 'neutral'
             end
             @resultp = ''
-            if @gotten.Protein <= 0.9 * @requisition.Protein
-                @resultp = 'too-little'
-            elsif @gotten.Protein >= 1.1 * @requisition.Protein
-                @resultp = 'too-much'
-            else
-                @resultp = 'neutral'
+            if !@gotten.Protein.nil?
+                if @gotten.Protein <= 0.9 * @requisition.Protein
+                    @resultp = 'too-little'
+                elsif @gotten.Protein >= 1.1 * @requisition.Protein
+                    @resultp = 'too-much'
+                else
+                    @resultp = 'neutral'
+                end
             end
             @resultc = ''
-            if @gotten.Carbs <= 0.9 * @requisition.Carbs
-                @resultc = 'too-little'
-            else
-                @resultc = 'neutral'
-            end
+            if !@gotten.Carbs.nil?
+                if @gotten.Carbs <= 0.9 * @requisition.Carbs
+                    @resultc = 'too-little'
+                else
+                    @resultc = 'neutral'
+                end
+            end    
         end
         if  @eatenMeals.present?
             carbs_sum = 0

@@ -7,17 +7,23 @@ class CompleteRecipeController < ApplicationController
             if !weight.blank?
                 begin
                     weight = Float(weight)
+                    if weight < 0
+                        render plain: "Waga nie może być ujemna"  and return
+                    end
                     newWeighted = RecipeProductsViewModel.new(session[:sessionID])
-                    newWeighted.weightProduct(params['recipe'],id,weight)
+                    newWeighted.weightProduct(params['recipe'],id,weight)                    
                 rescue
                     render plain: "Wprowadzono błędną wartość"  and return
                 end
             else
                 next
-            end
+            end            
         end
         newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
         newCompleteRecipeID = newCompleteRecipe.createCompleteRecipe(params['recipe'])
+        if newCompleteRecipeID == 'NoWeight'
+            render plain: 'Nie można stworzyć potrawy - nie podano wagi żadnego składnika' and return
+        end
         newCompleteRecipe.calculateNutrition(newCompleteRecipeID)
         if params['goToPortioning'] == 'on'
             render plain: 'Go to portioning' and return
@@ -34,6 +40,9 @@ class CompleteRecipeController < ApplicationController
         end
         begin
             params['measurement'] = Integer(params['measurement'])
+            if params['measurement'] < 0
+                render plain: "Wartość pola nie może być ujemna"  and return
+            end
         rescue
             render plain: "Wprowadzono błędną wartość pomiaru"  and return
         end

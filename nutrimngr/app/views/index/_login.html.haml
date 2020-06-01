@@ -15,3 +15,21 @@
         %input{class: 'btn-form', type:'submit', value:'Zaloguj się'}
 %div
     %button{class:'btn-form btn-link-form', type:'button', style:'display:none'}='Reset hasła'
+
+%script
+    $(document).off('ajax:success').on('ajax:success',function(event){
+    var xhr = event.detail[2];
+    if(xhr.responseText == "error"){
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    else if(xhr.responseText == "success"){
+    $("#error").css("display","none");
+    $("#success").css("display","block");
+    }
+    else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }
+    });

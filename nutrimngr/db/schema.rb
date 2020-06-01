@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_20_065748) do
+ActiveRecord::Schema.define(version: 2020_06_01_173459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
   create_table "CompleteRecipe", force: :cascade do |t|
     t.integer "IDR"
     t.boolean "IsActive"
-    t.boolean "HasPortion"
-    t.integer "HowManyPortion"
-    t.boolean "IsWeighed"
+    t.boolean "HasPortions"
+    t.integer "HowManyPortions"
+    t.boolean "IsWeighted"
     t.float "Weight"
     t.float "WhatIsLeft"
     t.float "Calories"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
     t.float "Na"
     t.float "Ca"
     t.float "Fe"
+    t.decimal "Cholesterol", precision: 5, scale: 2
   end
 
   create_table "Eaten", force: :cascade do |t|
@@ -137,6 +138,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
     t.float "Na"
     t.float "Ca"
     t.float "Fe"
+    t.decimal "Cholesterol", precision: 5, scale: 2
   end
 
   create_table "GeneralRequisition", force: :cascade do |t|
@@ -152,7 +154,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
   end
 
   create_table "ProductInfo", force: :cascade do |t|
-    t.string "Name", limit: 30
+    t.string "Name", limit: 100
     t.float "Calories"
     t.float "Protein"
     t.float "Carbs"
@@ -199,6 +201,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
     t.float "Ca"
     t.float "Fe"
     t.integer "IDU"
+    t.decimal "Cholesterol", precision: 6, scale: 2
   end
 
   create_table "ProteinRequisition", force: :cascade do |t|
@@ -217,6 +220,12 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
     t.integer "IDP"
     t.float "Weight"
     t.integer "IDR"
+  end
+
+  create_table "TEST", force: :cascade do |t|
+    t.string "Name", limit: 100
+    t.decimal "Calories", precision: 6, scale: 2
+    t.decimal "Protein", precision: 5, scale: 2
   end
 
   create_table "Target", force: :cascade do |t|
@@ -242,6 +251,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
     t.float "Weight"
     t.float "Waist"
     t.float "Hips"
+    t.date "Date"
   end
 
   create_table "UserRequisition", force: :cascade do |t|
@@ -285,6 +295,151 @@ ActiveRecord::Schema.define(version: 2020_04_20_065748) do
     t.integer "Na"
     t.integer "Ca"
     t.integer "Fe"
+  end
+
+  create_table "food", id: false, force: :cascade do |t|
+    t.integer "fdc_id"
+    t.text "data_type"
+    t.text "description"
+    t.text "food_category_id"
+    t.text "publication_date"
+  end
+
+  create_table "food_category", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.text "code"
+    t.text "description"
+  end
+
+  create_table "food_export", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.text "data_type"
+    t.text "food"
+    t.text "nutrient"
+    t.text "food_category"
+    t.text "unit"
+    t.text "amount"
+  end
+
+  create_table "food_export_2", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.text "data_type"
+    t.text "food"
+    t.text "nutrient"
+    t.text "food_category"
+    t.text "unit"
+    t.text "amount"
+  end
+
+  create_table "food_export_old", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.text "data_type"
+    t.text "food"
+    t.text "nutrient"
+    t.text "food_category"
+    t.text "unit"
+    t.text "amount"
+  end
+
+  create_table "food_import", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.text "data_type"
+    t.text "food"
+    t.text "food_category"
+    t.text "lactose"
+    t.text "vitamin_k_phylloquinone"
+    t.text "sugars_total_including_nlea"
+    t.text "tryptophan"
+    t.text "copper_cu"
+    t.text "n183_n_3_ccc_ala"
+    t.text "vitamin_k_dihydrophylloquinone"
+    t.text "vitamin_d_d2_plus_d3_international_units"
+    t.text "vitamin_b_6"
+    t.text "phenylalanine"
+    t.text "vitamin_a_rae"
+    t.text "zinc_zn"
+    t.text "selenium_se"
+    t.text "potassium_k"
+    t.text "iron_fe"
+    t.text "n226_n_3_dha"
+    t.text "niacin"
+    t.text "protein"
+    t.text "sugars_total_nlea"
+    t.text "vitamin_d_d2_plus_d3"
+    t.text "isoleucine"
+    t.text "folate_dfe"
+    t.text "cholesterol"
+    t.text "vitamin_k_menaquinone_4"
+    t.text "fatty_acids_total_saturated"
+    t.text "leucine"
+    t.text "threonine"
+    t.text "total_dietary_fiber_aoac_2011_25"
+    t.text "thiamin"
+    t.text "vitamin_a_iu"
+    t.text "n205_n_3_epa"
+    t.text "lysine"
+    t.text "vitamin_c_total_ascorbic_acid"
+    t.text "carbohydrate_by_difference"
+    t.text "sodium_na"
+    t.text "methionine"
+    t.text "folate_food"
+    t.text "pantothenic_acid"
+    t.text "iodine_i"
+    t.text "fatty_acids_total_trans"
+    t.text "phosphorus_p"
+    t.text "cysteine"
+    t.text "carbohydrate_by_summation"
+    t.text "energy"
+    t.text "fluoride_f"
+    t.text "calcium_ca"
+    t.text "folate_total"
+    t.text "fiber_total_dietary"
+    t.text "biotin"
+    t.text "folic_acid"
+    t.text "magnesium_mg"
+    t.text "valine"
+    t.text "vitamin_e_alpha_tocopherol"
+    t.text "vitamin_b_12"
+    t.text "total_lipid_fat"
+    t.text "fatty_acids_total_polyunsaturated"
+  end
+
+  create_table "food_nutrient", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.integer "fdc_id"
+    t.integer "nutrient_id"
+    t.text "amount"
+    t.text "data_points"
+    t.text "derivation_id"
+    t.text "min"
+    t.text "max"
+    t.text "median"
+    t.text "footnote"
+    t.text "min_year_acquired"
+  end
+
+  create_table "foods", id: false, force: :cascade do |t|
+    t.text "food"
+    t.text "food_category"
+    t.text "nutrient"
+    t.text "unit"
+    t.text "amount"
+  end
+
+  create_table "foods_old", id: false, force: :cascade do |t|
+    t.text "food"
+    t.text "food_category"
+    t.text "nutrient"
+    t.text "unit"
+    t.text "amount"
+  end
+
+  create_table "nutrient", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.text "name"
+    t.text "unit_name"
+    t.float "nutrient_nbr"
+    t.text "rank"
   end
 
   add_foreign_key "CompleteRecipe", "\"Recipe\"", column: "IDR"

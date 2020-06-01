@@ -5,6 +5,9 @@ class UserDataController < ApplicationController
         end
         begin
             params['height'] = Integer(params['height'])
+            if params['height'] < 0
+                render plain: "Błędna wartość w polu wzrost." and return                
+            end
         rescue
                 render plain: "Błędna wartość w polu wzrost." and return                
         end            
@@ -21,6 +24,9 @@ class UserDataController < ApplicationController
         if params['what'] == '3'       
             begin
                 params['edited'] = Integer(params['edited'])
+                if params['edited'] < 0
+                    render plain: "Wartość pola nie może być mniejsza niż 0." and return                
+                end
             rescue
                 render plain: "Wprowadzono błędną wartość"  and return
             end

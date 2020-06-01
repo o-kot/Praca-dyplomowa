@@ -13,29 +13,29 @@ class AddUserRequisitionTable < ActiveRecord::Migration[5.2]
 	 t.integer :Lysine
 	 t.integer :Methionine
 	 t.integer :Threonine
-	 t.float :Tryptophan, precission: 2, scale: 1
+	 t.numeric :Tryptophan, precision: 2, scale: 1
 	 t.integer :Phenylalanine
 	 t.integer :VitA
-	 t.float :VitB1, precission: 2, scale: 1
-	 t.float :VitB2, precission: 2, scale: 1
+	 t.numeric :VitB1, precision: 2, scale: 1
+	 t.numeric :VitB2, precision: 2, scale: 1
 	 t.integer :VitB3
 	 t.integer :VitB4
 	 t.integer :VitB5
-	 t.float :VitB6, precission: 2, scale: 1
+	 t.numeric :VitB6, precision: 2, scale: 1
 	 t.integer :VitB9
-	 t.float :VitB12, precission: 2, scale: 1
-	 t.float :VitC, precission: 2, scale: 1
+	 t.numeric :VitB12, precision: 2, scale: 1
+	 t.numeric :VitC, precision: 2, scale: 1
 	 t.integer :VitD
 	 t.integer :VitE
 	 t.integer :VitH
 	 t.integer :VitK
 	 t.integer :Cl
 	 t.integer :Zn
-	 t.float :F, precission: 2, scale: 1
+	 t.numeric :F, precision: 2, scale: 1
 	 t.integer :P
 	 t.integer :I
 	 t.integer :Mg
-	 t.float :Cu, precission: 2, scale: 1
+	 t.numeric :Cu, precision: 2, scale: 1
 	 t.integer :K
 	 t.integer :Se
 	 t.integer :Na

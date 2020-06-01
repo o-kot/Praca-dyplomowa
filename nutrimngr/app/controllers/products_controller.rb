@@ -12,10 +12,12 @@ class ProductsController < ApplicationController
     end
     def searchForNutrient
         if params['searched'].blank?
-            render plain: 'Nie wybramo składnika odżywczego.' and return
+            session[:message]='Nie wybrano składnika odżwyczego'
+            redirect_to '/products/products' and return
         end
         if params['sort'] !='1' && params['sort'] !='2'
-            render plain: 'Nie wybrano metody sortowania.' and return
+            session[:message]='Nie wybrano metody sortowania'
+            redirect_to '/products/products' and return
         end
         @searched_text = params['searched']
         case params['searched']

@@ -5,7 +5,7 @@ class AddGeneralRequisitionTable < ActiveRecord::Migration[5.2]
 	 t.integer :ToAge
 	 t.boolean :IsWoman
 	 t.string :Name, limit: 25
-	 t.float :Requirement, precission: 3, scale: 2
+	 t.numeric :Requirement, precision: 3, scale: 2
 	end
   end
 end

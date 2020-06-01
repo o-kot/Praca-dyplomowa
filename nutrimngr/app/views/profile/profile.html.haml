@@ -24,13 +24,16 @@
         %div{class:'col-8'}
             %div{class:'row'}
                 #weight-chart
-                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'wght'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
+                - if @differences.present?
+                    = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'wght'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
             %div{class:'row'}
                 #waist-chart
-                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'wst'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
+                - if @differences.present?
+                    = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'wst'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
             %div{class:'row'}
                 #hips-chart
-                = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'hps'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
+                - if @differences.present?
+                    = link_to '', modal_path(body: 'profile/measurements', title: 'Moje wymiary', which: 'hps'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-plus-square btn-add-small'
         %div{class:'col-4 user-data'}
             %div{class:'row'}
                 #data
@@ -163,157 +166,158 @@
     $(".modal").modal('hide');
     });
     });
-    var edit_link_template = '#{link_to '', modal_path(body: 'profile/edit_measurement', title: 'Wprowadź wartość', id: 'STUB', which: 'TMP'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'}';
-    var del_link_template = '#{link_to '', delete_measurement_path(id: 'STUB', what: 'TMP'), class:'fas fa-times btn-delete'}';
-    Highcharts.chart('weight-chart', {
-    chart: {
-    type: 'line'
-    },
-    title: {
-    text: 'Zmiana wagi w czasie'
-    },
-    subtitle: {
-    text: 'Całkowita zmiana wagi: #{@differences[0].round(2)} kg'
-    },
-    xAxis: {
-    categories: #{raw(@dates_weights.to_json)}
-    },
-    yAxis: {
-    title: {
-    text: 'Waga (kg)'
-    }
-    },
-    tooltip: {
-    pointFormat: '{point.diff}'
-    },
-    plotOptions: {
-    line: {
-    dataLabels: {
-    enabled: true
-    },
-    enableMouseTracking: true
-    }
-    },
-    series: [{
-    name: 'Waga',
-    cursor: 'pointer',
-    point: {
-    events: {
-    click: function (e) {
-    hs.htmlExpand(null, {
-    pageOrigin: {
-    x: e.pageX || e.clientX,
-    y: e.pageY || e.clientY
-    },
-    headingText: this.series.name,
-    maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' kg<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'wght') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'wght'),
-    width: 200
-    });
-    }
-    }
-    },
-    data: #{raw(@weights.to_json)}
-    }]
-    });
-    Highcharts.chart('waist-chart', {
-    chart: {
-    type: 'line'
-    },
-    title: {
-    text: 'Zmiana obwodu pasa w czasie'
-    },
-    subtitle: {
-    text: 'Całkowita zmiana obwodu pasa: #{@differences[1].round(2)} cm'
-    },
-    xAxis: {
-    categories: #{raw(@dates_waist.to_json)}
-    },
-    yAxis: {
-    title: {
-    text: 'Obwód pasa (cm)'
-    }
-    },
-    tooltip: {
-    pointFormat: '{point.diff}'
-    },
-    plotOptions: {
-    line: {
-    dataLabels: {
-    enabled: true
-    },
-    enableMouseTracking: true
-    }
-    },
-    series: [{
-    name: 'Obwód pasa',
-    cursor: 'pointer',
-    point: {
-    events: {
-    click: function (e) {
-    hs.htmlExpand(null, {
-    pageOrigin: {
-    x: e.pageX || e.clientX,
-    y: e.pageY || e.clientY
-    },
-    headingText: this.series.name,
-    maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' cm<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'wst') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'wst'),
-    width: 200
-    });
-    }
-    }
-    },
-    data: #{raw(@waist.to_json)}
-    }]
-    });
-    Highcharts.chart('hips-chart', {
-    chart: {
-    type: 'line'
-    },
-    title: {
-    text: 'Zmiana obwodu bioder w czasie'
-    },
-    subtitle: {
-    text: 'Całkowita zmiana obwodu bioder: #{@differences[2].round(2)} cm'
-    },
-    xAxis: {
-    categories: #{raw(@dates_hips.to_json)}
-    },
-    tooltip: {
-    pointFormat: '{point.diff}'
-    },
-    yAxis: {
-    title: {
-    text: 'Obwód bioder (cm)'
-    }
-    },
-    plotOptions: {
-    line: {
-    allowPointSelect: true,
-    cursor: 'pointer',
-    dataLabels: {
-    enabled: true
-    },
-    enableMouseTracking: true
-    }
-    },
-    series: [{
-    name: 'Obwód bioder',
-    cursor: 'pointer',
-    point: {
-    events: {
-    click: function (e) {
-    hs.htmlExpand(null, {
-    pageOrigin: {
-    x: e.pageX || e.clientX,
-    y: e.pageY || e.clientY
-    },
-    headingText: this.series.name,
-    maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' cm<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'hps') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'hps'),
-    width: 200
-    });
-    }
-    }
-    },
-    data: #{raw(@hips.to_json)}
-    }]
-    });
+    - if @differences.present?
+        var edit_link_template = '#{link_to '', modal_path(body: 'profile/edit_measurement', title: 'Wprowadź wartość', id: 'STUB', which: 'TMP'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'}';
+        var del_link_template = '#{link_to '', delete_measurement_path(id: 'STUB', what: 'TMP'), class:'fas fa-times btn-delete'}';
+        Highcharts.chart('weight-chart', {
+        chart: {
+        type: 'line'
+        },
+        title: {
+        text: 'Zmiana wagi w czasie'
+        },
+        subtitle: {
+        text: 'Całkowita zmiana wagi: #{@differences[0].round(2)} kg'
+        },
+        xAxis: {
+        categories: #{raw(@dates_weights.to_json)}
+        },
+        yAxis: {
+        title: {
+        text: 'Waga (kg)'
+        }
+        },
+        tooltip: {
+        pointFormat: '{point.diff}'
+        },
+        plotOptions: {
+        line: {
+        dataLabels: {
+        enabled: true
+        },
+        enableMouseTracking: true
+        }
+        },
+        series: [{
+        name: 'Waga',
+        cursor: 'pointer',
+        point: {
+        events: {
+        click: function (e) {
+        hs.htmlExpand(null, {
+        pageOrigin: {
+        x: e.pageX || e.clientX,
+        y: e.pageY || e.clientY
+        },
+        headingText: this.series.name,
+        maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' kg<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'wght') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'wght'),
+        width: 200
+        });
+        }
+        }
+        },
+        data: #{raw(@weights.to_json)}
+        }]
+        });
+        Highcharts.chart('waist-chart', {
+        chart: {
+        type: 'line'
+        },
+        title: {
+        text: 'Zmiana obwodu pasa w czasie'
+        },
+        subtitle: {
+        text: 'Całkowita zmiana obwodu pasa: #{@differences[1].round(2)} cm'
+        },
+        xAxis: {
+        categories: #{raw(@dates_waist.to_json)}
+        },
+        yAxis: {
+        title: {
+        text: 'Obwód pasa (cm)'
+        }
+        },
+        tooltip: {
+        pointFormat: '{point.diff}'
+        },
+        plotOptions: {
+        line: {
+        dataLabels: {
+        enabled: true
+        },
+        enableMouseTracking: true
+        }
+        },
+        series: [{
+        name: 'Obwód pasa',
+        cursor: 'pointer',
+        point: {
+        events: {
+        click: function (e) {
+        hs.htmlExpand(null, {
+        pageOrigin: {
+        x: e.pageX || e.clientX,
+        y: e.pageY || e.clientY
+        },
+        headingText: this.series.name,
+        maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' cm<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'wst') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'wst'),
+        width: 200
+        });
+        }
+        }
+        },
+        data: #{raw(@waist.to_json)}
+        }]
+        });
+        Highcharts.chart('hips-chart', {
+        chart: {
+        type: 'line'
+        },
+        title: {
+        text: 'Zmiana obwodu bioder w czasie'
+        },
+        subtitle: {
+        text: 'Całkowita zmiana obwodu bioder: #{@differences[2].round(2)} cm'
+        },
+        xAxis: {
+        categories: #{raw(@dates_hips.to_json)}
+        },
+        tooltip: {
+        pointFormat: '{point.diff}'
+        },
+        yAxis: {
+        title: {
+        text: 'Obwód bioder (cm)'
+        }
+        },
+        plotOptions: {
+        line: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+        enabled: true
+        },
+        enableMouseTracking: true
+        }
+        },
+        series: [{
+        name: 'Obwód bioder',
+        cursor: 'pointer',
+        point: {
+        events: {
+        click: function (e) {
+        hs.htmlExpand(null, {
+        pageOrigin: {
+        x: e.pageX || e.clientX,
+        y: e.pageY || e.clientY
+        },
+        headingText: this.series.name,
+        maincontentText: '<b>' + this.date + '</b><br />'+ this.y +' cm<br />' + edit_link_template.replace("STUB",this.id).replace("TMP",'hps') + ' ' + del_link_template.replace("STUB",this.id).replace("TMP",'hps'),
+        width: 200
+        });
+        }
+        }
+        },
+        data: #{raw(@hips.to_json)}
+        }]
+        });

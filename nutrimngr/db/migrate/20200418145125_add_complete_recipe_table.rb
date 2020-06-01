@@ -6,54 +6,54 @@ class AddCompleteRecipeTable < ActiveRecord::Migration[5.2]
       t.boolean :HasPortions
       t.integer :HowManyPortions, null: true
       t.boolean :IsWeighted
-      t.float :Weight, precission: 6, scale: 2, null: true
-      t.float :WhatIsLeft, precission: 6, scale: 2, null: true 
-      t.float :Calories, precission: 6, scale: 2 
-      t.float :Protein, precission: 6, scale: 2 
-      t.float :Carbs, precission: 6, scale: 2 
-      t.float :Fat, precission: 6, scale: 2
-      t.float :Sugars, precission: 5, scale: 2, null: true  
-      t.float :Fiber, precission: 5, scale: 2, null: true 
-      t.float :Omega3, precission: 6, scale: 3, null: true 
-      t.float :ALA, precission: 6, scale: 3, null: true 
-      t.float :SFA, precission: 6, scale: 3, null: true 
-      t.float :WNKT, precission: 6, scale: 3, null: true 
-      t.float :Trans, precission: 6, scale: 3, null: true       
-      t.float :Valine, precission: 6, scale: 3, null: true 
-      t.float :Isoleucine, precission: 6, scale: 3, null: true 
-      t.float :Leucine, precission: 6, scale: 3, null: true 
-      t.float :Lysine, precission: 6, scale: 3, null: true 
-      t.float :Methionine, precission: 6, scale: 3, null: true 
-      t.float :Threonine, precission: 6, scale: 3, null: true 
-      t.float :Tryptophan, precission: 6, scale: 3, null: true 
-      t.float :Phenylalanine, precission: 6, scale: 3, null: true 
-      t.float :VitA, precission: 6, scale: 3, null: true 
-      t.float :VitB1, precission: 6, scale: 3, null: true 
-      t.float :VitB3, precission: 6, scale: 3, null: true 
-      t.float :VitB3, precission: 6, scale: 3, null: true 
-      t.float :VitB6, precission: 6, scale: 3, null: true 
-      t.float :VitB5, precission: 6, scale: 3, null: true 
-      t.float :VitB6, precission: 6, scale: 3, null: true 
-      t.float :VitB9, precission: 6, scale: 3, null: true 
-      t.float :VitB13, precission: 6, scale: 3, null: true 
-      t.float :VitC, precission: 6, scale: 3, null: true 
-      t.float :VitD, precission: 6, scale: 3, null: true 
-      t.float :VitE, precission: 6, scale: 3, null: true 
-      t.float :VitH, precission: 6, scale: 3, null: true 
-      t.float :VitK, precission: 6, scale: 3, null: true 
-      t.float :Cl, precission: 6, scale: 3, null: true 
-      t.float :Zn, precission: 6, scale: 3, null: true 
-      t.float :F, precission: 6, scale: 3, null: true 
-      t.float :P, precission: 6, scale: 3, null: true 
-      t.float :I, precission: 6, scale: 3, null: true 
-      t.float :Mg, precission: 6, scale: 3, null: true 
-      t.float :Cu, precission: 6, scale: 3, null: true 
-      t.float :K, precission: 6, scale: 3, null: true 
-      t.float :Se, precission: 6, scale: 3, null: true 
-      t.float :Na, precission: 6, scale: 3, null: true 
-      t.float :Ca, precission: 6, scale: 3, null: true 
-      t.float :Fe, precission: 6, scale: 3, null: true
-      t.float :Cholesterol, precission: 6, scale: 3, null: true 
+      t.numeric :Weight, precision: 6, scale: 2, null: true
+      t.numeric :WhatIsLeft, precision: 6, scale: 2, null: true 
+      t.numeric :Calories, precision: 6, scale: 2 
+      t.numeric :Protein, precision: 6, scale: 2 
+      t.numeric :Carbs, precision: 6, scale: 2 
+      t.numeric :Fat, precision: 6, scale: 2
+      t.numeric :Sugars, precision: 5, scale: 2, null: true  
+      t.numeric :Fiber, precision: 5, scale: 2, null: true 
+      t.numeric :Omega3, precision: 6, scale: 3, null: true 
+      t.numeric :ALA, precision: 6, scale: 3, null: true 
+      t.numeric :SFA, precision: 6, scale: 3, null: true 
+      t.numeric :WNKT, precision: 6, scale: 3, null: true 
+      t.numeric :Trans, precision: 6, scale: 3, null: true       
+      t.numeric :Valine, precision: 6, scale: 3, null: true 
+      t.numeric :Isoleucine, precision: 6, scale: 3, null: true 
+      t.numeric :Leucine, precision: 6, scale: 3, null: true 
+      t.numeric :Lysine, precision: 6, scale: 3, null: true 
+      t.numeric :Methionine, precision: 6, scale: 3, null: true 
+      t.numeric :Threonine, precision: 6, scale: 3, null: true 
+      t.numeric :Tryptophan, precision: 6, scale: 3, null: true 
+      t.numeric :Phenylalanine, precision: 6, scale: 3, null: true 
+      t.numeric :VitA, precision: 6, scale: 3, null: true 
+      t.numeric :VitB1, precision: 6, scale: 3, null: true 
+      t.numeric :VitB3, precision: 6, scale: 3, null: true 
+      t.numeric :VitB3, precision: 6, scale: 3, null: true 
+      t.numeric :VitB6, precision: 6, scale: 3, null: true 
+      t.numeric :VitB5, precision: 6, scale: 3, null: true 
+      t.numeric :VitB6, precision: 6, scale: 3, null: true 
+      t.numeric :VitB9, precision: 6, scale: 3, null: true 
+      t.numeric :VitB13, precision: 6, scale: 3, null: true 
+      t.numeric :VitC, precision: 6, scale: 3, null: true 
+      t.numeric :VitD, precision: 6, scale: 3, null: true 
+      t.numeric :VitE, precision: 6, scale: 3, null: true 
+      t.numeric :VitH, precision: 6, scale: 3, null: true 
+      t.numeric :VitK, precision: 6, scale: 3, null: true 
+      t.numeric :Cl, precision: 6, scale: 3, null: true 
+      t.numeric :Zn, precision: 6, scale: 3, null: true 
+      t.numeric :F, precision: 6, scale: 3, null: true 
+      t.numeric :P, precision: 6, scale: 3, null: true 
+      t.numeric :I, precision: 6, scale: 3, null: true 
+      t.numeric :Mg, precision: 6, scale: 3, null: true 
+      t.numeric :Cu, precision: 6, scale: 3, null: true 
+      t.numeric :K, precision: 6, scale: 3, null: true 
+      t.numeric :Se, precision: 6, scale: 3, null: true 
+      t.numeric :Na, precision: 6, scale: 3, null: true 
+      t.numeric :Ca, precision: 6, scale: 3, null: true 
+      t.numeric :Fe, precision: 6, scale: 3, null: true
+      t.numeric :Cholesterol, precision: 6, scale: 3, null: true 
      end
   end
 end

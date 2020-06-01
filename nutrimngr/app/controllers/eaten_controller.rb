@@ -31,6 +31,9 @@ class EatenController < ApplicationController
         end
         begin
             params['weight'] = Float(params['weight'])
+            if params['weight'] < 0
+                render plain: "Waga nie może być ujemna"  and return
+            end
         rescue
             render plain: 'Wprowadzoną błędną wagę.' and return
         end
@@ -49,7 +52,7 @@ class EatenController < ApplicationController
             render plain: 'Formularz zawiera niewypełnione pole.' and return
         end
         begin
-            params['calories'] = Float(params['calories']) if !params['calories'].blank?
+            params['kcal'] = Float(params['kcal']) if !params['kcal'].blank?
             params['protein'] = Float(params['protein']) if !params['protein'].blank?
             params['carbs'] = Float(params['carbs']) if !params['carbs'].blank?
             params['fat'] = Float(params['fat']) if !params['fat'].blank?
@@ -63,7 +66,7 @@ class EatenController < ApplicationController
             params['cholesterol'] = Float(params['cholesterol']) if !params['cholesterol'].blank?
             params['valine'] = Float(params['valine']) if !params['valine'].blank?
             params['isoleucine'] = Float(params['isoleucine']) if !params['isoleucine'].blank?
-            params['leucine'] = Float(params['leucine']) if !params['lecuine'].blank?
+            params['leucine'] = Float(params['leucine']) if !params['leucine'].blank?
             params['lysine'] = Float(params['lysine']) if !params['lysine'].blank?
             params['methionine'] = Float(params['methionine']) if !params['methionine'].blank?
             params['threonine'] = Float(params['threonine']) if !params['threonine'].blank?
@@ -81,8 +84,8 @@ class EatenController < ApplicationController
             params['vitC'] = Float(params['vitC']) if !params['vitC'].blank?
             params['vitD'] = Float(params['vitD']) if !params['vitD'].blank?
             params['vitE'] = Float(params['vitE']) if !params['vitE'].blank?
-            params['vitH'] = Float(params['vitH']) if !params['pvitH'].blank?
-            params['vitK'] = Float(params['vitK']) if !params['vitk'].blank?
+            params['vitH'] = Float(params['vitH']) if !params['vitH'].blank?
+            params['vitK'] = Float(params['vitK']) if !params['vitK'].blank?
             params['cl'] = Float(params['cl']) if !params['cl'].blank?
             params['zn'] = Float(params['zn']) if !params['zn'].blank?
             params['f'] = Float(params['f']) if !params['f'].blank?
@@ -96,7 +99,10 @@ class EatenController < ApplicationController
             params['ca'] = Float(params['ca']) if !params['ca'].blank?
             params['fe'] = Float(params['fe']) if !params['fe'].blank?
         rescue
-            render plain: "Wprowadzono błędną wartość"  and return
+            render plain: 'Wprowadzono błędną wartość' and return
+        end
+        if params['kcal'].to_f < 0 || params['protein'].to_f < 0 || params['carbs'].to_f < 0 || params['fat'].to_f < 0 || params['sugars'].to_f < 0 || params['fiber'].to_f < 0 || params['omega3'].to_f < 0 || params['ala'].to_f < 0 || params['sfa'].to_f < 0 || params['wnkt'].to_f < 0 || params['trans'].to_f < 0 || params['cholesterol'].to_f < 0 || params['valine'].to_f < 0 || params['isoleucine'].to_f < 0 || params['leucine'].to_f < 0 || params['lysine'].to_f < 0 || params['methionine'].to_f < 0 || params['threonine'].to_f < 0 || params['tryptophan'].to_f < 0 || params['phenylalanine'].to_f < 0 || params['vitA'].to_f < 0 || params['vitB1'].to_f < 0 || params['vitB2'].to_f < 0 || params['vitB3'].to_f < 0 || params['vitB4'].to_f < 0 || params['vitB5'].to_f < 0 || params['vitB6'].to_f < 0 || params['vitB9'].to_f < 0 || params['vitB12'].to_f < 0 || params['vitC'].to_f < 0 || params['vitD'].to_f < 0 || params['vitE'].to_f < 0 || params['vitH'].to_f < 0 || params['vitK'].to_f < 0 || params['cl'].to_f < 0 || params['zn'].to_f < 0 || params['f'].to_f < 0 || params['p'].to_f < 0 || params['i'].to_f < 0 || params['mg'].to_f < 0 || params['cu'].to_f < 0 || params['k'].to_f < 0 || params['se'].to_f < 0 || params['na'].to_f < 0 || params['ca'].to_f < 0 || params['fe'].to_f < 0
+            render plain: 'Wartość pola nie może być mniejsza od 0' and return
         end
         newEaten = EatenViewModel.new(session[:sessionID])
         if params['decompose'] == 'on'
@@ -113,6 +119,9 @@ class EatenController < ApplicationController
         if params['meal'].blank?
             render plain: 'Nie wybrano potrawy.' and return
         end
+        if params['portion'].blank?
+            render plain: 'Nie wprowadzono wagi albo liczby porcji' and return
+        end
         begin
             params['portion'] = Float(params['portion'])
         rescue
@@ -123,7 +132,7 @@ class EatenController < ApplicationController
             render plain: 'Wprowadzono większą porcję, niż zostało potrawy.' and return
         end
         if params['portion'] <= 0
-            render plain: 'Wprowadzoną błędną wartość porcji.' and return
+            render plain: 'Wielkość porcji musi być większa od 0.' and return
         end
         newEaten = EatenViewModel.new(session[:sessionID])
         eatenID = newEaten.addCompleteRecipe(session[:meal],params['meal'],params['portion'])
@@ -142,12 +151,12 @@ class EatenController < ApplicationController
         end
         params['weight'].each do |w|
             begin
-                w = Float(w)
+                w = Float(w)                
             rescue
                 render plain: 'Wprowadzoną błędną wagę.' and return
             end
             if w <= 0
-                render plain: 'Wprowadzoną błędną wagę.' and return
+                render plain: 'Waga nie może być mniejsza od 0.' and return
             end
         end
         existingProductsList = ProductInfoViewModel.new(session[:sessionID])

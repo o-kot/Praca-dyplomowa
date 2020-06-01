@@ -3,7 +3,7 @@ class UserRequisitionController < ApplicationController
         newUserData = UserDataViewModel.new(session[:sessionID])
         newUserData.getUserData
         newUserMeasurements = UserMeasurementsViewModel.new(session[:sessionID])
-        newUserMeasurements.getUserMeasurements
+        newUserMeasurements.getLatestMeasurements
         if !newUserData.userDataHeight.present?
             render plain: 'Incomplete data' and return
         elsif !newUserMeasurements.userMeasurementsWeight.present?
@@ -37,6 +37,9 @@ class UserRequisitionController < ApplicationController
         end
         begin
             params['calories'] = Integer(params['calories'])
+            if params['calories'] <0
+                render plain: "Kalorie nie mogą być ujemne" and return
+            end
         rescue
             render plain: 'Wprowadzono błędną wartość kaloryczności' and return
         end

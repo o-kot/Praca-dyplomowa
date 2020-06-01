@@ -1,3 +1,6 @@
+- if !@availableRecipes.present?
+    #norecipes{class:'alert alert-danger', role:'alert'}='W tym momencie nie masz masz żadnej potrawy przygotowanej.'
+
 #error{class:'alert alert-danger', role:'alert', style:'display:none'}='Wystąpił błąd. Spróbuj ponownie za  chwilę.'
 
 %form{id:'add-meal-form', action:'/addRecipeToMeal', method:'post', 'data-remote' => 'true'}
@@ -23,4 +26,9 @@
     $("#error").css("display","block");
     $("#success").css("display","none");
     }
+    else if(xhr.responseText.search('modal')<0 && xhr.responseText.search('Cache')<0){
+    $("#error").html(xhr.responseText);
+    $("#error").css("display","block");
+    $("#success").css("display","none");
+    }    
     });

@@ -34,6 +34,9 @@ class RecipesPg
         end
     end
     def deleteRecipe(id)
+        if CompleteRecipeDbModel.where(IDR:id,IsActive:true).exists?
+            return 'Nie można usunąć przepisu dopóki istnieją niespożyte potrawy z niego zrobione.' 
+        end
         recipe = RecipeDbModel.where(id:id).first
         recipe.update_attributes(IsActive:false)
         return 'success'
@@ -63,7 +66,7 @@ class RecipesPg
     end
     def weightProduct(recipe,product,weight)
         newRecipeProduct = RecipeProductsDbModel.where(IDR:recipe,IDP:product).first
-        newRecipeProduct.update_attributes(Weight:weight)
+        newRecipeProduct.update_attributes(Weight:weight)        
         return 'success'
     end
     def getProductList(recipe)
@@ -83,6 +86,14 @@ class RecipesPg
         return {ingredients:ingredients,ingredientsWeight:ingredientsWeight}
     end
     def createCompleteRecipe(recipe)
+        tmp = RecipeProductsDbModel.where(IDR:recipe)
+        tmpWeight = 0
+        tmp.each do |t|
+            tmpWeight += (t.Weight.nil? ? 0 : t.Weight)
+        end
+        if tmpWeight == 0
+            return 'NoWeight'
+        end
         newCompleteRecipe = CompleteRecipeDbModel.new
         newCompleteRecipe.IDR = recipe
         newCompleteRecipe.IsActive = true

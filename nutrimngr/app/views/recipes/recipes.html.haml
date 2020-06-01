@@ -10,9 +10,12 @@
                 %h4="Nie został jeszcze dodany żaden przepis."
             %div{classs:'col-md-1'}
                 = link_to 'Dodaj przepis', modal_path(body: 'recipes/add', title: 'Wprowadź nazwę przepisu'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'btn-form link-adjustements'
-
+    
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
-    - if @message.present?
+    - if @message.present? && session[:messageClass].present?
+        #error{class:'alert alert-danger centered', role:'alert', style:'text-align:center'}=@message
+        - session[:messageClass] = nil
+    - elsif @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
 
 -# Main content for existing recipes

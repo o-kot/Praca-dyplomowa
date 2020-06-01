@@ -48,6 +48,10 @@ class RecipeController < ApplicationController
         if newRecipe.deleteRecipe(params['recipe']) == 'success'
             session[:message]='Przepis został usunięty.'
             redirect_to '/recipes/recipes'
+        else
+            session[:message] = newRecipe.deleteRecipe(params['recipe'])
+            session[:messageClass] = 'alert-danger'
+            redirect_to '/recipes/recipes'
         end
     end
     def deleteProduct
