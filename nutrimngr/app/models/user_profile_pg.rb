@@ -95,9 +95,21 @@ class UserProfilePg
                 return ''                
             end
         when 'wst'
-            newUserMeasurements.update_attributes(Waist:nil)
+            firstM = UserMeasurementsDbModel.where("\"IDU\" = #{@userID} AND \"Waist\" IS NOT NULL").order('ID ASC').first.id
+            lastM = UserMeasurementsDbModel.where("\"IDU\" = #{@userID} AND \"Waist\" IS NOT NULL").order('ID DESC').first.id
+            unless firstM == id.to_i && firstM == lastM
+                newUserMeasurements.update_attributes(Waist:nil)
+            else
+                return ''
+            end
         when 'hps'
-            newUserMeasurements.update_attributes(Hips:nil)
+            firstM = UserMeasurementsDbModel.where("\"IDU\" = #{@userID} AND \"Hips\" IS NOT NULL").order('ID ASC').first.id
+            lastM = UserMeasurementsDbModel.where("\"IDU\" = #{@userID} AND \"Hips\" IS NOT NULL").order('ID DESC').first.id
+            unless firstM == id.to_i && firstM == lastM
+                newUserMeasurements.update_attributes(Hips:nil)
+            else 
+                return ''                
+            end    
         else "Error: data has an invalid value (#{what})"
         end
         if newUserMeasurements.Weight == nil && newUserMeasurements.Waist == nil && newUserMeasurements.Hips == nil

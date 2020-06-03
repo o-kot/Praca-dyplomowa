@@ -6,18 +6,18 @@ class CompleteRecipeController < ApplicationController
             weight = params['ingredientWeight'][index]
             if !weight.blank?
                 begin
-                    weight = Float(weight)
+                    weight = Float(weight.gsub(',','.'))
                     if weight < 0
                         render plain: "Waga nie może być ujemna"  and return
                     end
                     newWeighted = RecipeProductsViewModel.new(session[:sessionID])
-                    newWeighted.weightProduct(params['recipe'],id,weight)                    
+                    newWeighted.weightProduct(params['recipe'],id,weight)
                 rescue
                     render plain: "Wprowadzono błędną wartość"  and return
                 end
             else
                 next
-            end            
+            end
         end
         newCompleteRecipe = CompleteRecipeViewModel.new(session[:sessionID])
         newCompleteRecipeID = newCompleteRecipe.createCompleteRecipe(params['recipe'])

@@ -32,7 +32,8 @@
                 %th='Białko'
                 %th='Węglowodany'
                 %th='Tłuszcz'
-                %th=@searched_text
+                - unless %w[Calories Protein Carbs Fat].include? params['searched']
+                    %th=@searched_text
 
             - if @searched.nil?
                 - @products.each do |product|
@@ -42,9 +43,10 @@
                         %td=product.Protein
                         %td=product.Carbs
                         %td=product.Fat
-                        %td=product[params['searched']]
-                        %td
-                            = link_to '', modal_path(body: 'user_products/show', product: product.id, title: product.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
+                        - unless %w[Calories Protein Carbs Fat].include? params['searched']
+                            %td=product[params['searched']]
+                            %td
+                                = link_to '', modal_path(body: 'shared/show_product', product: product.id, title: product.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
 
             - else
                 %td=@searched.Name
@@ -53,7 +55,7 @@
                 %td=@searched.Carbs
                 %td=@searched.Fat
                 %td
-                    = link_to '', modal_path(body: 'user_products/show', product: @searched.id, title: @searched.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
+                    = link_to '', modal_path(body: 'shared/show_product', product: @searched.id, title: @searched.Name), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'far fa-eye btn-examine'
                 %td
                     = link_to '', modal_path(body: 'user_products/edit', product: @searched.id, title: 'Edytuj wybrane dane', size: 'lg'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit'
                 %td

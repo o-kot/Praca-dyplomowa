@@ -66,7 +66,7 @@ class ProductsPg
             else
                 temp = 100/weight
                 newUserProduct.Calories = calories.to_f * temp
-                newUserProduct.Protein = protein.to_f * temp rescue nil
+                newUserProduct.Protein = Pprotein.to_f * temp rescue nil
                 newUserProduct.Carbs = carbs.to_f * temp rescue nil
                 newUserProduct.Fat = fat.to_f * temp rescue nil
                 newUserProduct.Sugars = sugars.to_f * temp rescue nil

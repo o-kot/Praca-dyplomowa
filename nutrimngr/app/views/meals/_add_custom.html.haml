@@ -208,7 +208,6 @@
     url: $('#dec').attr('href'),  dataType: 'json',
     success: function() {  },
     error: function(data) {
-    $('.modal-backdrop').remove();
     eval(data.responseText);
     }
     });

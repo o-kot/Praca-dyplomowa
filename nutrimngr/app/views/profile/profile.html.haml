@@ -14,7 +14,10 @@
             = link_to 'Oblicz', '/user_requisition/requisition', class:'btn-form link-adjustements', remote: true
     #error{class:'alert alert-danger centered', role:'alert', style:'display:none; text-align:center'}
     #advice{class:'alert alert-warning centered', role:'alert', style:'display:none; text-align:center'}
-    - if @message.present?
+    - if @message.present? && session[:messageClass].present?
+        #error{class:'alert alert-danger centered', role:'alert', style:'text-align:center'}=@message
+        - session[:messageClass] = nil
+    - elsif @message.present?
         #success{class:'alert alert-success', role:'alert', style:'text-align:center'}=@message
 
 -# Forms
@@ -109,10 +112,6 @@
     $("#modal-title").html('Uzupełnij dane');
     $("#modal-body").html("#{ escape_javascript(render 'profile/data', which:'all') }");
     $(".modal").modal('show');
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
     }
     else{
     $("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
@@ -124,10 +123,6 @@
     $("#modal-title").html('Uzupełnij wymiary');
     $("#modal-body").html("#{ escape_javascript(render 'profile/measurements', which: 'all') }");
     $(".modal").modal('show');
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
     }
     else{
     $("#error").html("Nie można obliczyć zapotrzebowania ze względu na niekompletne informacje.");
@@ -161,14 +156,10 @@
     $("#modal-title").html('Wprowadź proponowaną kaloryczność');
     $("#modal-body").html("#{ escape_javascript(render 'profile/modify') }");
     $(".modal").modal('show');
-    $(".btn-close").off('click').click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
     });
     - if @differences.present?
         var edit_link_template = '#{link_to '', modal_path(body: 'profile/edit_measurement', title: 'Wprowadź wartość', id: 'STUB', which: 'TMP'), remote: true, 'data-toggle' =>  'modal', 'data-target' => '#modal-holder', class:'fas fa-pencil-alt btn-edit-for-profile'}';
-        var del_link_template = '#{link_to '', delete_measurement_path(id: 'STUB', what: 'TMP'), class:'fas fa-times btn-delete'}';
+        var del_link_template = '#{link_to '', delete_measurement_path(id: 'STUB', what: 'TMP'), onclick:'if(!confirm("Czy na pewno chcesz usunąć ten wymiar?")) return false', class:'fas fa-times btn-delete'}';
         Highcharts.chart('weight-chart', {
         chart: {
         type: 'line'

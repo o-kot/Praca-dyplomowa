@@ -30,7 +30,7 @@ class EatenController < ApplicationController
             render plain: 'Nie wybrano produktu.' and return
         end
         begin
-            params['weight'] = Float(params['weight'])
+            params['weight'] = Float(params['weight'].gsub(',','.'))
             if params['weight'] < 0
                 render plain: "Waga nie może być ujemna"  and return
             end
@@ -52,52 +52,52 @@ class EatenController < ApplicationController
             render plain: 'Formularz zawiera niewypełnione pole.' and return
         end
         begin
-            params['kcal'] = Float(params['kcal']) if !params['kcal'].blank?
-            params['protein'] = Float(params['protein']) if !params['protein'].blank?
-            params['carbs'] = Float(params['carbs']) if !params['carbs'].blank?
-            params['fat'] = Float(params['fat']) if !params['fat'].blank?
-            params['sugars'] = Float(params['sugars']) if !params['sugars'].blank?
-            params['fiber'] = Float(params['fiber']) if !params['fiber'].blank?
-            params['omega3'] = Float(params['omega3']) if !params['omega3'].blank?
-            params['ala'] = Float(params['ala']) if !params['ala'].blank?
-            params['sfa'] = Float(params['sfa']) if !params['sfa'].blank?
-            params['wnkt'] = Float(params['wnkt']) if !params['wnkt'].blank?
-            params['trans'] = Float(params['trans']) if !params['trans'].blank?
-            params['cholesterol'] = Float(params['cholesterol']) if !params['cholesterol'].blank?
-            params['valine'] = Float(params['valine']) if !params['valine'].blank?
-            params['isoleucine'] = Float(params['isoleucine']) if !params['isoleucine'].blank?
-            params['leucine'] = Float(params['leucine']) if !params['leucine'].blank?
-            params['lysine'] = Float(params['lysine']) if !params['lysine'].blank?
-            params['methionine'] = Float(params['methionine']) if !params['methionine'].blank?
-            params['threonine'] = Float(params['threonine']) if !params['threonine'].blank?
-            params['tryptophan'] = Float(params['tryptophan']) if !params['tryptophan'].blank?
-            params['phenylalanine'] = Float(params['pheylalanine']) if !params['phenylalanine'].blank?
-            params['vitA'] = Float(params['vitA']) if !params['vitA'].blank?
-            params['vitB1'] = Float(params['vitB1']) if !params['vitB1'].blank?
-            params['vitB2'] = Float(params['vitB2']) if !params['vitB2'].blank?
-            params['vitB3'] = Float(params['vitB3']) if !params['vitB3'].blank?
-            params['vitB4'] = Float(params['vitB4']) if !params['vitB4'].blank?
-            params['vitB5'] = Float(params['vitB5']) if !params['vitB5'].blank?
-            params['vitB6'] = Float(params['vitB6']) if !params['vitB6'].blank?
-            params['vitB9'] = Float(params['vitB9']) if !params['vitB9'].blank?
-            params['vitB12'] = Float(params['vitB12']) if !params['vitB12'].blank?
-            params['vitC'] = Float(params['vitC']) if !params['vitC'].blank?
-            params['vitD'] = Float(params['vitD']) if !params['vitD'].blank?
-            params['vitE'] = Float(params['vitE']) if !params['vitE'].blank?
-            params['vitH'] = Float(params['vitH']) if !params['vitH'].blank?
-            params['vitK'] = Float(params['vitK']) if !params['vitK'].blank?
-            params['cl'] = Float(params['cl']) if !params['cl'].blank?
-            params['zn'] = Float(params['zn']) if !params['zn'].blank?
-            params['f'] = Float(params['f']) if !params['f'].blank?
-            params['p'] = Float(params['p']) if !params['p'].blank?
-            params['i'] = Float(params['i']) if !params['i'].blank?
-            params['mg'] = Float(params['mg']) if !params['mg'].blank?
-            params['cu'] = Float(params['cu']) if !params['cu'].blank?
-            params['k'] = Float(params['k']) if !params['k'].blank?
-            params['se'] = Float(params['se']) if !params['se'].blank?
-            params['na'] = Float(params['na']) if !params['na'].blank?
-            params['ca'] = Float(params['ca']) if !params['ca'].blank?
-            params['fe'] = Float(params['fe']) if !params['fe'].blank?
+            params['kcal'] = Float(params['kcal'].gsub(',','.')) if !params['kcal'].blank?
+            params['protein'] = Float(params['protein'].gsub(',','.')) if !params['protein'].blank?
+            params['carbs'] = Float(params['carbs'].gsub(',','.')) if !params['carbs'].blank?
+            params['fat'] = Float(params['fat'].gsub(',','.')) if !params['fat'].blank?
+            params['sugars'] = Float(params['sugars'].gsub(',','.')) if !params['sugars'].blank?
+            params['fiber'] = Float(params['fiber'].gsub(',','.')) if !params['fiber'].blank?
+            params['omega3'] = Float(params['omega3'].gsub(',','.')) if !params['omega3'].blank?
+            params['ala'] = Float(params['ala'].gsub(',','.')) if !params['ala'].blank?
+            params['sfa'] = Float(params['sfa'].gsub(',','.')) if !params['sfa'].blank?
+            params['wnkt'] = Float(params['wnkt'].gsub(',','.')) if !params['wnkt'].blank?
+            params['trans'] = Float(params['trans'].gsub(',','.')) if !params['trans'].blank?
+            params['cholesterol'] = Float(params['cholesterol'].gsub(',','.')) if !params['cholesterol'].blank?
+            params['valine'] = Float(params['valine'].gsub(',','.')) if !params['valine'].blank?
+            params['isoleucine'] = Float(params['isoleucine'].gsub(',','.')) if !params['isoleucine'].blank?
+            params['leucine'] = Float(params['leucine'].gsub(',','.')) if !params['leucine'].blank?
+            params['lysine'] = Float(params['lysine'].gsub(',','.')) if !params['lysine'].blank?
+            params['methionine'] = Float(params['methionine'].gsub(',','.')) if !params['methionine'].blank?
+            params['threonine'] = Float(params['threonine'].gsub(',','.')) if !params['threonine'].blank?
+            params['tryptophan'] = Float(params['tryptophan'].gsub(',','.')) if !params['tryptophan'].blank?
+            params['phenylalanine'] = Float(params['pheylalanine'].gsub(',','.')) if !params['phenylalanine'].blank?
+            params['vitA'] = Float(params['vitA'].gsub(',','.')) if !params['vitA'].blank?
+            params['vitB1'] = Float(params['vitB1'].gsub(',','.')) if !params['vitB1'].blank?
+            params['vitB2'] = Float(params['vitB2'].gsub(',','.')) if !params['vitB2'].blank?
+            params['vitB3'] = Float(params['vitB3'].gsub(',','.')) if !params['vitB3'].blank?
+            params['vitB4'] = Float(params['vitB4'].gsub(',','.')) if !params['vitB4'].blank?
+            params['vitB5'] = Float(params['vitB5'].gsub(',','.')) if !params['vitB5'].blank?
+            params['vitB6'] = Float(params['vitB6'].gsub(',','.')) if !params['vitB6'].blank?
+            params['vitB9'] = Float(params['vitB9'].gsub(',','.')) if !params['vitB9'].blank?
+            params['vitB12'] = Float(params['vitB12'].gsub(',','.')) if !params['vitB12'].blank?
+            params['vitC'] = Float(params['vitC'].gsub(',','.')) if !params['vitC'].blank?
+            params['vitD'] = Float(params['vitD'].gsub(',','.')) if !params['vitD'].blank?
+            params['vitE'] = Float(params['vitE'].gsub(',','.')) if !params['vitE'].blank?
+            params['vitH'] = Float(params['vitH'].gsub(',','.')) if !params['vitH'].blank?
+            params['vitK'] = Float(params['vitK'].gsub(',','.')) if !params['vitK'].blank?
+            params['cl'] = Float(params['cl'].gsub(',','.')) if !params['cl'].blank?
+            params['zn'] = Float(params['zn'].gsub(',','.')) if !params['zn'].blank?
+            params['f'] = Float(params['f'].gsub(',','.')) if !params['f'].blank?
+            params['p'] = Float(params['p'].gsub(',','.')) if !params['p'].blank?
+            params['i'] = Float(params['i'].gsub(',','.')) if !params['i'].blank?
+            params['mg'] = Float(params['mg'].gsub(',','.')) if !params['mg'].blank?
+            params['cu'] = Float(params['cu'].gsub(',','.')) if !params['cu'].blank?
+            params['k'] = Float(params['k'].gsub(',','.')) if !params['k'].blank?
+            params['se'] = Float(params['se'].gsub(',','.')) if !params['se'].blank?
+            params['na'] = Float(params['na'].gsub(',','.')) if !params['na'].blank?
+            params['ca'] = Float(params['ca'].gsub(',','.')) if !params['ca'].blank?
+            params['fe'] = Float(params['fe'].gsub(',','.')) if !params['fe'].blank?
         rescue
             render plain: 'Wprowadzono błędną wartość' and return
         end
@@ -123,7 +123,7 @@ class EatenController < ApplicationController
             render plain: 'Nie wprowadzono wagi albo liczby porcji' and return
         end
         begin
-            params['portion'] = Float(params['portion'])
+            params['portion'] = Float(params['portion'].gsub(',','.'))
         rescue
             render plain: 'Wprowadzoną błędną wartość porcji.' and return
         end
@@ -151,7 +151,7 @@ class EatenController < ApplicationController
         end
         params['weight'].each do |w|
             begin
-                w = Float(w)                
+                w = Float(w)
             rescue
                 render plain: 'Wprowadzoną błędną wagę.' and return
             end

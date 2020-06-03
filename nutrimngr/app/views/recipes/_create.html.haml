@@ -19,13 +19,13 @@
             %div{class:'col-sm-8'}
                 %input{name:'ingredientWeight[]', type:'text', class:'form-control', placeholder:@productWeightList[product[0]]}
                 %input{name:'ingredientID[]', type:'hidden', value:product[0]}
-        -if @productList.present?
-            %div{class:'form-check'}
-                %input{type:'checkbox', class:'form-check-input', name:'goToPortioning', checked:'true'}
-                %label{class:'form-check-label', for:'goToPortioning'}='Czy chcesz od razu porcjować lub zważyć?'
+    -if @productList.present?
+        %div{class:'form-check'}
+            %input{type:'checkbox', class:'form-check-input', name:'goToPortioning', checked:'true'}
+            %label{class:'form-check-label', for:'goToPortioning'}='Czy chcesz od razu porcjować lub zważyć?'
 
-            %div{class:'form-group row justify-content-end'}
-                %input{class: 'btn-form', type:'submit', value:'Zapisz'}
+        %div{class:'form-group row justify-content-end'}
+            %input{class: 'btn-form', type:'submit', value:'Zapisz'}
 
 %script
     $(document).off('ajax:success').on('ajax:success',function(event){
@@ -36,7 +36,6 @@
     url: $('#measure').attr('href'),  dataType: 'json',
     success: function() {  },
     error: function(data) {
-    $('.modal-backdrop').remove();
     eval(data.responseText);
     }
     });
@@ -54,8 +53,4 @@
     $("#error").css("display","block");
     $("#success").css("display","none");
     }
-    });
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
     });

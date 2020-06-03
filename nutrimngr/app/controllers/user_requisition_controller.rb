@@ -9,7 +9,7 @@ class UserRequisitionController < ApplicationController
         elsif !newUserMeasurements.userMeasurementsWeight.present?
             render plain: 'Incomplete measurements' and return
         elsif newUserData.userDataActivityID.nil?
-            render plain: 'Incomplete activity' and return    
+            render plain: 'Incomplete activity' and return
         elsif newUserData.userDataTargetID.nil?
             render plain: 'Incomplete target' and return
         else
@@ -19,7 +19,7 @@ class UserRequisitionController < ApplicationController
             end
             newUserRequisition = UserRequisitionViewModel.new(session[:sessionID])
             kcal = newUserRequisition.calculateUserRequisition(newUserData.userDataIsWoman,newUserData.userDataHeight,newUserMeasurements.userMeasurementsWeight,newUserData.userDataActivityID,userAge,newUserData.userDataTargetID)
-            if kcal  
+            if kcal
                 redirect_to modal_path(body: 'profile/requisition', title: 'Twoje zapotrzebowanie', energy: kcal)
             end
         end
@@ -28,7 +28,7 @@ class UserRequisitionController < ApplicationController
         newUserRequisition = UserRequisitionViewModel.new(session[:sessionID])
         if newUserRequisition.saveUserRequisition(params['calories']) == 'success'
             session[:message]='Zapisano zapotrzebowanie.'
-            redirect_to '/profile/profile'         
+            redirect_to '/profile/profile'
         end
     end
     def modifyRequisition
@@ -44,11 +44,11 @@ class UserRequisitionController < ApplicationController
             render plain: 'Wprowadzono błędną wartość kaloryczności' and return
         end
         newTargetCalories = UserRequisitionViewModel.new(session[:sessionID])
-        if newTargetCalories.modifyUserRequisition(params['calories']) == 'success'  
-            session[:message]='Zapisano zapotrzebowanie.' 
+        if newTargetCalories.modifyUserRequisition(params['calories']) == 'success'
+            session[:message]='Zapisano zapotrzebowanie.'
             redirect_to '/profile/profile'
         else
             render plain: newTargetCalories.modifyUserRequisition(params['calories'])
         end
-    end   
+    end
 end

@@ -229,7 +229,6 @@
     url: $('#cback').attr('href'),  dataType: 'json',
     success: function() {  },
     error: function(data) {
-    $('.modal-backdrop').remove();
     eval(data.responseText);
     }
     });
@@ -246,8 +245,3 @@
     $(".modal").modal('show');
     }
     });
-    $(".btn-close").click(function () {
-    if(confirm("Czy na pewno chcesz zamknąć to okno?"))
-    $(".modal").modal('hide');
-    });
-    

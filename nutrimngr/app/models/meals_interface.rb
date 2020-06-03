@@ -3,9 +3,6 @@ class MealsInterface
         @object = object     
         @object.setID(id)
     end
-    def getEaten(date)
-        @object.getEaten(date)
-    end
     def getMeals
         @object.getMeals
     end
@@ -14,9 +11,6 @@ class MealsInterface
     end
     def addMeal(date,time,meal)
         @object.addMeal(date,time,meal)
-    end
-    def editMeal(id) 
-        @object.editMeal(id)
     end
     def deleteMeal(id) 
         @object.deleteMeal(id)

@@ -4,25 +4,25 @@ class UserMeasurementsController < ApplicationController
             render plain: 'Formularz zawiera niewypełnione pola.' and return
         end
         begin
-            params['weight'] = Float(params['weight'])
+            params['weight'] = Float(params['weight'].gsub(',','.'))
             if params['weight'] < 0
-                render plain: "Waga nie może być mniejsza niż 0." and return                
+                render plain: "Waga nie może być mniejsza niż 0." and return
             end
         rescue
             render plain: "Błędna wartość w polu waga." and return
         end
         begin
-            params['waist'] = Float(params['waist'])
+            params['waist'] = Float(params['waist'].gsub(',','.'))
             if params['waist'] < 0
-                render plain: "Obwód pasa nie może być mniejszy niż 0." and return                
+                render plain: "Obwód pasa nie może być mniejszy niż 0." and return
             end
         rescue
             render plain: "Błędna wartość w polu obwod pasa." and return
         end
         begin
-            params['hips'] = Float(params['hips'])
+            params['hips'] = Float(params['hips'].gsub(',','.'))
             if params['hips'] < 0
-                render plain: "Obwód bioder nie może być mniejsza niż 0." and return                
+                render plain: "Obwód bioder nie może być mniejsza niż 0." and return
             end
         rescue
             render plain: "Błędna wartość w polu obwód bioder." and return
@@ -38,9 +38,9 @@ class UserMeasurementsController < ApplicationController
             render plain: 'Formularz zawiera niewypełnione pola.' and return
         end
         begin
-            params['edited'] = Float(params['edited'])
+            params['edited'] = Float(params['edited'].gsub(',','.'))
             if params['edited'] < 0
-                render plain: "Wartość pola nie może być mniejsza niż 0." and return                
+                render plain: "Wartość pola nie może być mniejsza niż 0." and return
             end
         rescue
             render plain: "Wprowadzono błędną wartość." and return
@@ -56,9 +56,9 @@ class UserMeasurementsController < ApplicationController
             render plain: 'Formularz zawiera niewypełnione pola.' and return
         end
         begin
-            params['edited'] = Float(params['edited'])
+            params['edited'] = Float(params['edited'].gsub(',','.'))
             if params['edited'] < 0
-                render plain: "Wartość pola nie może być mniejsza niż 0." and return                
+                render plain: "Wartość pola nie może być mniejsza niż 0." and return
             end
         rescue
             render plain: "Wprowadzono błędną wartość." and return
@@ -76,6 +76,7 @@ class UserMeasurementsController < ApplicationController
             redirect_to '/profile/profile'
         else
             session[:message]= 'Nie można usunąć jedynego pomiaru.'
+            session[:messageClass]='alert-danger'
             redirect_to '/profile/profile'
         end
     end

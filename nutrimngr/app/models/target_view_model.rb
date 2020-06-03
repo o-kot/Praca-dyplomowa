@@ -11,8 +11,7 @@ class TargetViewModel
         target = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
         target.editTarget(id)
     end
-    def
-        getTarget
+    def getTarget
         target = UserProfileInterface.new(ConfigDb::USERDATA.constantize.new,@userID)
         target = target.getTarget
         @targetID = target.id rescue ''

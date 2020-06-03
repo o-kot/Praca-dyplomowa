@@ -1,5 +1,5 @@
 class UserMeasurementsViewModel
-    attr_accessor :userMeasurementsWeight, :userMeasurementsWaist, :userMeasurementsHips, :getUserMeasurementsDate
+    attr_accessor :userMeasurementsWeight, :userMeasurementsWaist, :userMeasurementsHips
     def initialize(id)
         @userID = id
     end

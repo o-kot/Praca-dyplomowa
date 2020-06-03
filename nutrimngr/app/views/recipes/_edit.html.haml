@@ -44,7 +44,6 @@
     url: '/modal/modal?body=recipes%2Fedit&recipe='+#{@recipe.id}+'&title=Edytuj+przepis',  dataType: 'json',
     success: function() { },
     error: function(data) {
-    $('.modal-backdrop').remove();
     eval(data.responseText);
     }
     });

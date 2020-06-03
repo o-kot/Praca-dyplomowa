@@ -3,7 +3,7 @@ require 'date'
 class ModalController < ActionController::Base
     def modal
         case params['body']
-        when 'user_products/show'
+        when 'shared/show_product'
             @product = ProductInfoViewModel.new(session[:sessionID])
             @product.getProductInfo(params['product'])
         when 'user_products/edit'
@@ -81,11 +81,11 @@ class ModalController < ActionController::Base
             @today = Date.today
             @eaten = EatenViewModel.new(session[:sessionID])
             @eatenMeals = @eaten.getEaten(@today)
-            @eatenMeals = @eatenMeals[:mealsList] 
+            @eatenMeals = @eatenMeals[:mealsList]
             @eatenMeals = @eatenMeals.map do |eaten|
                 {
                     id: eaten.id,
-                    VitA: eaten.VitA, 
+                    VitA: eaten.VitA,
                     VitB1: eaten.VitB1,
                     VitB2: eaten.VitB2,
                     VitB3: eaten.VitB3,
@@ -166,9 +166,9 @@ class ModalController < ActionController::Base
             @na_sum = 0
             @eatenMeals.each {|eat| @na_sum += eat[:Na] unless eat[:Na].nil?}
             @ca_sum = 0
-            @eatenMeals.each {|eat| @ca_sum += eat[:Ca] unless eat[:Ca].nil?}   
+            @eatenMeals.each {|eat| @ca_sum += eat[:Ca] unless eat[:Ca].nil?}
             @fe_sum = 0
-            @eatenMeals.each {|eat| @fe_sum += eat[:Fe] unless eat[:Fe].nil?}            
+            @eatenMeals.each {|eat| @fe_sum += eat[:Fe] unless eat[:Fe].nil?}
         end
         respond_to do |format|
             format.html

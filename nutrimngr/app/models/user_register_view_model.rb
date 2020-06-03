@@ -3,7 +3,4 @@ class UserRegisterViewModel
         user = UserInterface.new(ConfigDb::USERCONFIG.constantize.new)
         user.saveUser(userEmail, userPassword)
     end
-    private
-    @userEmail = ''
-    @userPassword = ''
 end

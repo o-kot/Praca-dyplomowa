@@ -35,9 +35,6 @@ class MealsPg
         newMealTMP.Time = time
         return newMealTMP
     end
-    def editMeal(id)
-        newMeal = EatenDbModel.where(id:id).first
-    end
     def deleteMeal(id)
         newMeal = EatenDbModel.where(id:id).first
         newMeal.delete
