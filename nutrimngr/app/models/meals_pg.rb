@@ -190,9 +190,9 @@ class MealsPg
         else "Error: data has an invalid value"
         end
         calculating.Calories = completeRecipe.Calories * quantity
-        calculating.Protein = completeRecipe.Protein * quantity
-        calculating.Carbs = completeRecipe.Carbs * quantity
-        calculating.Fat = completeRecipe.Fat * quantity
+        calculating.Protein = completeRecipe.Protein * quantity rescue nil
+        calculating.Carbs = completeRecipe.Carbs * quantity rescue nil
+        calculating.Fat = completeRecipe.Fat * quantity rescue nil
         calculating.Sugars = completeRecipe.Sugars * quantity rescue nil
         calculating.Fiber = completeRecipe.Fiber * quantity rescue nil
         calculating.Omega3 = completeRecipe.Omega3 * quantity rescue nil
