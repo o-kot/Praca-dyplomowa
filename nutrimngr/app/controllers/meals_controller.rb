@@ -75,7 +75,7 @@ class MealsController < ApplicationController
                 else
                     @resultc = 'neutral'
                 end
-            end    
+            end
         end
         if  @eatenMeals.present?
             carbs_sum = 0
@@ -171,7 +171,7 @@ class MealsController < ApplicationController
             if trans_percent >= 1
                 trans_col = 'red'
             end
-            
+
             fiber_col = ''
             if fiber_sum < 25
                 fiber_col = 'red'
@@ -183,9 +183,9 @@ class MealsController < ApplicationController
             end
 
             @chart_data = [
-                { name: 'Węglowodany', class: c_chart_col, y: carbs_div, tooltip_info: "<b>Błonnik</b>: <span style='color:#{fiber_col}'>#{fiber_sum.round(2)} g</span><br /> <b>Cukry:</b> #{sugars_sum.round(2)} g (<span style='color:#{sugar_col}'>#{sugars_percent.round(2)} %</span>)<br />" },
-                { name: 'Białko', class: p_chart_col, y: protein_div, tooltip_info: "<b>Walina</b>: #{valine_sum.round(2)} mg (z #{@requisition.Valine})<br /> <b>Izoleucyna:</b> #{isoleucine_sum.round(2)} mg (z #{@requisition.Isoleucine})<br /> <b>Leucyna:</b> #{leucine_sum.round(2)} mg (z #{@requisition.Leucine})<br /> <b>Lizyna:</b> #{lysine_sum.round(2)} mg (z #{@requisition.Lysine})<br /> <b>Metionina:</b> #{methionine_sum.round(2)} mg (z #{@requisition.Methionine})<br /> <b>Treonina:</b> #{threonine_sum.round(2)} mg (z #{@requisition.Threonine})<br /> <b>Tryptofan:</b> #{tryptophan_sum.round(2)} mg (z #{@requisition.Tryptophan})<br /> <b>Fenyalanina:</b> #{phenylalanine_sum.round(2)} mg (z #{@requisition.Phenylalanine})<br />" },
-                { name: 'Tłuszcze', class: f_chart_col, y: fat_div, tooltip_info: "<b>Tłuszcze jednonienasycone</b>: #{jnkt_sum.round(2)} g<br /> <b>Tłuszcze wielonienasycone:</b> #{wnkt_sum.round(2)} g (<span style='color:#{wnkt_col}'>#{wnkt_percent.round(2)} %</span>)<br /> <b>Tłuszcze nasycone:</b> #{sfa_sum.round(2)} g (<span style='color:#{sfa_col}'>#{sfa_percent.round(2)} %</span>)<br /> <b>Tłuszcze trans:</b> #{trans_sum.round(2)} g (<span style='color:#{trans_col}'>#{trans_percent.round(2)} %</span>)<br /> <b>Kwasy tł. Omega3:</b> #{omega3_sum.round(2)} g<br /> <b>Kwas tł. ALA:</b> #{ala_sum.round(2)} g (<span style='color:#{ala_col}'>#{ala_percent.round(2)} %</span>)<br /> <b>Cholesterol:</b> <span style='color:#{cholesterol_col}'>#{cholesterol_sum.round(2)} mg</span><br />" }
+                { name: 'Węglowodany', class: c_chart_col, y: carbs_div.to_f, tooltip_info: "<b>Błonnik</b>: <span style='color:#{fiber_col}'>#{fiber_sum.round(2)} g</span><br /> <b>Cukry:</b> #{sugars_sum.round(2)} g (<span style='color:#{sugar_col}'>#{sugars_percent.round(2)} %</span>)<br />" },
+                { name: 'Białko', class: p_chart_col, y: protein_div.to_f, tooltip_info: "<b>Walina</b>: #{valine_sum.round(2)} mg (z #{@requisition.Valine})<br /> <b>Izoleucyna:</b> #{isoleucine_sum.round(2)} mg (z #{@requisition.Isoleucine})<br /> <b>Leucyna:</b> #{leucine_sum.round(2)} mg (z #{@requisition.Leucine})<br /> <b>Lizyna:</b> #{lysine_sum.round(2)} mg (z #{@requisition.Lysine})<br /> <b>Metionina:</b> #{methionine_sum.round(2)} mg (z #{@requisition.Methionine})<br /> <b>Treonina:</b> #{threonine_sum.round(2)} mg (z #{@requisition.Threonine})<br /> <b>Tryptofan:</b> #{tryptophan_sum.round(2)} mg (z #{@requisition.Tryptophan})<br /> <b>Fenyalanina:</b> #{phenylalanine_sum.round(2)} mg (z #{@requisition.Phenylalanine})<br />" },
+                { name: 'Tłuszcze', class: f_chart_col, y: fat_div.to_f, tooltip_info: "<b>Tłuszcze jednonienasycone</b>: #{jnkt_sum.round(2)} g<br /> <b>Tłuszcze wielonienasycone:</b> #{wnkt_sum.round(2)} g (<span style='color:#{wnkt_col}'>#{wnkt_percent.round(2)} %</span>)<br /> <b>Tłuszcze nasycone:</b> #{sfa_sum.round(2)} g (<span style='color:#{sfa_col}'>#{sfa_percent.round(2)} %</span>)<br /> <b>Tłuszcze trans:</b> #{trans_sum.round(2)} g (<span style='color:#{trans_col}'>#{trans_percent.round(2)} %</span>)<br /> <b>Kwasy tł. Omega3:</b> #{omega3_sum.round(2)} g<br /> <b>Kwas tł. ALA:</b> #{ala_sum.round(2)} g (<span style='color:#{ala_col}'>#{ala_percent.round(2)} %</span>)<br /> <b>Cholesterol:</b> <span style='color:#{cholesterol_col}'>#{cholesterol_sum.round(2)} mg</span><br />" }
             ].to_json
         end
     end

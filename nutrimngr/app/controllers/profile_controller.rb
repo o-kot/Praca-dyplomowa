@@ -28,17 +28,17 @@ class ProfileController < ApplicationController
         allMeasurements.each_with_index do |measurement, index|
             if measurement.Weight.present?
                 diff = @weights[@weights.length-1] ? measurement.Weight - @weights[@weights.length-1][:y] : 0
-                @weights << { y: measurement.Weight, diff: diff.round(1), id: measurement.id, date: measurement.Date }
+                @weights << { y: measurement.Weight.to_f, diff: diff.round(1), id: measurement.id, date: measurement.Date }
                 @dates_weights << measurement.Date
             end
             if measurement.Waist.present?
                 diff = @waist[@waist.length-1] ? measurement.Waist - @waist[@waist.length-1][:y] : 0
-                @waist << { y: measurement.Waist, diff: diff.round(1), id: measurement.id, date: measurement.Date }
+                @waist << { y: measurement.Waist.to_f, diff: diff.round(1), id: measurement.id, date: measurement.Date }
                 @dates_waist << measurement.Date
             end
             if measurement.Hips.present?
                 diff = @hips[@hips.length-1] ? measurement.Hips - @hips[@hips.length-1][:y] : 0
-                @hips << { y: measurement.Hips, diff: diff.round(1), id: measurement.id, date: measurement.Date }
+                @hips << { y: measurement.Hips.to_f, diff: diff.round(1), id: measurement.id, date: measurement.Date }
                 @dates_hips << measurement.Date
             end
 
