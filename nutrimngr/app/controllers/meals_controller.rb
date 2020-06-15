@@ -92,26 +92,25 @@ class MealsController < ApplicationController
                 carbs_div = (carbs_sum / total) * 100.0
                 protein_div = (protein_sum / total) * 100.0
                 fat_div = (fat_sum / total) * 100.0
-            end
-            c_chart_col = ''
-            p_chart_col = ''
-            f_chart_col = ''
-            if carbs_div < 55 || carbs_div > 75
-                c_chart_col = 'red'
-            end
-            if protein_div < 10 || protein_div > 15
-                p_chart_col = 'red'
-            end
-            if fat_div < 15 || fat_div > 30
-                f_chart_col = 'red'
-            end
 
-            if total > 0
+                c_chart_col = ''
+                p_chart_col = ''
+                f_chart_col = ''
+                if carbs_div < 55 || carbs_div > 75
+                    c_chart_col = 'red'
+                end
+                if protein_div < 10 || protein_div > 15
+                    p_chart_col = 'red'
+                end
+                if fat_div < 15 || fat_div > 30
+                    f_chart_col = 'red'
+                end
+
                 fiber_sum = 0
                 @eatenMeals.each {|eat| fiber_sum += eat[:Fiber].nil? ? 0 : eat[:Fiber]}
                 sugars_sum = 0
                 @eatenMeals.each {|eat| sugars_sum += eat[:Sugars].nil? ? 0 : eat[:Sugars]}
-                sugars_percent = (sugars_sum / total ) * 100.0            
+                sugars_percent = (sugars_sum / total ) * 100.0
 
                 omega3_sum = 0
                 @eatenMeals.each {|eat| omega3_sum += eat[:Omega3].nil? ? 0 : eat[:Omega3]}
@@ -125,11 +124,11 @@ class MealsController < ApplicationController
                 @eatenMeals.each {|eat| trans_sum += eat[:Trans].nil? ? 0 : eat[:Trans]}
                 jnkt_sum = fat_sum - (omega3_sum + ala_sum + sfa_sum + wnkt_sum + trans_sum)
                 cholesterol_sum = 0
-                @eatenMeals.each {|eat| cholesterol_sum += eat[:Cholesterol].nil? ? 0 : eat[:Cholesterol]}            
+                @eatenMeals.each {|eat| cholesterol_sum += eat[:Cholesterol].nil? ? 0 : eat[:Cholesterol]}
                 sfa_percent = (sfa_sum / total) * 100.0
                 wnkt_percent = (wnkt_sum / total) * 100.0
                 ala_percent = (ala_sum / total) * 100.0
-                trans_percent = (trans_sum / total) * 100.0            
+                trans_percent = (trans_sum / total) * 100.0
 
                 valine_sum = 0
                 @eatenMeals.each {|eat| valine_sum += eat[:Valine].nil? ? 0 : eat[:Valine]}
@@ -178,7 +177,7 @@ class MealsController < ApplicationController
                 if cholesterol_sum >= 300
                     cholesterol_col = 'red'
                 end
-            
+
                 @chart_data = [
                     { name: 'Węglowodany', class: c_chart_col, y: carbs_div.to_f, tooltip_info: "<b>Błonnik</b>: <span style='color:#{fiber_col}'>#{fiber_sum.round(2)} g</span><br /> <b>Cukry:</b> #{sugars_sum.round(2)} g (<span style='color:#{sugar_col}'>#{sugars_percent.round(2)} %</span>)<br />" },
                     { name: 'Białko', class: p_chart_col, y: protein_div.to_f, tooltip_info: "<b>Walina</b>: #{valine_sum.round(2)} mg (z #{@requisition.Valine})<br /> <b>Izoleucyna:</b> #{isoleucine_sum.round(2)} mg (z #{@requisition.Isoleucine})<br /> <b>Leucyna:</b> #{leucine_sum.round(2)} mg (z #{@requisition.Leucine})<br /> <b>Lizyna:</b> #{lysine_sum.round(2)} mg (z #{@requisition.Lysine})<br /> <b>Metionina:</b> #{methionine_sum.round(2)} mg (z #{@requisition.Methionine})<br /> <b>Treonina:</b> #{threonine_sum.round(2)} mg (z #{@requisition.Threonine})<br /> <b>Tryptofan:</b> #{tryptophan_sum.round(2)} mg (z #{@requisition.Tryptophan})<br /> <b>Fenyalanina:</b> #{phenylalanine_sum.round(2)} mg (z #{@requisition.Phenylalanine})<br />" },
