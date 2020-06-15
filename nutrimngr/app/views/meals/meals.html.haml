@@ -137,38 +137,39 @@
     if(!confirm("Czy na pewno chcesz usunąć ten posiłek?"))
     return false;
     });
-    Highcharts.chart('pie-chart', {
-    chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie'
-    },
-    title: {
-    text: 'Rozkład procentowy spożycia makroskładników'
-    },
-    tooltip: {
-    pointFormat: '{point.tooltip_info}'
-    },
-    accessibility: {
-    point: {
-    valueSuffix: '%'
-    }
-    },
-    plotOptions: {
-    pie: {
-    allowPointSelect: true,
-    cursor: 'pointer',
-    dataLabels: {
-    enabled: true,
-    format: '<b>{point.name}</b>: <span style="color: {point.class}">{point.percentage:.1f} %'
-    }
-    }
-    },
-    series: [{
-    name: 'Makroskładniki',
-    colorByPoint: true,
-    data: #{raw(@chart_data)}
-    }]
-    });
-    });
+    - if @total > 0
+        Highcharts.chart('pie-chart', {
+        chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+        },
+        title: {
+        text: 'Rozkład procentowy spożycia makroskładników'
+        },
+        tooltip: {
+        pointFormat: '{point.tooltip_info}'
+        },
+        accessibility: {
+        point: {
+        valueSuffix: '%'
+        }
+        },
+        plotOptions: {
+        pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: <span style="color: {point.class}">{point.percentage:.1f} %'
+        }
+        }
+        },
+        series: [{
+        name: 'Makroskładniki',
+        colorByPoint: true,
+        data: #{raw(@chart_data)}
+        }]
+        });
+        });

@@ -10,7 +10,7 @@ class ProductsPg
         userOnly ? ProductInfoDbModel.where(IDU:@userID) : ProductInfoDbModel.where("\"IDU\" =? or \"IDU\" is NULL",@userID)
     end
     def addUserProduct(name,calories,protein,carbs,fat,sugars,fiber,omega3,ala,sfa,wnkt,trans,cholesterol,valine,isoleucine,leucine,lysine,methionine,threonine,tryptophan,phenylalanine,vitA,vitB1,vitB2,vitB3,vitB4,vitB5,vitB6,vitB9,vitB12,vitC,vitD,vitE,vitH,vitK,cl,zn,f,p,i,mg,cu,k,se,na,ca,fe,weight)
-        if ProductInfoDbModel.where(Name:name).exists?
+        if ProductInfoDbModel.where(Name:name,["IDU is null or IDU =?",@userID]).exists?
             return 'Produkt o takiej nazwie istnieje już w bazie danych'
         else
             newUserProduct = ProductInfoDbModel.new

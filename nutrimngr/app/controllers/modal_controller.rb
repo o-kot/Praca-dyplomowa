@@ -78,6 +78,8 @@ class ModalController < ActionController::Base
             @products = ProductInfoViewModel.new(session[:sessionID])
             @products = @products.getProductList
         when 'meals/other_nutrients'
+            @requisition = UserRequisitionViewModel.new(session[:sessionID])
+            @requisition = @requisition.getUserRequisition
             @today = Date.today
             @eaten = EatenViewModel.new(session[:sessionID])
             @eatenMeals = @eaten.getEaten(@today)

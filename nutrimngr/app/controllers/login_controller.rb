@@ -6,7 +6,7 @@ class LoginController < ApplicationController
         accessingUser = UserLoginViewModel.new    
         if(accessingUser.logUser(params['email'], params['password']))
             session[:sessionID] = accessingUser.logUser(params['email'], params['password'])
-            redirect_to "/profile/profile"
+            redirect_to "/meals/meals"
         else
             render plain: 'Adres e-mail lub hasło nieprawidłowe'      
         end 
